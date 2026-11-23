@@ -1,0 +1,998 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+.rv-h{font-family:var(--display,inherit);font-size:clamp(1.4rem,1.1rem + 1vw,1.9rem);margin:48px 0 20px;font-weight:500}
+.rvf{display:grid;gap:32px;margin-top:56px;padding:clamp(24px,3vw,44px);background:var(--surface);border:1px solid var(--line);border-radius:22px}
+@media(min-width:900px){.rvf{grid-template-columns:1fr 1.25fr;align-items:start}}
+.rvf form{display:grid;gap:16px}
+.rvf .two{display:grid;gap:16px}
+@media(min-width:600px){.rvf .two{grid-template-columns:1fr 1fr}}
+.rvp{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+.rvp summary{cursor:pointer;font-weight:500}
+.rvp p{margin-top:10px;font-size:.92rem;color:var(--muted)}
+.rvstars{border:0;padding:0;margin:0}
+.rvstars legend{margin-bottom:8px}
+.rvstars__row{display:flex;flex-wrap:wrap;gap:8px}
+.rvstars input{position:absolute;opacity:0;width:1px;height:1px}
+.rvstars label{padding:10px 16px;border:1px solid var(--line);border-radius:999px;cursor:pointer;background:var(--bg);min-width:64px;text-align:center}
+.rvstars input:checked+label{background:var(--sel);color:var(--sel-fg);border-color:var(--sel)}
+.rvstars input:focus-visible+label{outline:2px solid var(--brass);outline-offset:2px}
+.rv .rv-stars{color:var(--brass);letter-spacing:2px;margin-bottom:8px}
+.totop{position:fixed;right:calc(24px + env(safe-area-inset-right,0px));bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:41;width:46px;height:46px;border-radius:50%;border:1px solid var(--brass-soft);background:var(--navy);color:var(--champagne);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;transform:translateY(12px);pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.totop.on{opacity:1;transform:none;pointer-events:auto}
+.totop:hover{background:var(--btn-hover)}
+.totop:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+@media(max-width:899px){.totop{bottom:calc(160px + env(safe-area-inset-bottom,0px))}}
+@media(prefers-reduced-motion:reduce){.totop{transition:none}}
+</style></head><body>
+<title>Your London Stay</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://yourlondonstay.com/">
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Book direct: a bright one-bedroom apartment in Hammersmith, West London, for up to 4 guests. 10 minutes from Barons Court Tube, Piccadilly line direct to Heathrow. Rated 4.94 by guests.">
+<link rel="preload" href="fonts/bodoni-moda-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["LodgingBusiness","Apartment"],"name":"Your London Stay – The Hammersmith Apartment","description":"A bright one-bedroom apartment in Hammersmith, West London, for up to 4 guests, 10 minutes' walk from Barons Court Underground station.","email":"4yourlondonstay@gmail.com","telephone":"+447848108122","address":{"@type":"PostalAddress","streetAddress":"Lampeter Square","addressLocality":"London","postalCode":"W6","addressCountry":"GB"},"numberOfBedrooms":1,"occupancy":{"@type":"QuantitativeValue","maxValue":4},"checkinTime":"12:00","checkoutTime":"11:00","petsAllowed":false,"priceRange":"£125–£152 per night","sameAs":["https://www.instagram.com/43lampetersquare/","https://www.airbnb.co.uk/rooms/1245107111113572905"]}</script>
+<style>
+@font-face{font-family:"Bodoni Moda";font-style:normal;font-weight:400 900;font-display:swap;src:url(fonts/bodoni-moda-latin-opsz-normal.woff2) format("woff2")}
+@font-face{font-family:"Bodoni Moda";font-style:italic;font-weight:400 900;font-display:swap;src:url(fonts/bodoni-moda-latin-opsz-italic.woff2) format("woff2")}
+@font-face{font-family:"Jost";font-style:normal;font-weight:300;font-display:swap;src:url(fonts/jost-latin-300-normal.woff2) format("woff2")}
+@font-face{font-family:"Jost";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/jost-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:"Jost";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/jost-latin-500-normal.woff2) format("woff2")}
+@font-face{font-family:"Jost";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/jost-latin-600-normal.woff2) format("woff2")}
+/* Layout: a hotel-grade single page. Navy of the kitchen cabinets, champagne of the curtains, brass of the ceiling light, white marble. */
+:root{
+  --bg:#f7f4ef; --surface:#ffffff; --linen:#efe7dc; --ink:#161b27; --ink-2:#3a3f4b; --muted:#6b665f; --line:#e3dacd;
+  --navy:#162033; --navy-2:#1f2b42; --on-navy:#f1ede6; --on-navy-muted:#b9b4ab;
+  --brass:#8c6b30; --brass-soft:#c9a466; --champagne:#d8c4a6;
+  --btn:#162033; --btn-fg:#ffffff; --btn-hover:#24324d;
+  --free:#efe7dc; --taken:#f1eee9; --taken-ink:#b5aea4; --sel:#162033; --sel-fg:#ffffff; --range:#d8c4a6;
+  --ok:#2f6b4f; --err:#a3362a;
+  --display:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --body:"Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --r:6px; --r-lg:14px; --shadow:0 1px 2px rgba(22,32,51,.06),0 18px 40px rgba(22,32,51,.10);
+  --max:1200px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e131d; --surface:#151c2a; --linen:#1b2434; --ink:#ece8e1; --ink-2:#cfcac2; --muted:#a39e95; --line:#283246;
+  --navy:#0a0f18; --navy-2:#131b2a; --on-navy:#f1ede6; --on-navy-muted:#a9a49b;
+  --brass:#d4b072; --brass-soft:#d4b072; --champagne:#8a7658;
+  --btn:#d4b072; --btn-fg:#121826; --btn-hover:#e2c48c;
+  --free:#1d2738; --taken:#121925; --taken-ink:#4d5668; --sel:#d4b072; --sel-fg:#121826; --range:#5d5040;
+  --ok:#7cc79f; --err:#ec8b7e; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e131d; --surface:#151c2a; --linen:#1b2434; --ink:#ece8e1; --ink-2:#cfcac2; --muted:#a39e95; --line:#283246;
+  --navy:#0a0f18; --navy-2:#131b2a; --on-navy:#f1ede6; --on-navy-muted:#a9a49b;
+  --brass:#d4b072; --brass-soft:#d4b072; --champagne:#8a7658;
+  --btn:#d4b072; --btn-fg:#121826; --btn-hover:#e2c48c;
+  --free:#1d2738; --taken:#121925; --taken-ink:#4d5668; --sel:#d4b072; --sel-fg:#121826; --range:#5d5040;
+  --ok:#7cc79f; --err:#ec8b7e; color-scheme:dark}
+[hidden]{display:none!important}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.65;font-weight:400;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:400;line-height:1.08;letter-spacing:-.01em;margin:0;text-wrap:balance}
+h2{font-size:clamp(2.2rem,1.5rem + 2.6vw,3.6rem)}
+h3{font-size:clamp(1.35rem,1.2rem + .6vw,1.7rem)}
+p{margin:0;text-wrap:pretty}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.section{padding-block:clamp(72px,6vw + 40px,136px)}
+.eyebrow{font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:var(--brass);display:flex;align-items:center;gap:14px}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor}
+.lead{font-size:clamp(1.08rem,1rem + .35vw,1.28rem);color:var(--ink-2);font-weight:300;line-height:1.6}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+.head{display:grid;gap:18px;max-width:46rem;margin-bottom:clamp(36px,3vw + 20px,64px)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;border:1px solid transparent;font:500 .82rem/1 var(--body);letter-spacing:.16em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background .25s,color .25s,border-color .25s,transform .25s}
+.btn:active{transform:translateY(1px)}
+.btn--primary{background:var(--btn);color:var(--btn-fg)}
+.btn--primary:hover{background:var(--btn-hover)}
+.btn--line{border-color:currentColor;background:transparent;color:var(--ink)}
+.btn--line:hover{background:var(--ink);color:var(--bg)}
+.btn--wa{background:#1f8a4c;color:#fff}
+.btn--wa:hover{background:#18723e}
+.btn--light{background:#f7f4ef;color:#162033}
+.btn--light:hover{background:#fff}
+.btn--ghost{border-color:rgba(255,255,255,.6);color:#fff;background:transparent}
+.btn--ghost:hover{background:#fff;color:#162033}
+.btn[aria-disabled="true"],.btn:disabled{opacity:.4;pointer-events:none}
+.btn svg{width:18px;height:18px;flex:none}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:4px}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+/* header */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(14px) saturate(1.3);border-bottom:1px solid transparent;transition:border-color .3s}
+.hdr.is-scrolled{border-bottom-color:var(--line)}
+.hdr__in{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:76px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.logo svg{width:30px;height:36px;color:var(--ink)}
+.logo b{display:block;font-family:var(--display);font-weight:500;font-size:1.32rem;letter-spacing:.01em;line-height:1}
+.logo i{display:block;font-style:normal;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-top:5px}
+.nav{display:flex;gap:26px;list-style:none;margin:0;padding:0}
+.nav a{text-decoration:none;font-size:.88rem;letter-spacing:.04em;color:var(--ink-2);padding-block:6px;background:linear-gradient(var(--brass),var(--brass)) no-repeat left bottom/0 1px;transition:background-size .3s}
+.nav a:hover{background-size:100% 1px;color:var(--ink)}
+.hdr__cta{display:flex;gap:10px;align-items:center}
+.hdr__cta .btn{min-height:44px;padding:0 20px;font-size:.74rem}
+.burger{display:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;align-items:center;justify-content:center}
+@media (max-width:1060px){.nav{display:none}.burger{display:inline-flex}
+  .nav.open{display:flex;flex-direction:column;gap:0;position:absolute;left:0;right:0;top:100%;background:var(--bg);border-bottom:1px solid var(--line);padding:8px max(20px,env(safe-area-inset-right,0px)) 20px max(20px,env(safe-area-inset-left,0px))}
+  .nav.open li{border-top:1px solid var(--line)} .nav.open a{display:block;padding:16px 0;font-family:var(--display);font-size:1.4rem;background:none}}
+@media (max-width:560px){.hdr__cta .btn--primary{display:none}}
+
+/* hero */
+.hero{position:relative;min-height:min(88vh,820px);display:grid;align-items:end;color:#fff;overflow:hidden;background:#162033}
+.hero picture,.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,15,24,.15) 0%,rgba(10,15,24,.25) 40%,rgba(10,15,24,.82) 100%)}
+.hero__in{position:relative;z-index:1;padding-block:120px 56px;display:grid;gap:36px;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);align-items:end}
+@media (max-width:900px){.hero__in{grid-template-columns:1fr;gap:28px;padding-block:120px 32px}}
+.hero .eyebrow{color:#e6cf9f}
+.hero h1{font-size:clamp(2.8rem,1.6rem + 5.2vw,6.2rem);margin-top:18px;line-height:1}
+.hero h1 em{font-style:italic;color:#ead6ad}
+.hero p{margin-top:20px;max-width:34rem;font-size:clamp(1.05rem,1rem + .4vw,1.3rem);font-weight:300;color:#ece6dc}
+.hero .btn-row{margin-top:30px}
+.card-q{background:rgba(247,244,239,.96);color:#162033;border-radius:var(--r-lg);padding:26px;box-shadow:0 24px 60px rgba(0,0,0,.3);display:grid;gap:16px}
+.card-q__price{display:flex;align-items:baseline;gap:8px}
+.card-q__price b{font-family:var(--display);font-weight:400;font-size:2.6rem;line-height:1}
+.card-q__price span{color:#6b665f}
+.card-q dl{display:grid;grid-template-columns:auto 1fr;gap:8px 16px;margin:0;font-size:.95rem;border-block:1px solid #e3dacd;padding-block:14px}
+.card-q dt{color:#6b665f}.card-q dd{margin:0;text-align:right;font-weight:500}
+.card-q .btn{width:100%}
+.card-q .btn--primary{background:#162033;color:#fff}
+.card-q .btn--primary:hover{background:#24324d}
+.stars{display:inline-flex;gap:2px;color:#b8924f}
+.stars svg{width:15px;height:15px}
+
+/* proof strip */
+.proof{background:var(--navy);color:var(--on-navy)}
+.proof ul{list-style:none;margin:0;padding:22px 0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px}
+.proof li{display:flex;gap:12px;align-items:center;font-size:.9rem;color:var(--on-navy-muted)}
+.proof li b{display:block;color:var(--on-navy);font-weight:500}
+.proof svg{width:24px;height:24px;color:var(--brass-soft);flex:none}
+@media (max-width:980px){.proof ul{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* intro */
+.intro{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(32px,5vw,90px);align-items:center}
+@media (max-width:900px){.intro{grid-template-columns:1fr}}
+.intro__text{display:grid;gap:22px}
+.mosaic{display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:auto auto;gap:14px}
+.mosaic figure{margin:0;border-radius:var(--r-lg);overflow:hidden;background:var(--linen)}
+.mosaic img{width:100%;height:100%;object-fit:cover}
+.mosaic .m1{grid-row:span 2;aspect-ratio:3/4}
+.mosaic .m2,.mosaic .m3{aspect-ratio:4/3}
+.specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-top:1px solid var(--line);margin-top:8px}
+.specs div{padding:16px 0;border-bottom:1px solid var(--line)}
+.specs div:nth-child(odd){padding-right:16px}
+.specs dt{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.specs dd{margin:4px 0 0;font-family:var(--display);font-size:1.25rem}
+
+/* rooms */
+.rooms{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+@media (max-width:1000px){.rooms{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.rooms{gap:14px}.room p{font-size:.85rem}.room h3{font-size:1.15rem}}
+.room{display:grid;gap:14px}
+.room figure{margin:0;aspect-ratio:4/5;border-radius:var(--r-lg);overflow:hidden;background:var(--linen)}
+.room img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.room:hover img{transform:scale(1.04)}
+.room p{color:var(--muted);font-size:.95rem}
+
+/* gallery */
+.gal-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.gal-tabs button{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);border-radius:999px;padding:9px 18px;font:500 .8rem var(--body);letter-spacing:.08em;cursor:pointer}
+.gal-tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.gal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.gal{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){.gal{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.gal.all button:first-child{grid-column:span 2;grid-row:span 2}
+.gal button{padding:0;border:0;border-radius:10px;overflow:hidden;aspect-ratio:1;cursor:zoom-in;background:var(--linen)}
+.gal button img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.gal button:hover img{transform:scale(1.05)}
+.lb{position:fixed;inset:0;z-index:80;background:rgba(8,11,18,.94);display:grid;grid-template-rows:auto 1fr auto;padding:calc(env(safe-area-inset-top,0px) + 12px) max(12px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 16px) max(12px,env(safe-area-inset-left,0px));color:#fff}
+.lb__top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.9rem;color:#cfc9bf}
+.lb__stage{display:grid;place-items:center;min-height:0}
+.lb__stage img{max-height:100%;max-width:100%;object-fit:contain;border-radius:6px}
+.lb__bar{display:flex;justify-content:center;gap:12px}
+.lb button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;font-size:1.4rem;cursor:pointer}
+
+/* amenities */
+.amen{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(24px,3vw,48px)}
+@media (max-width:900px){.amen{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.amen{grid-template-columns:1fr}}
+.amen h3{font-size:1.3rem;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.amen ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.amen li{display:flex;gap:10px;align-items:baseline;color:var(--ink-2)}
+.amen li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--brass);flex:none;transform:translateY(-2px)}
+
+/* booking */
+.book{background:var(--linen)}
+.book__grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:980px){.book__grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(20px,2vw + 8px,36px);box-shadow:var(--shadow)}
+.cal__head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:22px}
+.cal__nav{display:flex;gap:8px}
+.cal__nav button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:1.3rem;cursor:pointer}
+.cal__nav button:disabled{opacity:.3;cursor:default}
+.cal__months{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,3vw,44px)}
+@media (max-width:620px){.cal__months{grid-template-columns:1fr}}
+.cal__m{font-family:var(--display);font-size:1.45rem;margin-bottom:12px}
+.cal__g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;font-variant-numeric:tabular-nums}
+.cal__dow{text-align:center;font-size:.68rem;letter-spacing:.16em;color:var(--muted);padding-bottom:6px}
+.day{aspect-ratio:1;border:0;border-radius:50%;background:transparent;color:var(--ink);font:500 .92rem var(--body);cursor:pointer;display:grid;place-items:center;line-height:1.05;padding:0}
+.day small{display:block;font-size:.6rem;font-weight:400;color:var(--muted)}
+.day--free{background:var(--free)}
+.day--free:hover,.day--out:hover{box-shadow:inset 0 0 0 1.5px var(--brass)}
+.day--taken,.day--past{color:var(--taken-ink);cursor:default;font-weight:400}
+.day--taken{text-decoration:line-through}
+.day--out{background:var(--free);box-shadow:inset 0 0 0 1px dashed var(--brass);outline:1px dashed var(--brass);outline-offset:-3px}
+.day--range{background:var(--range);border-radius:0}
+.day--sel{background:var(--sel);color:var(--sel-fg)}
+.day--sel small,.day--range small{color:inherit;opacity:.8}
+.cal__legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:18px;font-size:.82rem;color:var(--muted)}
+.cal__legend i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px}
+.cal__hint{margin-top:10px;font-size:.9rem;color:var(--brass);font-weight:500;min-height:1.6em}
+.quote{position:sticky;top:96px;display:grid;gap:18px}
+.quote h3{font-size:1.6rem}
+.quote__price{display:flex;align-items:baseline;gap:8px}
+.quote__price b{font-family:var(--display);font-weight:400;font-size:2.4rem;line-height:1}
+.qrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.qrow > div{padding:12px 14px}
+.qrow > div + div{border-left:1px solid var(--line)}
+.qrow .full{grid-column:1/-1;border-left:0;border-top:1px solid var(--line)}
+.qrow label,.qrow span.l{display:block;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.qrow strong{display:block;font-weight:500;margin-top:2px}
+.qrow select{width:100%;border:0;background:transparent;color:var(--ink);font:500 1rem var(--body);padding:2px 0;margin-top:2px}
+.lines{display:grid;gap:8px;font-size:.95rem;margin:0;padding:0;list-style:none}
+.lines li{display:flex;justify-content:space-between;gap:12px;color:var(--ink-2)}
+.lines .disc{color:var(--ok)}
+.lines .tot{border-top:1px solid var(--line);padding-top:12px;margin-top:4px;color:var(--ink);font-weight:600;font-size:1.05rem}
+.quote .btn{width:100%}
+.quote__note{font-size:.82rem;color:var(--muted);text-align:center}
+.nextfree{font-size:.9rem;color:var(--muted)} .nextfree strong{color:var(--ink);font-weight:500}
+
+/* direct benefits */
+.why{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin-top:40px}
+@media (max-width:900px){.why{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.why{grid-template-columns:1fr}}
+.why div{border-top:1px solid var(--brass);padding-top:16px}
+.why h3{font-size:1.2rem;margin-bottom:6px}
+.why p{color:var(--muted);font-size:.95rem}
+
+/* dark band: location */
+.dark{background:var(--navy);color:var(--on-navy)}
+.dark .lead,.dark .muted{color:var(--on-navy-muted)}
+.dark .eyebrow{color:#e0c48f}
+.loc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,80px);align-items:start}
+@media (max-width:900px){.loc{grid-template-columns:1fr}}
+.journeys{list-style:none;margin:0;padding:0}
+.journeys li{display:grid;grid-template-columns:1fr auto;gap:4px 16px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.12)}
+.journeys b{font-weight:500}
+.journeys span{font-family:var(--display);font-size:1.2rem;color:#ead6ad;text-align:right}
+.journeys em{grid-column:1/-1;font-style:normal;font-size:.85rem;color:var(--on-navy-muted)}
+.loc__img{margin:0;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/5;position:relative}
+.loc__img img{width:100%;height:100%;object-fit:cover}
+.loc__img figcaption{position:absolute;left:16px;bottom:16px;right:16px;font-size:.85rem;color:#f1ede6;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.near{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 28px;margin-top:48px;padding-top:36px;border-top:1px solid rgba(255,255,255,.12)}
+@media (max-width:760px){.near{grid-template-columns:1fr}}
+.near b{display:block;font-family:var(--display);font-weight:400;font-size:1.2rem;color:#fff}
+.near p{font-size:.92rem;color:var(--on-navy-muted)}
+
+/* reviews */
+.rv__top{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,5vw,80px);align-items:end;margin-bottom:48px}
+@media (max-width:900px){.rv__top{grid-template-columns:1fr}}
+.score{display:flex;align-items:center;gap:20px}
+.score b{font-family:var(--display);font-weight:400;font-size:clamp(4rem,3rem + 4vw,6.5rem);line-height:.9}
+.bars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 32px}
+@media (max-width:520px){.bars{grid-template-columns:1fr}}
+.bar{display:grid;grid-template-columns:1fr auto;gap:6px;font-size:.9rem}
+.bar i{grid-column:1/-1;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i::after{content:"";display:block;height:100%;width:var(--w);background:var(--brass)}
+.reviews{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.reviews{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.reviews{grid-template-columns:1fr}}
+.rv{margin:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;display:grid;gap:16px;align-content:start}
+.rv blockquote{margin:0;font-family:var(--display);font-size:1.12rem;line-height:1.5}
+.rv figcaption{font-size:.85rem;color:var(--muted)}
+.rv figcaption b{color:var(--ink);font-weight:500;display:block}
+
+/* host */
+.host{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,5vw,90px);align-items:center}
+@media (max-width:900px){.host{grid-template-columns:1fr}}
+.host figure{margin:0;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:1}
+.host figure img{width:100%;height:100%;object-fit:cover}
+.host__txt{display:grid;gap:20px}
+.hfacts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;border-top:1px solid var(--line);padding-top:20px}
+.hfacts b{display:block;font-family:var(--display);font-weight:400;font-size:1.8rem}
+.hfacts span{font-size:.82rem;color:var(--muted)}
+
+/* guide */
+.guide{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.guide{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.guide{grid-template-columns:1fr}}
+.g{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;display:grid;gap:10px;align-content:start}
+.g .tag{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--brass)}
+.g p{color:var(--muted);font-size:.95rem}
+.g .route{font-size:.85rem;color:var(--ink-2);border-top:1px solid var(--line);padding-top:10px;margin-top:4px}
+
+/* faq + rules */
+.faqgrid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,5vw,90px)}
+@media (max-width:900px){.faqgrid{grid-template-columns:1fr}}
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:20px 40px 20px 0;position:relative;font-family:var(--display);font-size:1.2rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:4px;top:16px;font-family:var(--body);font-weight:300;font-size:1.6rem;color:var(--brass);transition:transform .25s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 0 20px;color:var(--ink-2)}
+.rules{display:grid;gap:10px;list-style:none;margin:24px 0 0;padding:0}
+.rules li{display:flex;gap:12px;align-items:baseline;color:var(--ink-2)}
+.rules li::before{content:"";width:14px;height:1px;background:var(--brass);flex:none;transform:translateY(-4px)}
+.times{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:24px}
+.times div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+.times span{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.times b{display:block;font-family:var(--display);font-weight:400;font-size:1.5rem}
+
+/* contact */
+.contact{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(32px,5vw,90px);align-items:start}
+@media (max-width:900px){.contact{grid-template-columns:1fr}}
+.contact__side{display:grid;gap:22px}
+.chan{display:grid;gap:12px}
+.chan a,.chan div{display:flex;align-items:center;gap:14px;text-decoration:none;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.chan a:hover{border-color:var(--brass)}
+.chan svg{width:22px;height:22px;color:var(--brass);flex:none}
+.chan span{display:block;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.chan b{font-weight:500;overflow-wrap:anywhere}
+form{display:grid;gap:16px}
+.frow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.frow3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:620px){.frow,.frow3{grid-template-columns:1fr}}
+.field{display:grid;gap:6px}
+.field label{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.field input,.field select,.field textarea{width:100%;min-height:50px;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:400 1rem var(--body)}
+.field textarea{min-height:130px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0 3px color-mix(in srgb,var(--brass) 25%,transparent)}
+.field [aria-invalid="true"]{border-color:var(--err)}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:.9rem;color:var(--ink-2)}
+.check input{width:20px;height:20px;accent-color:var(--brass);margin-top:2px;flex:none}
+.hp{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.status{border-radius:12px;padding:16px 18px;font-size:.95rem;display:grid;gap:10px}
+.status--ok{background:color-mix(in srgb,var(--ok) 12%,var(--surface));border:1px solid var(--ok)}
+.status--warn{background:var(--linen);border:1px solid var(--brass)}
+.status pre{white-space:pre-wrap;font:400 .88rem/1.5 var(--body);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;margin:0;user-select:all}
+.err{color:var(--err);font-size:.85rem}
+
+/* footer */
+.foot{background:var(--navy);color:var(--on-navy-muted);padding-block:72px 32px;padding-bottom:calc(32px + env(safe-area-inset-bottom,0px))}
+.foot__cta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:24px;padding-bottom:48px;border-bottom:1px solid rgba(255,255,255,.12)}
+.foot__cta p{font-family:var(--display);font-size:clamp(2.2rem,1.5rem + 3vw,4rem);color:var(--on-navy);line-height:1.05}
+.foot__grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px;padding-block:44px}
+@media (max-width:860px){.foot__grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.foot h4{margin:0 0 14px;font:500 .7rem var(--body);letter-spacing:.22em;text-transform:uppercase;color:#8f8a82}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.foot a{color:var(--on-navy);text-decoration:none}
+.foot a:hover{text-decoration:underline}
+.foot .logo{color:var(--on-navy)} .foot .logo svg{color:var(--on-navy)} .foot .logo i{color:#8f8a82}
+.foot__base{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:.82rem;border-top:1px solid rgba(255,255,255,.12);padding-top:22px}
+
+/* floating */
+.wa-float{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:40;width:58px;height:58px;border-radius:50%;background:#1f8a4c;color:#fff;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.25);text-decoration:none}
+.wa-float svg{width:28px;height:28px}
+.mbar{display:none}
+@media (max-width:760px){
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:45;align-items:center;justify-content:space-between;gap:12px;background:var(--surface);border-top:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+  .mbar b{font-family:var(--display);font-weight:400;font-size:1.4rem} .mbar span{font-size:.8rem;color:var(--muted)}
+  .mbar .btn{min-height:46px;padding:0 18px}
+  .wa-float{bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+  .foot{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
+}
+.preview{background:var(--linen);color:var(--ink-2);font-size:.8rem;text-align:center;padding:8px 16px;border-bottom:1px solid var(--line)}
+</style>
+
+<div class="preview">Preview of the new Your London Stay website. Calendar and prices are live; online card payment is connected at launch.</div>
+
+<header class="hdr" id="top">
+  <div class="wrap hdr__in">
+    <a class="logo" href="#top" aria-label="Your London Stay, back to top">
+      <svg viewBox="0 0 40 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 47V20a16 16 0 0 1 32 0v27"/><path d="M9 20a11 11 0 0 1 22 0Z"/><path d="M20 9v11M12.2 12.2 20 20M27.8 12.2 20 20M9 20h22"/><path d="M9 47V25h22v22M20 25v22"/></g><circle cx="23.5" cy="37" r="1.4" fill="#b8924f"/></svg>
+      <span><b>Your London Stay</b><i>Hammersmith · W6</i></span>
+    </a>
+    <ul class="nav" id="nav">
+      <li><a href="#apartment">The apartment</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#book">Prices &amp; dates</a></li>
+      <li><a href="#location">Location</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="hdr__cta">
+      <a class="btn btn--primary" href="#book">Check availability</a>
+      <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-label="Welcome">
+  <picture>
+    <source media="(max-width:900px)" srcset="img/hero-m.webp">
+    <img src="img/hero.webp" alt="The bright living room: cream corner sofa, champagne curtains and a gold pendant light" fetchpriority="high">
+  </picture>
+  <div class="wrap hero__in">
+    <div>
+      <p class="eyebrow">Hammersmith · West London</p>
+      <h1>Your home <em>in</em> West London</h1>
+      <p>A bright, beautifully kept one-bedroom apartment for up to four guests. Ten minutes from the Tube, one direct line from Heathrow and the West End.</p>
+      <div class="btn-row">
+        <a class="btn btn--light" href="#book">Check availability</a>
+        <a class="btn btn--ghost" href="#gallery">See the apartment</a>
+      </div>
+    </div>
+    <aside class="card-q" aria-label="At a glance">
+      <div class="card-q__price"><b>£125</b><span>per night, from</span></div>
+      <dl>
+        <dt>Guests</dt><dd>Up to 4</dd>
+        <dt>Rated</dt><dd><span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2-6.2 3.2L7 14.2 2 9.3l6.9-1z"/></svg></span> 4.94 · 17 reviews</dd>
+        <dt>Next free</dt><dd id="heroNext">–</dd>
+      </dl>
+      <a class="btn btn--primary" href="#book">Choose your dates</a>
+    </aside>
+  </div>
+</section>
+
+<section class="proof" aria-label="Highlights">
+  <div class="wrap"><ul>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2-6.2 3.2L7 14.2 2 9.3l6.9-1z"/></svg><span><b>4.94 guest rating</b>17 verified stays</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 21h18M5 21V8l7-5 7 5v13M10 21v-6h4v6"/></svg><span><b>Entire apartment</b>All to yourself</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 12h20M12 2v20"/><circle cx="12" cy="12" r="9"/></svg><span><b>Heathrow, direct</b>Piccadilly line</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 12.5a11 11 0 0 1 14 0M2 9a16 16 0 0 1 20 0M8.5 16a6 6 0 0 1 7 0"/><circle cx="12" cy="20" r="1"/></svg><span><b>Up to 600 Mbps</b>Plus 1 Gbps Ethernet</span></li>
+    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="15" r="5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></svg><span><b>Self check-in</b>Arrive from 12:00</span></li>
+  </ul></div>
+</section>
+
+<section class="section" id="apartment">
+  <div class="wrap intro">
+    <div class="intro__text">
+      <p class="eyebrow">The apartment</p>
+      <h2>Hotel comfort, with a home of your own</h2>
+      <p class="lead">A quiet residential square between Hammersmith and Barons Court. Champagne curtains, soft light, a navy-and-marble kitchen and a view across West London to the London Eye.</p>
+      <p class="muted">Stay a weekend or a month. There's a proper kitchen, a washing machine and tumble dryer, fast Wi-Fi with a desk, and a sofa bed in the living room for a third and fourth guest.</p>
+      <dl class="specs">
+        <div><dt>Guests</dt><dd>Up to 4</dd></div>
+        <div><dt>Beds</dt><dd>Double + sofa bed</dd></div>
+        <div><dt>Bathroom</dt><dd>Walk-in shower</dd></div>
+        <div><dt>Building</dt><dd>4th floor, with lift</dd></div>
+      </dl>
+    </div>
+    <div class="mosaic">
+      <figure class="m1"><img src="img/living-portrait.webp" alt="Living room seen from the doorway, with the sofa and window" loading="lazy"></figure>
+      <figure class="m2"><img src="img/bedroom.webp" alt="Double bed with upholstered headboard and fresh white linen" loading="lazy"></figure>
+      <figure class="m3"><img src="img/kitchen.webp" alt="Kitchen with navy cabinets and marble-effect worktops" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top:0" aria-label="Room by room">
+  <div class="wrap">
+    <div class="rooms">
+      <article class="room"><figure><img src="img/living-sofa.webp" alt="Corner sofa bed with colourful cushions" loading="lazy"></figure><h3>Living room</h3><p>Corner sofa that opens into a bed, dining area and a 65" Samsung smart TV with Netflix.</p></article>
+      <article class="room"><figure><img src="img/bedroom-detail.webp" alt="The double bed and bedside light" loading="lazy"></figure><h3>Bedroom</h3><p>Comfortable double bed, fresh linen, blackout blinds, wardrobe and a desk by the window.</p></article>
+      <article class="room"><figure><img src="img/kitchen-tea.webp" alt="Tea and coffee station prepared for guests" loading="lazy"></figure><h3>Kitchen</h3><p>Hob, oven, microwave, fridge-freezer and everything to cook, plus tea and coffee waiting.</p></article>
+      <article class="room"><figure><img src="img/bath-vanity.webp" alt="Bathroom with marble-effect tiles and round mirror" loading="lazy"></figure><h3>Bathroom</h3><p>Walk-in rainfall shower, heated towel rail, hairdryer and quality toiletries.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="gallery" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">Gallery</p><h2>Take a closer look</h2></div>
+    <div class="gal-tabs" id="galTabs" role="group" aria-label="Filter photos">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="living" aria-pressed="false">Living room</button>
+      <button type="button" data-f="bedroom" aria-pressed="false">Bedroom</button>
+      <button type="button" data-f="kitchen" aria-pressed="false">Kitchen</button>
+      <button type="button" data-f="bath" aria-pressed="false">Bathroom</button>
+      <button type="button" data-f="area" aria-pressed="false">Views &amp; area</button>
+    </div>
+    <div class="gal" id="gal"></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="amenH">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">Amenities</p><h2 id="amenH">Everything in its place</h2></div>
+    <div class="amen">
+      <div><h3>Work &amp; entertainment</h3><ul><li>Wi-Fi 300–600 Mbps</li><li>Wired Ethernet up to 1 Gbps</li><li>Desk by the window</li><li>65" smart TV, Netflix, IPTV, HDMI</li><li>Books and reading material</li></ul></div>
+      <div><h3>Kitchen &amp; dining</h3><ul><li>Electric hob and oven</li><li>Microwave, kettle and toaster</li><li>Fridge-freezer</li><li>Cookware, crockery, wine glasses</li><li>Tea and coffee station</li></ul></div>
+      <div><h3>Sleep &amp; laundry</h3><ul><li>Double bed and sofa bed</li><li>Fresh linen, extra pillows and blankets</li><li>Room-darkening blinds</li><li>Washing machine and tumble dryer</li><li>Iron and drying rack</li></ul></div>
+      <div><h3>Bathroom</h3><ul><li>Walk-in rainfall shower</li><li>Towels and hairdryer</li><li>Shampoo, conditioner, shower gel</li></ul></div>
+      <div><h3>Comfort</h3><ul><li>Central heating</li><li>Air conditioning</li><li>Private balcony with a London Eye view</li><li>Free street parking evenings and weekends</li></ul></div>
+      <div><h3>Safety &amp; access</h3><ul><li>Self check-in with lockbox</li><li>Lift to the 4th floor</li><li>Smoke and carbon monoxide alarms</li><li>Fire extinguisher and first aid kit</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section class="section book" id="book">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">Prices &amp; availability</p><h2>Choose your dates</h2><p class="lead">Live availability and clear prices. No booking-platform fees when you book direct.</p></div>
+    <div class="book__grid">
+      <div class="panel">
+        <div class="cal__head"><p class="nextfree" id="nextFree"></p><div class="cal__nav"><button type="button" id="calPrev" aria-label="Previous months">&#8249;</button><button type="button" id="calNext" aria-label="Next months">&#8250;</button></div></div>
+        <div class="cal__months" id="calMonths"></div>
+        <div class="cal__legend"><span><i style="background:var(--free)"></i>Available</span><span><i style="background:var(--taken);border:1px solid var(--line)"></i>Booked</span><span><i style="background:var(--sel)"></i>Your stay</span></div>
+        <p class="cal__hint" id="calHint" role="status">Select your check-in date.</p>
+      </div>
+      <aside class="panel quote" aria-label="Your stay" aria-live="polite">
+        <div class="quote__price"><b id="qRate">£125</b><span class="muted" id="qRateLbl">per night, from</span></div>
+        <div class="qrow">
+          <div><span class="l">Check-in</span><strong id="qIn">Add date</strong></div>
+          <div><span class="l">Check-out</span><strong id="qOut">Add date</strong></div>
+          <div class="full"><label for="qGuests">Guests</label><select id="qGuests"><option value="1">1 guest</option><option value="2" selected>2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option></select></div>
+        </div>
+        <ul class="lines" id="qLines"><li><span>Weeknights (Sun–Thu)</span><span>from £125</span></li><li><span>Fri &amp; Sat nights</span><span>from £152</span></li></ul>
+        <a class="btn btn--primary" id="qDirect" href="#contact" aria-disabled="true">Request to book direct</a>
+        <div class="btn-row" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <a class="btn btn--wa" id="qWa" href="https://wa.me/447848108122" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.2Z"/></svg>WhatsApp</a>
+          <a class="btn btn--line" id="qAirbnb" href="https://www.airbnb.co.uk/rooms/1245107111113572905" target="_blank" rel="noopener">Airbnb</a>
+        </div>
+        <p class="quote__note">You won't be charged yet. We confirm every direct request personally, usually within the hour. We never ask for payment by bank transfer or through a link sent on WhatsApp.</p>
+      </aside>
+    </div>
+    <div class="why">
+      <div><h3>No platform fees</h3><p>Book with us directly and skip the booking-site service charge.</p></div>
+      <div><h3>Talk to your host</h3><p>One person from first question to check-out, on WhatsApp or email.</p></div>
+      <div><h3>Longer-stay savings</h3><p>7% off stays of a week or more, 28% off stays of 28 nights or more.</p></div>
+      <div><h3>Flexible arrivals</h3><p>Self check-in from 12:00, with step-by-step instructions before you travel.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="location">
+  <div class="wrap">
+    <div class="loc">
+      <div>
+        <div class="head" style="margin-bottom:28px"><p class="eyebrow">Location</p><h2>The calm side of central London</h2><p class="lead">Barons Court station is about ten minutes' walk, Hammersmith about fifteen. From there, the West End is one train away.</p></div>
+        <ul class="journeys">
+          <li><b>Heathrow Airport</b><span>Direct</span><em>Piccadilly line from Barons Court, no changes</em></li>
+          <li><b>South Kensington museums</b><span>~15 min</span><em>Piccadilly line</em></li>
+          <li><b>Hyde Park &amp; Knightsbridge</b><span>~15 min</span><em>Piccadilly line</em></li>
+          <li><b>Covent Garden &amp; Leicester Square</b><span>20–25 min</span><em>Piccadilly line, direct</em></li>
+          <li><b>King's Cross St Pancras (Eurostar)</b><span>Direct</span><em>Piccadilly line, no changes</em></li>
+          <li><b>Tower of London</b><span>~30 min</span><em>District line to Tower Hill</em></li>
+        </ul>
+        <p class="small muted" style="margin-top:14px">Approximate Tube times from Barons Court or Hammersmith. <a href="https://www.google.com/maps/search/?api=1&amp;query=Lampeter+Square+London+W6" target="_blank" rel="noopener" style="color:#ead6ad">Open the area in Google Maps</a></p>
+      </div>
+      <figure class="loc__img"><img src="img/view-night.webp" alt="Night view from the balcony to the City skyline and the illuminated London Eye" loading="lazy"><figcaption>The view from the balcony after dark: the City skyline and the London Eye.</figcaption></figure>
+    </div>
+    <div class="near">
+      <div><b>Thames riverside</b><p>The Thames Path and historic pubs along Lower and Upper Mall.</p></div>
+      <div><b>Eventim Apollo &amp; Lyric</b><p>Concerts, comedy and theatre around Hammersmith Broadway.</p></div>
+      <div><b>Olympia London</b><p>Exhibitions and trade shows a short ride away.</p></div>
+      <div><b>Bishop's Park</b><p>Fulham Palace, walled garden and a riverside park.</p></div>
+      <div><b>Queen's Club &amp; Fulham FC</b><p>Tennis and Premier League football nearby.</p></div>
+      <div><b>Everyday essentials</b><p>Supermarkets and cafés on King Street and North End Road.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="reviews">
+  <div class="wrap">
+    <div class="rv__top">
+      <div class="head" style="margin:0"><p class="eyebrow">Guest reviews</p><h2>In our guests' words</h2></div>
+      <div style="display:grid;gap:24px">
+        <div class="score"><b>4.94</b><div><span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2-6.2 3.2L7 14.2 2 9.3l6.9-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2-6.2 3.2L7 14.2 2 9.3l6.9-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2-6.2 3.2L7 14.2 2 9.3l6.9-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2-6.2 3.2L7 14.2 2 9.3l6.9-1z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8-6.2-3.2-6.2 3.2L7 14.2 2 9.3l6.9-1z"/></svg></span><p class="small muted">17 verified Airbnb reviews, November 2026</p></div></div>
+        <div class="bars">
+          <div class="bar" style="--w:98%"><span>Cleanliness</span><span>4.9</span><i></i></div>
+          <div class="bar" style="--w:100%"><span>Communication</span><span>5.0</span><i></i></div>
+          <div class="bar" style="--w:98%"><span>Value</span><span>4.9</span><i></i></div>
+          <div class="bar" style="--w:96%"><span>Accuracy</span><span>4.8</span><i></i></div>
+          <div class="bar" style="--w:96%"><span>Check-in</span><span>4.8</span><i></i></div>
+          <div class="bar" style="--w:92%"><span>Location</span><span>4.6</span><i></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="reviews">
+      <figure class="rv"><blockquote>“I stayed just over 30 days and it's a great option for long stays in London. Quiet and well located, and the washer and dryer helped a lot.”</blockquote><figcaption><b>Alissa</b>February 2026 · Airbnb</figcaption></figure>
+      <figure class="rv"><blockquote>“Lovely apartment, very clean, had all needed inside. Darko was a great host, very attentive, fast replies. Will look forward to staying again!”</blockquote><figcaption><b>Sharnay</b>2026 · Airbnb</figcaption></figure>
+      <figure class="rv"><blockquote>“Very nicely decorated, the furniture is new, it is very clean. Safe neighbourhood. Both the accommodation and the host are 10/10.”</blockquote><figcaption><b>Emira</b>November 2024 · Airbnb</figcaption></figure>
+      <figure class="rv"><blockquote>“We had a very nice and comfortable stay. A very comfortable bed and living room, perfect location for exploring London.”</blockquote><figcaption><b>Caitlin</b>November 2024 · Airbnb</figcaption></figure>
+      <figure class="rv"><blockquote>“Beautiful home in a nice and safe neighbourhood. We loved the view of the London Eye. Very, very good stay.”</blockquote><figcaption><b>Gwen</b>December 2024 · Airbnb</figcaption></figure>
+      <figure class="rv"><blockquote>“Extremely clean and comfortable with all the essentials readily available. Definitely would stay here again.”</blockquote><figcaption><b>Helen</b>October 2024 · Airbnb</figcaption></figure>
+    </div>
+    <p class="small muted" style="margin-top:20px">Reviews are lightly shortened. <a href="https://www.airbnb.co.uk/rooms/1245107111113572905" target="_blank" rel="noopener">Read all reviews on Airbnb</a></p>
+    <div id="rvLiveWrap" hidden>
+      <h3 class="rv-h">From guests who booked with us directly</h3>
+      <div class="reviews" id="rvLive"></div>
+    </div>
+    <div class="rvf" id="leave-review">
+      <div class="rvf__intro">
+        <p class="eyebrow">Stayed with us?</p>
+        <h3 class="rv-h" style="margin-top:0">Leave a review</h3>
+        <p class="muted">We read every review and publish all genuine reviews from our guests, good or bad, usually within 3 working days. Please add your booking reference so we can confirm you stayed with us.</p>
+        <details class="rvp"><summary>Our review policy</summary>
+          <p>Only guests who have stayed at 43 Lampeter Square can post a review. We check each review against our bookings before it appears. We publish every genuine review, positive or negative. We only remove or refuse a review if it is fake, abusive, discriminatory, includes personal data or is not about a stay. We never pay for reviews, offer discounts or gifts for them, or write reviews ourselves. A review is not the right place for a complaint that needs action: please message us, and we will help straight away. Reviews show the guest's first name and the month of the stay.</p>
+        </details>
+      </div>
+      <form id="rvForm" name="review" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="review">
+        <div class="two">
+          <div class="field"><label for="rvName">First name</label><input id="rvName" name="name" autocomplete="given-name" required maxlength="40"></div>
+          <div class="field"><label for="rvMonth">Month of your stay</label><input id="rvMonth" name="stay_month" type="month" required placeholder="YYYY-MM" pattern="[0-9]{4}-[0-9]{2}"></div>
+        </div>
+        <div class="two">
+          <div class="field"><label for="rvRef">Booking reference</label><input id="rvRef" name="booking_ref" required maxlength="40" placeholder="e.g. HM4ABC123 or YLS-1234"></div>
+          <div class="field"><label for="rvEmail">Email (not published)</label><input id="rvEmail" name="email" type="email" autocomplete="email" required></div>
+        </div>
+        <fieldset class="field rvstars"><legend>Your rating</legend>
+          <div class="rvstars__row">
+            <input type="radio" id="rv5" name="rating" value="5" required><label for="rv5">5 ★</label>
+            <input type="radio" id="rv4" name="rating" value="4"><label for="rv4">4 ★</label>
+            <input type="radio" id="rv3" name="rating" value="3"><label for="rv3">3 ★</label>
+            <input type="radio" id="rv2" name="rating" value="2"><label for="rv2">2 ★</label>
+            <input type="radio" id="rv1" name="rating" value="1"><label for="rv1">1 ★</label>
+          </div>
+        </fieldset>
+        <div class="field"><label for="rvText">Your review</label><textarea id="rvText" name="review" required minlength="20" maxlength="1500" placeholder="What did you enjoy? What could we do better?"></textarea></div>
+        <div class="hp" aria-hidden="true"><label for="rvBot">Leave empty</label><input id="rvBot" name="bot-field" tabindex="-1" autocomplete="off"></div>
+        <label class="check"><input type="checkbox" id="rvOk" required><span>I confirm this review is about my own stay, and I agree that my first name, stay month, rating and review can be published. See our <a href="#privacy">privacy notice</a>.</span></label>
+        <p class="err" id="rvErr" role="alert" hidden></p>
+        <button class="btn btn--primary" type="submit" id="rvSend">Send my review</button>
+        <div id="rvStatus" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="background:var(--surface)" aria-labelledby="hostH">
+  <div class="wrap host">
+    <figure><img src="img/host.webp" alt="The living room, prepared for guests" loading="lazy"></figure>
+    <div class="host__txt">
+      <p class="eyebrow">Your host</p>
+      <h2 id="hostH">Hello, I'm Darko</h2>
+      <p class="lead">I work in hospitality and look after every stay personally, from your first question to the moment you lock up and head home.</p>
+      <p class="muted">Ask me for restaurant tips, the best way in from the airport, or a quiet corner of the river. Or just enjoy your space; it's your stay.</p>
+      <div class="hfacts"><div><b>2024</b><span>Hosting since</span></div><div><b>100%</b><span>Response rate</span></div><div><b>&lt; 1 hr</b><span>Typical reply</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="guide" style="background:var(--linen)">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">London guide</p><h2>London from your doorstep</h2><p class="lead">Our favourite places, with the route from the apartment.</p></div>
+    <div class="guide">
+      <article class="g"><span class="tag">Museums · Free</span><h3>Natural History, V&amp;A, Science Museum</h3><p>Three world-class museums side by side, all free.</p><p class="route">Piccadilly line to South Kensington, ~15 min</p></article>
+      <article class="g"><span class="tag">Landmark</span><h3>The London Eye &amp; South Bank</h3><p>The wheel you see from the balcony at night, then a riverside walk to Tate Modern.</p><p class="route">Piccadilly to Leicester Square, Northern line to Waterloo</p></article>
+      <article class="g"><span class="tag">Royal London</span><h3>Buckingham Palace</h3><p>Watch the Changing of the Guard for free. Check the schedule first.</p><p class="route">District line to Victoria or St James's Park</p></article>
+      <article class="g"><span class="tag">History</span><h3>Tower of London &amp; Tower Bridge</h3><p>The Crown Jewels and London's most famous bridge.</p><p class="route">District line direct to Tower Hill</p></article>
+      <article class="g"><span class="tag">On foot</span><h3>Hammersmith riverside</h3><p>Georgian houses, rowing clubs and riverside pubs. Lovely at sunset.</p><p class="route">About 15–20 min walk</p></article>
+      <article class="g"><span class="tag">Gardens</span><h3>Holland Park &amp; Kyoto Garden</h3><p>A Japanese garden with a waterfall, koi and peacocks.</p><p class="route">Short Tube or bus ride to Holland Park</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="wrap faqgrid">
+    <div>
+      <div class="head" style="margin-bottom:0"><p class="eyebrow">Good to know</p><h2>Questions, answered</h2></div>
+      <div class="times"><div><span>Check-in</span><b>From 12:00</b></div><div><span>Check-out</span><b>By 11:00</b></div></div>
+      <ul class="rules">
+        <li>Up to 4 guests; only registered guests overnight</li>
+        <li>Quiet hours 22:00 to 07:00</li>
+        <li>No parties or events</li>
+        <li>No smoking or vaping</li>
+        <li>No pets (assistance dogs welcome)</li>
+      </ul>
+    </div>
+    <div>
+      <details><summary>How does self check-in work?</summary><p>There's a secure lockbox. We send the full address and step-by-step arrival instructions before your stay, so you can arrive any time from 12:00.</p></details>
+      <details><summary>Where do the third and fourth guests sleep?</summary><p>The corner sofa in the living room opens into a comfortable sofa bed with fresh linen. The bedroom has a double bed.</p></details>
+      <details><summary>Why book direct rather than on Airbnb?</summary><p>You deal with your host directly, there's no booking-platform service charge, and we can tailor longer stays. You're always welcome to book on Airbnb too.</p></details>
+      <details><summary>Do you offer discounts for longer stays?</summary><p>Yes: 7% off stays of 7 nights or more, and 28% off stays of 28 nights or more. These are included automatically in the price above.</p></details>
+      <details><summary>What is the cancellation policy?</summary><p>For direct bookings: a full refund if you cancel at least 45 days before check-in. Cancellations less than 45 days before arrival are not refundable. Bookings on Airbnb follow the policy shown there. Because accommodation is booked for specific dates, the statutory 14-day cancellation period does not apply.</p></details>
+      <details><summary>Is the Wi-Fi good enough for work?</summary><p>Yes. Wi-Fi runs at roughly 300–600 Mbps, there's a wired Ethernet connection up to 1 Gbps, and a desk in the bedroom.</p></details>
+      <details><summary>Is there parking?</summary><p>Free street parking is available in the evenings and at weekends. Check the local signs for weekday hours, and ask us before you travel.</p></details>
+      <details><summary>How do I know this website is genuine?</summary><p>This is the only official website for Your London Stay, and our only WhatsApp number is +44 7848 108122. We never ask you to pay by bank transfer, and we never send payment links on WhatsApp. If anything feels wrong, contact us before paying.</p></details>
+      <details><summary>Can I arrive early or leave late?</summary><p>Often, depending on the bookings either side of yours. Send us a message and we'll do our best.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact" style="background:var(--surface)">
+  <div class="wrap contact">
+    <div class="contact__side">
+      <div class="head" style="margin:0"><p class="eyebrow">Contact</p><h2>Ask us anything</h2><p class="lead">Questions, a direct booking or a long-stay quote. We usually reply within the hour.</p></div>
+      <div class="chan">
+        <a href="https://wa.me/447848108122?text=Hello%20Darko%2C%20I%27m%20interested%20in%20staying%20at%20Your%20London%20Stay." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg><div style="all:unset"><span>WhatsApp</span><b>Chat with Darko</b></div></a>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg><div style="all:unset"><span>Email</span><b>4yourlondonstay@gmail.com</b></div></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg><div style="all:unset"><span>Phone</span><b>+44 7848 108122</b></div></div>
+        <a href="https://www.instagram.com/43lampetersquare/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg><div style="all:unset"><span>Instagram</span><b>@43lampetersquare</b></div></a>
+      </div>
+    </div>
+    <div class="panel">
+      <form id="cForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="_honey" novalidate><input type="hidden" name="form-name" value="contact">
+        <div class="frow">
+          <div class="field"><label for="fName">Your name</label><input id="fName" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="fEmail">Email</label><input id="fEmail" name="email" type="email" autocomplete="email" required></div>
+        </div>
+        <div class="field"><label for="fPhone">Phone or WhatsApp (optional)</label><input id="fPhone" name="phone" type="tel" autocomplete="tel"></div>
+        <div class="frow3">
+          <div class="field"><label for="fIn">Check-in</label><input id="fIn" name="check_in" type="date" min="2026-11-22"></div>
+          <div class="field"><label for="fOut">Check-out</label><input id="fOut" name="check_out" type="date" min="2026-11-23"></div>
+          <div class="field"><label for="fGuests">Guests</label><select id="fGuests" name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></div>
+        </div>
+        <div class="field"><label for="fMsg">Message</label><textarea id="fMsg" name="message" required placeholder="Tell us about your trip, arrival time or any questions."></textarea></div>
+        <div class="hp" aria-hidden="true"><label for="fHp">Leave empty</label><input id="fHp" name="_honey" tabindex="-1" autocomplete="off"></div>
+        <label class="check"><input type="checkbox" id="fOk" required><span>I agree that Your London Stay may use these details to reply to my enquiry. See our <a href="#privacy">privacy notice</a>.</span></label>
+        <p class="err" id="fErr" role="alert" hidden></p>
+        <button class="btn btn--primary" type="submit" id="fSend">Send message</button>
+        <div id="fStatus" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</section>
+<section class="section" id="privacy" style="padding-block:56px;border-top:1px solid var(--line)">
+  <div class="wrap" style="display:grid;gap:12px;max-width:52rem;margin-inline:0">
+    <details><summary>Privacy notice</summary><div style="display:grid;gap:10px;padding-bottom:20px;color:var(--ink-2)">
+      <p><b>Who we are.</b> Your London Stay is run by Darko, a sole trader based at Lampeter Square, London W6. Contact: 4yourlondonstay@gmail.com, +44 7848 108122.</p>
+      <p><b>What we collect.</b> When you use the contact form or message us, we receive your name, email, phone number (if given), dates, number of guests and your message. This website sets no cookies and uses no tracking or analytics.</p>
+      <p><b>Why.</b> To answer your enquiry and, if you book, to arrange your stay (taking steps at your request before a contract). We do not use your details for marketing without your consent.</p>
+      <p><b>Who else handles it.</b> Our website host (Netlify), our form service (FormSubmit), which forwards your message to our email (Google Gmail), and WhatsApp if you choose to contact us there. Some of these providers are based outside the UK.</p>
+      <p><b>How long.</b> Enquiries that don't lead to a booking are deleted within 12 months. Booking records are kept for 6 years for tax purposes.</p>
+      <p><b>Your rights.</b> You can ask to see, correct or delete your data, or object to its use, by emailing us. You can also complain to the Information Commissioner's Office (ico.org.uk).</p>
+    </div></details>
+    <details><summary>Booking information</summary><div style="display:grid;gap:10px;padding-bottom:20px;color:var(--ink-2)">
+      <p>Prices are per night for the whole apartment, in pounds sterling, and the total shown in the price box is the full price for your stay. There are no hidden booking fees for direct bookings.</p>
+      <p>Direct booking requests are confirmed by us in writing (email or WhatsApp) before any payment is taken. Your booking is only confirmed once you receive our written confirmation.</p>
+      <p>Cancellation: full refund if you cancel at least 45 days before check-in; no refund for later cancellations. The statutory 14-day cancellation period does not apply to accommodation booked for specific dates.</p>
+      <p>Please read the house rules in the "Good to know" section before booking.</p>
+    </div></details>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__cta"><p>Your door in West London.</p><div class="btn-row"><a class="btn btn--light" href="#book">Check availability</a><a class="btn btn--ghost" href="#contact">Ask a question</a></div></div>
+    <div class="foot__grid">
+      <div style="display:grid;gap:16px;align-content:start">
+        <a class="logo" href="#top"><svg viewBox="0 0 40 48" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 47V20a16 16 0 0 1 32 0v27"/><path d="M9 20a11 11 0 0 1 22 0Z"/><path d="M20 9v11M12.2 12.2 20 20M27.8 12.2 20 20M9 20h22"/><path d="M9 47V25h22v22M20 25v22"/></g><circle cx="23.5" cy="37" r="1.4" fill="#b8924f"/></svg><span><b>Your London Stay</b><i>Hammersmith · W6</i></span></a>
+        <p class="small">Lampeter Square, Hammersmith, London W6</p>
+      </div>
+      <div><h4>Your stay</h4><ul><li><a href="#apartment">The apartment</a></li><li><a href="#gallery">Gallery</a></li><li><a href="#book">Prices &amp; dates</a></li><li><a href="#faq">House rules &amp; FAQ</a></li><li><a href="#privacy">Privacy &amp; booking terms</a></li></ul></div>
+      <div><h4>Explore</h4><ul><li><a href="#location">Location</a></li><li><a href="#guide">London guide</a></li><li><a href="#reviews">Reviews</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li><a href="https://wa.me/447848108122" target="_blank" rel="noopener">WhatsApp</a></li><li><a href="#contact">Email us</a></li><li><a href="https://www.instagram.com/43lampetersquare/" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+    </div>
+    <div class="foot__base"><span>© 2026 Your London Stay</span><span>Prices in GBP per night for the whole apartment.</span></div>
+  </div>
+</footer>
+
+<button class="totop" id="toTop" type="button" aria-label="Back to top"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+<a class="wa-float" id="waFloat" href="https://wa.me/447848108122?text=Hello%20Darko%2C%20I%27m%20interested%20in%20staying%20at%20Your%20London%20Stay." target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.2Z"/></svg></a>
+<div class="mbar"><div><b>£125</b> <span>/ night, from</span></div><a class="btn btn--primary" href="#book">Check dates</a></div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <div class="lb__top"><span id="lbCap"></span><button type="button" id="lbClose" aria-label="Close">&times;</button></div>
+  <div class="lb__stage"><img id="lbImg" alt=""></div>
+  <div class="lb__bar"><button type="button" id="lbPrev" aria-label="Previous photo">&#8249;</button><button type="button" id="lbNext" aria-label="Next photo">&#8250;</button></div>
+</div>
+
+<script>
+(function(){
+  /* ===== Settings (edit here) ===== */
+  var CFG={
+    updated:"2026-11-22",
+    blocked:[["2026-11-20","2026-12-01"],["2026-12-02","2026-12-08"],["2026-12-12","2027-11-23"]], // unavailable nights [first night, end exclusive]
+    lastDate:"2027-11-22",
+    weekday:125, weekend:152, weekendNights:[5,6],      // Fri & Sat nights
+    guestExtra:{3:38,4:53},                             // added per night for the 3rd and 4th guest
+    discounts:[[28,0.28],[7,0.07]],                     // [min nights, discount]
+    airbnb:"https://www.airbnb.co.uk/rooms/1245107111113572905",
+    whatsapp:"447848108122",
+    formEndpoint:"/"
+  };
+  var $=function(id){return document.getElementById(id);};
+  var DAY=864e5, MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  function key(t){var d=new Date(t);return d.getUTCFullYear()+"-"+String(d.getUTCMonth()+1).padStart(2,"0")+"-"+String(d.getUTCDate()).padStart(2,"0");}
+  function parse(k){var p=k.split("-");return Date.UTC(+p[0],+p[1]-1,+p[2]);}
+  function fmt(t,o){return new Date(t).toLocaleDateString("en-GB",o||{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"});}
+  function long(t){return fmt(t,{weekday:"short",day:"numeric",month:"long",year:"numeric",timeZone:"UTC"});}
+  function money(n){return "£"+(Math.round(n*100)/100).toLocaleString("en-GB",{minimumFractionDigits:n%1?2:0,maximumFractionDigits:2});}
+  var now=new Date(), TODAY=Math.max(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()),parse(CFG.updated)), LAST=parse(CFG.lastDate);
+  var blocked={};CFG.blocked.forEach(function(r){for(var t=parse(r[0]);t<parse(r[1]);t+=DAY)blocked[key(t)]=1;});
+  function free(t){return t>=TODAY&&t<=LAST&&!blocked[key(t)];}
+  function isWeekend(t){return CFG.weekendNights.indexOf(new Date(t).getUTCDay())>-1;}
+  function extra(g){var e=0;for(var i=3;i<=g;i++)e+=CFG.guestExtra[i]||0;return e;}
+  function rate(t,g){return (isWeekend(t)?CFG.weekend:CFG.weekday)+extra(g);}
+  function maxOut(t){while(free(t))t+=DAY;return t;}
+
+  /* header & menu */
+  var hdr=document.querySelector(".hdr");
+  addEventListener("scroll",function(){hdr.classList.toggle("is-scrolled",scrollY>10);},{passive:true});
+  $("burger").addEventListener("click",function(){var o=$("nav").classList.toggle("open");this.setAttribute("aria-expanded",o);});
+  $("nav").addEventListener("click",function(e){if(e.target.tagName==="A"){$("nav").classList.remove("open");$("burger").setAttribute("aria-expanded","false");}});
+
+  /* gallery */
+  var PHOTOS=[
+    ["living-wide","living","Living room with cream corner sofa and champagne curtains"],["living-sofa","living","Corner sofa bed with colourful cushions"],["living-tv","living","65-inch smart TV and sideboard"],["living-portrait","living","Living room from the doorway"],["living-media","living","TV wall with built-in storage"],
+    ["bedroom","bedroom","Double bed with upholstered headboard"],["bedroom-detail","bedroom","The double bed and bedside light"],["bedroom-desk","bedroom","Desk by the window for laptop work"],["bedroom-wardrobe","bedroom","Built-in sliding wardrobe"],
+    ["kitchen","kitchen","Kitchen with navy cabinets and marble-effect worktops"],["kitchen-hob","kitchen","Worktop with sink and electric hob"],["kitchen-oven","kitchen","Countertop oven"],["kitchen-tea","kitchen","Tea and coffee station"],["kitchen-laundry","kitchen","Washing machine"],
+    ["bath-vanity","bath","Bathroom with marble-effect tiles and round mirror"],["bath-shower","bath","Walk-in glass rainfall shower"],["bath-overview","bath","Bathroom overview"],
+    ["view-night","area","Balcony view to the City and the London Eye at night"],["courtyard","area","The building's landscaped courtyard at night"],["park-lawn","area","Open lawn and mature trees nearby"],["park-path","area","Tree-lined path in a nearby park"]
+  ];
+  var shown=PHOTOS.slice(), cur=0;
+  function drawGal(f){
+    shown=PHOTOS.filter(function(p){return f==="all"||p[1]===f;});
+    var g=$("gal");g.innerHTML="";g.classList.toggle("all",f==="all");
+    shown.forEach(function(p,i){var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Open photo: "+p[2]);var im=document.createElement("img");im.src="img/"+p[0]+".webp";im.alt=p[2];im.loading="lazy";b.appendChild(im);b.addEventListener("click",function(){openLb(i);});g.appendChild(b);});
+  }
+  $("galTabs").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;[].forEach.call(this.children,function(x){x.setAttribute("aria-pressed",x===b);});drawGal(b.dataset.f);});
+  var lastFocus=null;
+  function showLb(){var p=shown[cur];$("lbImg").src="img/"+p[0]+".webp";$("lbImg").alt=p[2];$("lbCap").textContent=(cur+1)+" / "+shown.length+"  ·  "+p[2];}
+  function openLb(i){lastFocus=document.activeElement;cur=i;showLb();$("lb").hidden=false;document.body.style.overflow="hidden";$("lbClose").focus();}
+  function closeLb(){$("lb").hidden=true;document.body.style.overflow="";if(lastFocus)lastFocus.focus();}
+  $("lbClose").addEventListener("click",closeLb);
+  $("lbPrev").addEventListener("click",function(){cur=(cur-1+shown.length)%shown.length;showLb();});
+  $("lbNext").addEventListener("click",function(){cur=(cur+1)%shown.length;showLb();});
+  $("lb").addEventListener("click",function(e){if(e.target===this||e.target.classList.contains("lb__stage"))closeLb();});
+  addEventListener("keydown",function(e){if($("lb").hidden)return;if(e.key==="Escape")closeLb();if(e.key==="ArrowRight")$("lbNext").click();if(e.key==="ArrowLeft")$("lbPrev").click();});
+  drawGal("all");
+
+  /* calendar + quote */
+  var s=new Date(TODAY),start={y:s.getUTCFullYear(),m:s.getUTCMonth()},view={y:start.y,m:start.m},cin=null,cout=null;
+  function month(y,m){
+    var w=document.createElement("div"),h=document.createElement("h3");h.className="cal__m";h.textContent=MONTHS[m]+" "+y;w.appendChild(h);
+    var g=document.createElement("div");g.className="cal__g";
+    ["M","T","W","T","F","S","S"].forEach(function(d){var e=document.createElement("div");e.className="cal__dow";e.textContent=d;e.setAttribute("aria-hidden","true");g.appendChild(e);});
+    var off=(new Date(Date.UTC(y,m,1)).getUTCDay()+6)%7;for(var i=0;i<off;i++)g.appendChild(document.createElement("span"));
+    var dim=new Date(Date.UTC(y,m+1,0)).getUTCDate(),lim=cin&&!cout?maxOut(cin):null,gs=+$("qGuests").value;
+    for(var d=1;d<=dim;d++){
+      var t=Date.UTC(y,m,d),b=document.createElement("button"),lab=fmt(t,{weekday:"long",day:"numeric",month:"long",timeZone:"UTC"});
+      b.type="button";b.className="day";b.dataset.t=t;b.textContent=d;
+      if(t<TODAY){b.classList.add("day--past");b.disabled=true;}
+      else if(lim&&t>cin&&t<=lim){b.classList.add("day--out");lab+=", available for check-out";}
+      else if(free(t)){b.classList.add("day--free");var sm=document.createElement("small");sm.textContent="£"+rate(t,gs);b.appendChild(sm);lab+=", available, "+money(rate(t,gs))+" per night";}
+      else{b.classList.add("day--taken");b.disabled=true;lab+=", booked";}
+      if(t===cin||t===cout)b.classList.add("day--sel");
+      if(cin&&cout&&t>cin&&t<cout)b.classList.add("day--range");
+      b.setAttribute("aria-label",lab);g.appendChild(b);
+    }
+    w.appendChild(g);return w;
+  }
+  function render(){
+    var box=$("calMonths");box.innerHTML="";var y2=view.m===11?view.y+1:view.y,m2=(view.m+1)%12;
+    box.appendChild(month(view.y,view.m));box.appendChild(month(y2,m2));
+    $("calPrev").disabled=view.y===start.y&&view.m===start.m;
+    var lastD=new Date(LAST);$("calNext").disabled=Date.UTC(y2,m2,1)>=Date.UTC(lastD.getUTCFullYear(),lastD.getUTCMonth(),1);
+    quote();
+  }
+  function li(a,b,cls){var l=document.createElement("li");if(cls)l.className=cls;var x=document.createElement("span");x.textContent=a;var y=document.createElement("span");y.textContent=b;l.appendChild(x);l.appendChild(y);return l;}
+  var last=null;
+  function quote(){
+    var g=+$("qGuests").value,n=cin&&cout?Math.round((cout-cin)/DAY):0,L=$("qLines");L.innerHTML="";
+    $("qIn").textContent=cin?fmt(cin):"Add date";$("qOut").textContent=cout?fmt(cout):"Add date";
+    var wd=CFG.weekday+extra(g),we=CFG.weekend+extra(g);
+    if(!n){
+      $("qRate").textContent=money(wd);$("qRateLbl").textContent="per night, from";
+      L.appendChild(li("Weeknights (Sun–Thu)",money(wd)));L.appendChild(li("Fri & Sat nights",money(we)));
+      $("qDirect").setAttribute("aria-disabled","true");$("qAirbnb").href=CFG.airbnb;
+      $("qWa").href="https://wa.me/"+CFG.whatsapp+"?text="+encodeURIComponent("Hello Darko, I'd like to check availability at Your London Stay.");
+      last=null;return;
+    }
+    var cW=0,cE=0;for(var t=cin;t<cout;t+=DAY){if(isWeekend(t))cE++;else cW++;}
+    var sub=cW*wd+cE*we,disc=0,dl="";
+    for(var i=0;i<CFG.discounts.length;i++){if(n>=CFG.discounts[i][0]){disc=Math.round(sub*CFG.discounts[i][1]*100)/100;dl=(n>=28?"Monthly":"Weekly")+" discount ("+Math.round(CFG.discounts[i][1]*100)+"%)";break;}}
+    var tot=sub-disc;
+    $("qRate").textContent=money(tot/n);$("qRateLbl").textContent="average per night";
+    if(cW)L.appendChild(li(money(wd)+" × "+cW+(cW>1?" weeknights":" weeknight"),money(cW*wd)));
+    if(cE)L.appendChild(li(money(we)+" × "+cE+(cE>1?" weekend nights":" weekend night"),money(cE*we)));
+    if(disc)L.appendChild(li(dl,"−"+money(disc),"disc"));
+    L.appendChild(li("Total, "+n+(n>1?" nights":" night"),money(tot),"tot"));
+    $("qDirect").setAttribute("aria-disabled","false");
+    $("qAirbnb").href=CFG.airbnb+"?check_in="+key(cin)+"&check_out="+key(cout)+"&adults="+g;
+    var txt="Hello Darko, I'd like to book Your London Stay from "+long(cin)+" to "+long(cout)+" ("+n+(n>1?" nights":" night")+", "+g+(g>1?" guests":" guest")+"). Website price: "+money(tot)+".";
+    $("qWa").href="https://wa.me/"+CFG.whatsapp+"?text="+encodeURIComponent(txt);
+    last={cin:cin,cout:cout,g:g,n:n,tot:tot};
+  }
+  $("calMonths").addEventListener("click",function(e){
+    var b=e.target.closest(".day");if(!b||b.disabled)return;var t=+b.dataset.t,h=$("calHint");
+    if(!cin||cout){if(!free(t))return;cin=t;cout=null;h.textContent="Now select your check-out date.";}
+    else if(t>cin&&t<=maxOut(cin)){cout=t;h.textContent="Your dates are set. Request to book, or message us on WhatsApp.";}
+    else if(free(t)){cin=t;h.textContent="Check-in updated. Now select your check-out date.";}
+    else return;
+    render();
+  });
+  $("calPrev").addEventListener("click",function(){if(--view.m<0){view.m=11;view.y--;}render();});
+  $("calNext").addEventListener("click",function(){if(++view.m>11){view.m=0;view.y++;}render();});
+  $("qGuests").addEventListener("change",render);
+  $("qDirect").addEventListener("click",function(){
+    if(!last)return;
+    $("fIn").value=key(last.cin);$("fOut").value=key(last.cout);$("fGuests").value=String(last.g);
+    if(!$("fMsg").value)$("fMsg").value="I'd like to book "+long(last.cin)+" to "+long(last.cout)+" for "+last.g+(last.g>1?" guests":" guest")+" ("+last.n+(last.n>1?" nights":" night")+", website price "+money(last.tot)+").";
+    setTimeout(function(){$("fName").focus({preventScroll:true});},600);
+  });
+  (function nextFree(){
+    var runs=[],st=null,t=TODAY;for(;t<=LAST&&runs.length<3;t+=DAY){if(free(t)){if(st===null)st=t;}else if(st!==null){runs.push([st,t]);st=null;}}
+    if(st!==null&&runs.length<3)runs.push([st,t]);
+    var el=$("nextFree");
+    if(!runs.length){el.textContent="Fully booked for now. Message us to hear about cancellations.";$("heroNext").textContent="Ask us";return;}
+    el.appendChild(document.createTextNode("Next free: "));
+    runs.forEach(function(r,i){var b=document.createElement("strong"),k=Math.round((r[1]-r[0])/DAY);b.textContent=fmt(r[0],{day:"numeric",month:"short",timeZone:"UTC"})+(k>1?"–"+fmt(r[1],{day:"numeric",month:"short",timeZone:"UTC"}):" (1 night)");el.appendChild(b);if(i<runs.length-1)el.appendChild(document.createTextNode(" · "));});
+    $("heroNext").textContent=fmt(runs[0][0],{day:"numeric",month:"short",timeZone:"UTC"});
+  })();
+  render();
+
+  /* contact form */
+  $("cForm").addEventListener("submit",function(e){
+    e.preventDefault();
+    var err=$("fErr"),ok=true,f=this;err.hidden=true;
+    ["fName","fEmail","fMsg"].forEach(function(id){var el=$(id),bad=!el.value.trim()||(id==="fEmail"&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value));el.setAttribute("aria-invalid",bad);if(bad)ok=false;});
+    if(!ok){err.textContent="Please add your name, a valid email address and a message.";err.hidden=false;return;}
+    var di=$("fIn").value,dout=$("fOut").value;
+    if(di||dout){
+      var a=di?parse(di):null,z=dout?parse(dout):null,bad="";
+      if(!a||!z)bad="Please add both a check-in and a check-out date, or leave both empty.";
+      else if(z<=a)bad="Your check-out date needs to be after your check-in date.";
+      else if(a<TODAY)bad="Your check-in date is in the past.";
+      else{for(var t=a;t<z;t+=DAY){if(!free(t)){bad="Some of those nights are already booked. Please check the calendar above for free dates.";break;}}}
+      if(bad){$("fIn").setAttribute("aria-invalid","true");$("fOut").setAttribute("aria-invalid","true");err.textContent=bad;err.hidden=false;return;}
+      $("fIn").setAttribute("aria-invalid","false");$("fOut").setAttribute("aria-invalid","false");
+    }
+    if(!$("fOk").checked){err.textContent="Please tick the box so we can reply to you.";err.hidden=false;return;}
+    if($("fHp").value)return;
+    var data={name:$("fName").value.trim(),email:$("fEmail").value.trim(),phone:$("fPhone").value.trim(),check_in:$("fIn").value,check_out:$("fOut").value,guests:$("fGuests").value,message:$("fMsg").value.trim(),_subject:"Website enquiry: "+$("fName").value.trim()+($("fIn").value?" ("+$("fIn").value+" to "+$("fOut").value+")":""),_template:"table",_captcha:"false",_replyto:$("fEmail").value.trim()};
+    var btn=$("fSend"),st=$("fStatus");btn.disabled=true;btn.textContent="Sending…";st.innerHTML="";
+    var summary="Name: "+data.name+"\nEmail: "+data.email+(data.phone?"\nPhone: "+data.phone:"")+(data.check_in?"\nDates: "+data.check_in+" to "+data.check_out:"")+"\nGuests: "+data.guests+"\n\n"+data.message;
+    var timer=new Promise(function(_,rej){setTimeout(function(){rej(new Error("timeout"));},12000);});
+    Promise.race([fetch(CFG.formEndpoint,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(Object.assign({"form-name":"contact"},data)).toString()}),timer])
+    .then(function(r){if(!r.ok)throw new Error("http "+r.status);})
+    .then(function(){var d=document.createElement("div");d.className="status status--ok";d.textContent="Thank you, "+data.name.split(" ")[0]+". Your message is on its way to Darko, who usually replies within the hour.";st.appendChild(d);f.reset();})
+    .catch(function(){
+      var d=document.createElement("div");d.className="status status--warn";
+      var p=document.createElement("p");p.textContent="We couldn't send the form from this page right now. Your message is ready below. Send it on WhatsApp in one tap, or copy it into an email to 4yourlondonstay@gmail.com.";d.appendChild(p);
+      var pre=document.createElement("pre");pre.textContent=summary;d.appendChild(pre);
+      var row=document.createElement("div");row.className="btn-row";
+      var wa=document.createElement("a");wa.className="btn btn--wa";wa.href="https://wa.me/"+CFG.whatsapp+"?text="+encodeURIComponent(summary);wa.target="_blank";wa.rel="noopener";wa.textContent="Send on WhatsApp";row.appendChild(wa);
+      var cp=document.createElement("button");cp.type="button";cp.className="btn btn--line";cp.textContent="Copy message";
+      cp.addEventListener("click",function(){function sel(){var r=document.createRange();r.selectNodeContents(pre);var x=getSelection();x.removeAllRanges();x.addRange(r);cp.textContent="Selected, now copy";}try{navigator.clipboard.writeText(summary).then(function(){cp.textContent="Copied";},sel);}catch(e){sel();}});
+      row.appendChild(cp);d.appendChild(row);st.appendChild(d);
+    })
+    .then(function(){btn.disabled=false;btn.textContent="Send message";});
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var b=document.getElementById("toTop");
+  function t(){b.classList.toggle("on",window.scrollY>600);}
+  window.addEventListener("scroll",t,{passive:true});t();
+  b.addEventListener("click",function(){var r=window.matchMedia("(prefers-reduced-motion: reduce)").matches;window.scrollTo({top:0,behavior:r?"auto":"smooth"});var l=document.querySelector(".logo");if(l)l.focus({preventScroll:true});});
+})();
+(function(){
+  function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
+  var M=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  fetch("/api/reviews").then(function(r){return r.ok?r.json():[];}).then(function(list){
+    if(!list||!list.length)return;
+    var box=document.getElementById("rvLive");
+    list.slice(0,12).forEach(function(v){
+      var f=el("figure","rv");f.appendChild(el("div","rv-stars","★★★★★".slice(0,v.rating)+"☆☆☆☆☆".slice(0,5-v.rating)));
+      f.lastChild.setAttribute("aria-label",v.rating+" out of 5");
+      f.appendChild(el("blockquote",null,"“"+v.text+"”"));
+      var c=el("figcaption");c.appendChild(el("b",null,v.name));var p=(v.stay||"").split("-");c.appendChild(document.createTextNode((p[1]?M[+p[1]-1]+" "+p[0]:"")+" · Verified guest"));f.appendChild(c);
+      if(v.reply){f.appendChild(el("p","small muted","Reply from Darko: "+v.reply));}
+      box.appendChild(f);
+    });
+    document.getElementById("rvLiveWrap").hidden=false;
+  }).catch(function(){});
+  var q=new URLSearchParams(location.search);if(q.get("review")){document.getElementById("rvRef").value=q.get("review").slice(0,40);}
+  var f=document.getElementById("rvForm");
+  f.addEventListener("submit",function(e){
+    e.preventDefault();var err=document.getElementById("rvErr");err.hidden=true;
+    if(!f.checkValidity()||!document.getElementById("rvOk").checked){err.textContent="Please fill in every field, choose a rating, write at least a couple of sentences and tick the box.";err.hidden=false;return;}
+    var btn=document.getElementById("rvSend"),st=document.getElementById("rvStatus");btn.disabled=true;btn.textContent="Sending…";
+    fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(new FormData(f)).toString()})
+    .then(function(r){if(!r.ok)throw 0;st.innerHTML="";var d=el("div","status status--ok","Thank you! We'll check your review against our bookings and publish it within 3 working days.");st.appendChild(d);f.reset();})
+    .catch(function(){st.innerHTML="";st.appendChild(el("div","status status--warn","Sorry, we couldn't send your review just now. Please try again in a moment, or email it to 4yourlondonstay@gmail.com."));})
+    .then(function(){btn.disabled=false;btn.textContent="Send my review";});
+  });
+})();
+</script>
+</body></html>
