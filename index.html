@@ -414,7 +414,7 @@ form{display:grid;gap:16px}
 <section class="hero" aria-label="Welcome">
   <picture>
     <source media="(max-width:900px)" srcset="img/hero-m.webp">
-    <img src="img/hero.webp" alt="The bright living room: cream corner sofa, champagne curtains and a gold pendant light" fetchpriority="high">
+    <img src="img/hero.webp" alt="Living room with a corner sofa, full-length curtains and a gold pendant light" fetchpriority="high">
   </picture>
   <div class="wrap hero__in">
     <div>
@@ -463,9 +463,9 @@ form{display:grid;gap:16px}
       </dl>
     </div>
     <div class="mosaic">
-      <figure class="m1"><img src="img/living-portrait.webp" alt="Living room seen from the doorway, with the sofa and window" loading="lazy"></figure>
-      <figure class="m2"><img src="img/bedroom.webp" alt="Double bed with upholstered headboard and fresh white linen" loading="lazy"></figure>
-      <figure class="m3"><img src="img/kitchen.webp" alt="Kitchen with navy cabinets and marble-effect worktops" loading="lazy"></figure>
+      <figure class="m1"><img src="img/host.webp" alt="Living room with a corner sofa and an orange throw by the window" loading="lazy"></figure>
+      <figure class="m2"><img src="img/bedroom-detail.webp" alt="Double bed with an upholstered headboard beside the window" loading="lazy"></figure>
+      <figure class="m3"><img src="img/kitchen.webp" alt="Kitchen with dark cabinets and a light worktop" loading="lazy"></figure>
     </div>
   </div>
 </section>
@@ -473,9 +473,9 @@ form{display:grid;gap:16px}
 <section class="section" style="padding-top:0" aria-label="Room by room">
   <div class="wrap">
     <div class="rooms">
-      <article class="room"><figure><img src="img/living-sofa.webp" alt="Corner sofa bed with colourful cushions" loading="lazy"></figure><h3>Living room</h3><p>Corner sofa that opens into a bed, dining area and a 65" Samsung smart TV with Netflix.</p></article>
-      <article class="room"><figure><img src="img/bedroom-detail.webp" alt="The double bed and bedside light" loading="lazy"></figure><h3>Bedroom</h3><p>Comfortable double bed, fresh linen, blackout blinds, wardrobe and a desk by the window.</p></article>
-      <article class="room"><figure><img src="img/kitchen-tea.webp" alt="Tea and coffee station prepared for guests" loading="lazy" onerror="this.closest('figure').style.display='none'"></figure><h3>Kitchen</h3><p>Hob, oven, microwave, fridge-freezer and everything to cook, plus tea and coffee waiting.</p></article>
+      <article class="room"><figure><img src="img/hero-m.webp" alt="Living room with a wall-mounted TV and a corner sofa" loading="lazy"></figure><h3>Living room</h3><p>Corner sofa that opens into a bed, dining area and a 65" Samsung smart TV with Netflix.</p></article>
+      <article class="room"><figure><img src="img/bedroom.webp" alt="Bedroom with a double bed, window and mirrored wardrobe" loading="lazy"></figure><h3>Bedroom</h3><p>Comfortable double bed, fresh linen, blackout blinds, wardrobe and a desk by the window.</p></article>
+      <article class="room"><figure><img src="img/kitchen.webp" alt="Kitchen worktop with a sink and countertop appliances" loading="lazy" onerror="this.closest('figure').style.display='none'"></figure><h3>Kitchen</h3><p>Hob, oven, microwave, fridge-freezer and everything to cook, plus tea and coffee waiting.</p></article>
       <article class="room"><figure><img src="img/bath-vanity.webp" alt="Bathroom with marble-effect tiles and round mirror" loading="lazy" onerror="this.closest('figure').style.display='none'"></figure><h3>Bathroom</h3><p>Walk-in rainfall shower, heated towel rail, hairdryer and quality toiletries.</p></article>
     </div>
   </div>
@@ -811,11 +811,11 @@ form{display:grid;gap:16px}
 
   /* gallery */
   var PHOTOS=[
-    ["living-wide","living","Living room with cream corner sofa and champagne curtains"],["living-sofa","living","Corner sofa bed with colourful cushions"],["living-tv","living","65-inch smart TV and sideboard"],["living-portrait","living","Living room from the doorway"],["living-media","living","TV wall with built-in storage"],["living-evening","living","The living room in the evening"],["living-door","living","Living room looking towards the hallway"],
-    ["bedroom","bedroom","Double bed with upholstered headboard"],["bedroom-detail","bedroom","The double bed and bedside light"],["bedroom-desk","bedroom","Desk by the window for laptop work"],["bedroom-wardrobe","bedroom","Built-in sliding wardrobe"],["bedroom-window","bedroom","Bright bedroom with desk by the window"],["bedroom-evening","bedroom","The bedroom in the evening"],
-    ["kitchen","kitchen","Kitchen with navy cabinets and marble-effect worktops"],["kitchen-hob","kitchen","Worktop with sink and electric hob"],["kitchen-oven","kitchen","Countertop oven"],["kitchen-tea","kitchen","Tea and coffee station"],["kitchen-laundry","kitchen","Washing machine"],["kitchen-sink","kitchen","Sink and utensils"],["kitchen-fridge","kitchen","Fridge with welcome drinks"],["kitchen-plates","kitchen","Plates and bowls"],["kitchen-glasses","kitchen","Glasses and mugs"],["kitchen-drawer","kitchen","Tea, coffee and cutlery drawer"],
-    ["bath-vanity","bath","Bathroom with marble-effect tiles and round mirror"],["bath-shower","bath","Walk-in glass rainfall shower"],["bath-overview","bath","Bathroom overview"],["bath-towels","bath","Fresh towels, toilet rolls and hairdryer"],
-    ["entrance","home","Private front door with self check-in lockbox"],["entrance-2","home","Fourth-floor walkway with views over West London"],["hall-door","home","Hallway leading to the front door"],["stairs","home","Staircase up to the apartment"],["hallway","home","Bright hallway with track lighting"],["bedroom-hallway","home","From the bedroom along the hallway to the living room"],["hallway-2","home","Hallway leading to the bedroom"],["storage-1","home","Built-in storage cupboards for luggage"],["storage-2","home","Extra built-in storage"]
+    ["hero","living","Living room with a cream corner sofa and full-length curtains"],["hero-m","living","Living room with a wall-mounted TV beside the sofa"],["host","living","Corner sofa with an orange throw by the window"],
+    ["bedroom-detail","bedroom","Double bed beside the curtained window"],["bedroom","bedroom","Bedroom with a window and mirrored wardrobe"],["bedroom-desk","bedroom","Wooden desk with built-in shelving"],["bedroom-wardrobe","bedroom","Built-in sliding wardrobe with mirrored doors"],["bedroom-window","bedroom","Desk and shelving beside the bedroom window"],["bedroom-evening","bedroom","Bedroom window framed by full-length curtains"],
+    ["kitchen","kitchen","Kitchen with dark cabinets, a sink and countertop appliances"],
+    ["bath-vanity","bath","Bathroom with marble-effect tiles and a round mirror"],["bath-shower","bath","Walk-in glass rainfall shower"],["bath-overview","bath","View of the bathroom with the shower and vanity"],["bath-towels","bath","Towels and bathroom supplies on built-in shelves"],
+    ["entrance-wide","home","Private front door on the fourth-floor walkway"],["entrance-2","home","Fourth-floor entrance seen from the walkway"],["hall-door","home","Hallway leading to the front door"],["hallway","home","Bright hallway with track lighting"],["bedroom-hallway","home","View of the hallway from the bedroom"],["hallway-2","home","Hallway leading to the bedroom"]
   ];
   var CDN={};
   function srcOf(n){return CDN[n]||("img/"+n+".webp");}
