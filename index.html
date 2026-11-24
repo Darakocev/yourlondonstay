@@ -426,7 +426,6 @@ h1,h2,h3,.logo b{font-family:var(--display);font-weight:500;letter-spacing:0}
 html,body{overflow-x:clip}
 </style>
 
-<div class="preview">Preview of the new Your London Stay website. Calendar and prices are live; online card payment is connected at launch.</div>
 
 <header class="hdr" id="top">
   <div class="wrap hdr__in">
@@ -940,7 +939,7 @@ html,body{overflow-x:clip}
   $("calMonths").addEventListener("click",function(e){
     var b=e.target.closest(".day");if(!b||b.disabled)return;var t=+b.dataset.t,h=$("calHint");
     if(!cin||cout){if(!free(t))return;cin=t;cout=null;h.textContent="Now select your check-out date.";}
-    else if(t>cin&&t<=maxOut(cin)){cout=t;h.textContent="Your dates are set. Request to book, or message us on WhatsApp.";}
+    else if(t>cin&&t<=maxOut(cin)){cout=t;h.textContent="Your dates are set. Book now and pay securely, or message us on WhatsApp.";}
     else if(free(t)){cin=t;h.textContent="Check-in updated. Now select your check-out date.";}
     else return;
     render();
