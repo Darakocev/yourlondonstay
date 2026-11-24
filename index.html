@@ -28,11 +28,11 @@
 <link rel="canonical" href="https://yourlondonstay.com/">
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Book direct: a bright one-bedroom apartment in Hammersmith, West London, for up to 4 guests. 10 minutes from Barons Court Tube, Piccadilly line direct to Heathrow. Rated 4.94 by guests.">
-<link rel="preload" href="fonts/bodoni-moda-latin-opsz-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/playfair-display-latin-500-normal.woff2" as="font" type="font/woff2" crossorigin>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":["LodgingBusiness","Apartment"],"name":"Your London Stay – The Hammersmith Apartment","description":"A bright one-bedroom apartment in Hammersmith, West London, for up to 4 guests, 10 minutes' walk from Barons Court Underground station.","email":"4yourlondonstay@gmail.com","telephone":"+447848108122","address":{"@type":"PostalAddress","streetAddress":"Lampeter Square","addressLocality":"London","postalCode":"W6","addressCountry":"GB"},"numberOfBedrooms":1,"occupancy":{"@type":"QuantitativeValue","maxValue":4},"checkinTime":"12:00","checkoutTime":"11:00","petsAllowed":false,"priceRange":"£125–£152 per night","sameAs":["https://www.instagram.com/yourrlondonstay/","https://www.airbnb.co.uk/rooms/1245107111113572905"]}</script>
 <style>
-@font-face{font-family:"Bodoni Moda";font-style:normal;font-weight:400 900;font-display:swap;src:url(fonts/bodoni-moda-latin-opsz-normal.woff2) format("woff2")}
-@font-face{font-family:"Bodoni Moda";font-style:italic;font-weight:400 900;font-display:swap;src:url(fonts/bodoni-moda-latin-opsz-italic.woff2) format("woff2")}
+@font-face{font-family:"Playfair Display";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/playfair-display-latin-500-normal.woff2) format("woff2")}@font-face{font-family:"Playfair Display";font-style:normal;font-weight:600;font-display:swap;src:url(fonts/playfair-display-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:"Playfair Display";font-style:italic;font-weight:500;font-display:swap;src:url(fonts/playfair-display-latin-500-italic.woff2) format("woff2")}
 @font-face{font-family:"Jost";font-style:normal;font-weight:300;font-display:swap;src:url(fonts/jost-latin-300-normal.woff2) format("woff2")}
 @font-face{font-family:"Jost";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/jost-latin-400-normal.woff2) format("woff2")}
 @font-face{font-family:"Jost";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/jost-latin-500-normal.woff2) format("woff2")}
@@ -45,12 +45,12 @@
   --btn:#162033; --btn-fg:#ffffff; --btn-hover:#24324d;
   --free:#efe7dc; --taken:#f1eee9; --taken-ink:#b5aea4; --sel:#162033; --sel-fg:#ffffff; --range:#d8c4a6;
   --ok:#2f6b4f; --err:#a3362a;
-  --display:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --display:"Playfair Display", Georgia, "Times New Roman", serif;
   --body:"Jost", "Avenir Next", "Segoe UI", system-ui, sans-serif;
   --r:6px; --r-lg:14px; --shadow:0 1px 2px rgba(22,32,51,.06),0 18px 40px rgba(22,32,51,.10);
   --max:1200px;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+@media (prefers-color-scheme: dark) and (max-width:0px){:root:not([data-theme="light"]){
   --bg:#0e131d; --surface:#151c2a; --linen:#1b2434; --ink:#ece8e1; --ink-2:#cfcac2; --muted:#a39e95; --line:#283246;
   --navy:#0a0f18; --navy-2:#131b2a; --on-navy:#f1ede6; --on-navy-muted:#a9a49b;
   --brass:#d4b072; --brass-soft:#d4b072; --champagne:#8a7658;
@@ -384,6 +384,40 @@ form{display:grid;gap:16px}
   .foot{padding-bottom:calc(110px + env(safe-area-inset-bottom,0px))}
 }
 .preview{background:var(--linen);color:var(--ink-2);font-size:.8rem;text-align:center;padding:8px 16px;border-bottom:1px solid var(--line)}
+
+/* 2026-11 refresh: light luxury palette, organic photo shapes, readable serif */
+:root{--bg:#fbf8f3;--surface:#ffffff;--linen:#f3ece2;--ink:#1d2433;--ink-2:#3d4352;--muted:#6e6a63;--navy:#f3ece2;--navy-2:#ece3d6;--on-navy:#1d2433;--on-navy-muted:#5d5a54;--btn:#1f3a5f;--btn-hover:#2b4c78;--brass:#b08a46;--r-lg:28px}
+body{font-weight:400}
+h1,h2,h3,.logo b{font-family:var(--display);font-weight:500;letter-spacing:0}
+.dark{background:var(--linen);color:var(--ink)}.dark .eyebrow{color:var(--brass)}
+.hero::after{background:linear-gradient(180deg,rgba(10,15,24,.05) 0%,rgba(10,15,24,.12) 45%,rgba(10,15,24,.62) 100%)}
+.mosaic,.rooms,.gal{filter:drop-shadow(0 18px 28px rgba(29,36,51,.14))}
+.mosaic .m1{border-radius:140px 46px 120px 46px/120px 46px 140px 46px}
+.mosaic .m2{border-radius:46px 120px 46px 90px/46px 90px 46px 120px}
+.mosaic .m3{border-radius:90px 46px 120px 46px/120px 46px 90px 46px}
+.room figure{border-radius:48% 52% 30px 30px/38% 34% 30px 30px}
+.room:nth-child(2) figure{border-radius:52% 48% 30px 30px/34% 38% 30px 30px}
+.room:nth-child(3) figure{border-radius:30px 30px 48% 52%/30px 30px 36% 32%}
+.room:nth-child(4) figure{border-radius:30px 30px 52% 48%/30px 30px 32% 36%}
+.gal{gap:14px;grid-auto-flow:dense}
+.gal button{border-radius:60px 24px 60px 24px}
+.gal button:nth-child(4n+2){border-radius:24px 60px 24px 60px}
+.gal button:nth-child(4n+3){border-radius:80px 24px 24px 24px}
+.gal button:nth-child(4n){border-radius:24px 24px 80px 24px}
+.gal.all button:first-child{border-radius:160px 40px 160px 40px/140px 40px 140px 40px}
+.loc__img{border-radius:160px 40px 160px 40px/140px 40px 140px 40px}
+.host figure{border-radius:58% 42% 46% 54%/48% 56% 44% 52%}
+.has-sub{position:relative}
+.sub{list-style:none;margin:0;padding:10px;position:absolute;top:100%;left:-14px;min-width:210px;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);display:none;z-index:50}
+.has-sub:hover .sub,.has-sub:focus-within .sub,.has-sub.open .sub{display:block}
+.sub a{display:block;padding:10px 12px;border-radius:12px;background:none!important}
+.sub a:hover{background:var(--linen)!important}
+.nav.open .sub{position:static;display:block;border:0;box-shadow:none;padding:0 0 8px 14px;min-width:0;background:none}
+.nav.open .sub a{font-size:1.05rem;padding:10px 0}
+.map{position:relative;margin-top:clamp(28px,4vw,48px);border-radius:120px 32px 120px 32px/90px 32px 90px 32px;overflow:hidden;aspect-ratio:16/7;min-height:320px;box-shadow:0 18px 40px -22px rgba(29,36,51,.5)}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.map__btn{position:absolute;right:20px;bottom:20px}
+@media(max-width:700px){.map{aspect-ratio:auto;height:360px;border-radius:60px 24px 60px 24px}.mosaic .m1,.loc__img,.gal.all button:first-child{border-radius:90px 30px 90px 30px}}
 </style>
 
 <div class="preview">Preview of the new Your London Stay website. Calendar and prices are live; online card payment is connected at launch.</div>
@@ -396,7 +430,8 @@ form{display:grid;gap:16px}
     </a>
     <ul class="nav" id="nav">
       <li><a href="#apartment">The apartment</a></li>
-      <li><a href="#gallery">Gallery</a></li>
+      <li class="has-sub"><a href="#gallery" data-gal="all" aria-haspopup="true">Gallery</a><ul class="sub">
+        <li><a href="#gallery" data-gal="living">Living room</a></li><li><a href="#gallery" data-gal="bedroom">Bedroom</a></li><li><a href="#gallery" data-gal="kitchen">Kitchen</a></li><li><a href="#gallery" data-gal="bath">Bathroom</a></li><li><a href="#gallery" data-gal="home">Entrance &amp; hallway</a></li></ul></li>
       <li><a href="#book">Prices &amp; dates</a></li>
       <li><a href="#location">Location</a></li>
       <li><a href="#reviews">Reviews</a></li>
@@ -562,6 +597,7 @@ form{display:grid;gap:16px}
       </div>
       <figure class="loc__img"><img src="img/entrance-wide.webp" alt="Private front door on the fourth floor with keypad lockbox and open views over West London" loading="lazy"><figcaption>Your private front door on the 4th floor, with self check-in and open views over West London.</figcaption></figure>
     </div>
+    <div class="map"><iframe title="Map: Lampeter Square, Hammersmith, London W6 8PS" src="https://www.google.com/maps?q=Lampeter+Square,+London+W6+8PS&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe><a class="btn btn--primary map__btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=Lampeter+Square,+London+W6+8PS" target="_blank" rel="noopener">Get directions</a></div>
     <div class="near">
       <div><b>Thames riverside</b><p>The Thames Path and historic pubs along Lower and Upper Mall.</p></div>
       <div><b>Eventim Apollo &amp; Lyric</b><p>Concerts, comedy and theatre around Hammersmith Broadway.</p></div>
@@ -812,7 +848,7 @@ form{display:grid;gap:16px}
   /* gallery */
   var PHOTOS=[
     ["hero","living","Living room with a cream corner sofa and full-length curtains"],["hero-m","living","Living room with a wall-mounted TV beside the sofa"],["host","living","Corner sofa with an orange throw by the window"],
-    ["bedroom-detail","bedroom","Double bed beside the curtained window"],["bedroom","bedroom","Bedroom with a window and mirrored wardrobe"],["bedroom-desk","bedroom","Wooden desk with built-in shelving"],["bedroom-wardrobe","bedroom","Built-in sliding wardrobe with mirrored doors"],["bedroom-window","bedroom","Desk and shelving beside the bedroom window"],["bedroom-evening","bedroom","Bedroom window framed by full-length curtains"],
+    ["bedroom-detail","bedroom","Double bed beside the curtained window"],["bedroom","bedroom","Bedroom with a window and mirrored wardrobe"],["bedroom-desk","bedroom","Wooden desk with built-in shelving"],["bedroom-wardrobe","bedroom","Built-in sliding wardrobe with mirrored doors"],["bedroom-evening","bedroom","Bedroom window framed by full-length curtains"],
     ["kitchen","kitchen","Kitchen with dark cabinets, a sink and countertop appliances"],
     ["bath-vanity","bath","Bathroom with marble-effect tiles and a round mirror"],["bath-shower","bath","Walk-in glass rainfall shower"],["bath-overview","bath","View of the bathroom with the shower and vanity"],["bath-towels","bath","Towels and bathroom supplies on built-in shelves"],
     ["entrance-wide","home","Private front door on the fourth-floor walkway"],["entrance-2","home","Fourth-floor entrance seen from the walkway"],["hall-door","home","Hallway leading to the front door"],["hallway","home","Bright hallway with track lighting"],["bedroom-hallway","home","View of the hallway from the bedroom"],["hallway-2","home","Hallway leading to the bedroom"]
@@ -996,5 +1032,10 @@ form{display:grid;gap:16px}
     .then(function(){btn.disabled=false;btn.textContent="Send my review";});
   });
 })();
+</script>
+<script>
+{const tabs=document.getElementById("galTabs");
+document.querySelectorAll("[data-gal]").forEach(function(a){a.addEventListener("click",function(){var b=tabs&&tabs.querySelector('button[data-f="'+a.dataset.gal+'"]');if(b)b.click();var n=document.getElementById("nav"),bg=document.getElementById("burger");if(n&&n.classList.contains("open")&&bg)bg.click();});});
+document.querySelectorAll(".has-sub>a").forEach(function(a){a.addEventListener("touchstart",function(e){var li=a.parentElement;if(!li.classList.contains("open")&&!document.getElementById("nav").classList.contains("open")){e.preventDefault();li.classList.add("open");}},{passive:false});});}
 </script>
 </body></html>
