@@ -464,7 +464,7 @@ form{display:grid;gap:16px}
     </div>
     <div class="mosaic">
       <figure class="m1"><img src="img/living-portrait.webp" alt="Living room seen from the doorway, with the sofa and window" loading="lazy"></figure>
-      <figure class="m2"><img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1245107111113572905/original/cb5a2da9-f3c5-48d9-8aec-8e76c861addf.jpeg?im_w=960" alt="Double bed with upholstered headboard and fresh white linen" loading="lazy"></figure>
+      <figure class="m2"><img src="img/bedroom.webp" alt="Double bed with upholstered headboard and fresh white linen" loading="lazy"></figure>
       <figure class="m3"><img src="img/kitchen.webp" alt="Kitchen with navy cabinets and marble-effect worktops" loading="lazy"></figure>
     </div>
   </div>
@@ -474,7 +474,7 @@ form{display:grid;gap:16px}
   <div class="wrap">
     <div class="rooms">
       <article class="room"><figure><img src="img/living-sofa.webp" alt="Corner sofa bed with colourful cushions" loading="lazy"></figure><h3>Living room</h3><p>Corner sofa that opens into a bed, dining area and a 65" Samsung smart TV with Netflix.</p></article>
-      <article class="room"><figure><img src="https://a0.muscache.com/im/pictures/hosting/Hosting-1245107111113572905/original/cb5a2da9-f3c5-48d9-8aec-8e76c861addf.jpeg?im_w=960" alt="The double bed and bedside light" loading="lazy"></figure><h3>Bedroom</h3><p>Comfortable double bed, fresh linen, blackout blinds, wardrobe and a desk by the window.</p></article>
+      <article class="room"><figure><img src="img/bedroom-detail.webp" alt="The double bed and bedside light" loading="lazy"></figure><h3>Bedroom</h3><p>Comfortable double bed, fresh linen, blackout blinds, wardrobe and a desk by the window.</p></article>
       <article class="room"><figure><img src="img/kitchen-tea.webp" alt="Tea and coffee station prepared for guests" loading="lazy" onerror="this.closest('figure').style.display='none'"></figure><h3>Kitchen</h3><p>Hob, oven, microwave, fridge-freezer and everything to cook, plus tea and coffee waiting.</p></article>
       <article class="room"><figure><img src="img/bath-vanity.webp" alt="Bathroom with marble-effect tiles and round mirror" loading="lazy" onerror="this.closest('figure').style.display='none'"></figure><h3>Bathroom</h3><p>Walk-in rainfall shower, heated towel rail, hairdryer and quality toiletries.</p></article>
     </div>
@@ -813,13 +813,13 @@ form{display:grid;gap:16px}
   /* gallery */
   var PHOTOS=[
     ["living-wide","living","Living room with cream corner sofa and champagne curtains"],["living-sofa","living","Corner sofa bed with colourful cushions"],["living-tv","living","65-inch smart TV and sideboard"],["living-portrait","living","Living room from the doorway"],["living-media","living","TV wall with built-in storage"],["living-evening","living","The living room in the evening"],["living-door","living","Living room looking towards the hallway"],
-    ["bedroom","bedroom","Double bed with upholstered headboard"],["bedroom-detail","bedroom","The double bed and bedside light"],["bedroom-desk","bedroom","Desk by the window for laptop work"],["bedroom-wardrobe","bedroom","Built-in sliding wardrobe"],
+    ["bedroom","bedroom","Double bed with upholstered headboard"],["bedroom-detail","bedroom","The double bed and bedside light"],["bedroom-desk","bedroom","Desk by the window for laptop work"],["bedroom-wardrobe","bedroom","Built-in sliding wardrobe"],["bedroom-window","bedroom","Bright bedroom with desk by the window"],["bedroom-evening","bedroom","The bedroom in the evening"],
     ["kitchen","kitchen","Kitchen with navy cabinets and marble-effect worktops"],["kitchen-hob","kitchen","Worktop with sink and electric hob"],["kitchen-oven","kitchen","Countertop oven"],["kitchen-tea","kitchen","Tea and coffee station"],["kitchen-laundry","kitchen","Washing machine"],["kitchen-sink","kitchen","Sink and utensils"],["kitchen-fridge","kitchen","Fridge with welcome drinks"],["kitchen-plates","kitchen","Plates and bowls"],["kitchen-glasses","kitchen","Glasses and mugs"],["kitchen-drawer","kitchen","Tea, coffee and cutlery drawer"],
     ["bath-vanity","bath","Bathroom with marble-effect tiles and round mirror"],["bath-shower","bath","Walk-in glass rainfall shower"],["bath-overview","bath","Bathroom overview"],
     ["entrance","home","Private front door with self check-in lockbox"],["hallway","home","Bright hallway with track lighting"],["bedroom-hallway","home","From the bedroom along the hallway to the living room"],["hallway-2","home","Hallway leading to the bedroom"],["storage-1","home","Built-in storage cupboards for luggage"],["storage-2","home","Extra built-in storage"],
     ["view-night","area","Balcony view to the City and the London Eye at night"],["courtyard","area","The building's landscaped courtyard at night"],["park-lawn","area","Open lawn and mature trees nearby"],["park-path","area","Tree-lined path in a nearby park"]
   ];
-  var CDN={"bedroom":"https://a0.muscache.com/im/pictures/hosting/Hosting-1245107111113572905/original/cb5a2da9-f3c5-48d9-8aec-8e76c861addf.jpeg?im_w=1200"};
+  var CDN={};
   function srcOf(n){return CDN[n]||("img/"+n+".webp");}
   var shown=PHOTOS.slice(), cur=0;
   function drawGal(f){
