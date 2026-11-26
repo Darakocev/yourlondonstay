@@ -1,0 +1,37 @@
+{
+  "_note": "Source of truth for the Airbnb reviews on the website. Edit here, then run: python3 scripts/update_reviews.py. Add EVERY new Airbnb review (good or bad) - UK DMCC Act / CMA208: no cherry-picking.",
+  "listing_url": "https://www.airbnb.co.uk/rooms/1245107111113572905",
+  "checked": "2026-11-26",
+  "rating": "4.95",
+  "count": 19,
+  "categories": {
+    "Cleanliness": "4.9",
+    "Communication": "5.0",
+    "Value": "4.9",
+    "Accuracy": "4.8",
+    "Check-in": "4.8",
+    "Location": "4.5"
+  },
+  "visible": 6,
+  "reviews": [
+    {"name": "Denizhan", "date": "2026-11-26", "stars": 5, "translated": true, "text": "Very good value for money, and everything matched the description. The building looks a bit old from outside, but it's different once you're inside. Enough room for 2 adults and a child; it might be a bit cramped for 3 adults."},
+    {"name": "Natálie", "date": "2026-11-23", "stars": 5, "translated": true, "text": "Nice accommodation, clean, about a 10-minute walk from the metro. An entire unit with complete privacy; only the front door is shared."},
+    {"name": "Daniele", "date": "2026-11-12", "stars": 4, "translated": true, "text": "A very good experience. Our flight was delayed and we arrived very late, but still checked in without any major issues. The apartment is very clean and has everything you need. The only negative, not related to the flat: we didn't feel very safe walking around the neighbourhood at night."},
+    {"name": "Pete", "date": "2026-11-05", "stars": 5, "translated": false, "text": "Darko is very helpful, communicative and friendly. The flat is in great shape and well equipped. Liked the separate bedroom, kitchen, bathroom and living room, the large smart TV and the high-speed internet."},
+    {"name": "Álvaro", "date": "2026-10-15", "stars": 5, "translated": false, "text": "I felt completely at home during my month here. When a minor boiler issue arose, it was resolved promptly. Well equipped, a very comfortable bed, and lovely views of the London Eye. I would happily stay here again!"},
+    {"name": "Marina", "date": "2026-10-10", "stars": 5, "translated": false, "text": "We had a great stay in London. The flat had everything we needed, and communication with the host was friendly and quick."},
+    {"name": "Valdas", "date": "2026-10-05", "stars": 5, "translated": false, "text": "Very clean place with a very helpful owner. The area feels safe and is lovely and quiet. Definitely recommend!"},
+    {"name": "Sharnay", "date": "2026-09-20", "stars": 5, "translated": false, "text": "Lovely apartment, very clean, had all needed inside. Darko was a great host, very attentive, fast replies. Will look forward to staying again!"},
+    {"name": "Janki", "date": "2026-09-10", "stars": 5, "translated": false, "text": "Nice clean space, a 15-minute walk to the train station. Overall a really good stay."},
+    {"name": "Alissa", "date": "2026-02-15", "stars": 5, "translated": true, "text": "I stayed just over 30 days and it's a great option for long stays in London. Quiet and well located, and the washer and dryer helped a lot. Points to note: small kitchen, compact shower and a steep staircase at the entrance."},
+    {"name": "Gwen", "date": "2024-12-10", "stars": 5, "translated": true, "text": "Beautiful home in a nice and safe neighbourhood. We loved the view of the London Eye. Very, very good stay."},
+    {"name": "Caitlin", "date": "2024-11-25", "stars": 5, "translated": false, "text": "We had a very nice and comfortable stay. A very comfortable bed and living room, perfect location for exploring London."},
+    {"name": "Emira", "date": "2024-11-20", "stars": 5, "translated": false, "text": "Very nicely decorated, the furniture is new, it is very clean. Safe neighbourhood. Both the accommodation and the host are 10/10."},
+    {"name": "Lorenzo", "date": "2024-11-15", "stars": 5, "translated": true, "text": "We stayed a week in Darko's apartment and had a great time. Darko is always available and kind."},
+    {"name": "Marvin", "date": "2024-11-10", "stars": 5, "translated": true, "text": "Good location, with places to eat, shop and the Tube within walking distance. I would not recommend it to people taller than 1.80 m, as the bed and shower are too small. Otherwise a very nice place, new and clean."},
+    {"name": "Helen", "date": "2024-10-20", "stars": 5, "translated": false, "text": "Extremely clean and comfortable with all the essentials readily available. Definitely would stay here again."},
+    {"name": "秝溱", "date": "2024-10-10", "stars": 5, "translated": false, "text": "Darko is very friendly and proactive in offering help. The room is in excellent condition and well equipped. Highly recommend staying here!"},
+    {"name": "Pallavi", "date": "2024-09-20", "stars": 5, "translated": false, "text": "An incredible experience. The host was exceptionally responsive from the moment I booked. Beautifully decorated, spotlessly clean, and the bed was super comfortable. I'll definitely be returning."},
+    {"name": "Sven", "date": "2024-09-10", "stars": 5, "translated": false, "text": "Happy to have been the first to use the apartment. Very practical and nice, and wonderful hosts. Thank you!"}
+  ]
+}
