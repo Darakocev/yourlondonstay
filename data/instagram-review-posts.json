@@ -1,0 +1,18 @@
+{
+  "posts": [
+    {
+      "name": "Denizhan",
+      "date": "2026-11-26",
+      "photo": "hero.webp",
+      "file": "review-2026-11-26-denizhan.jpg",
+      "status": "made"
+    },
+    {
+      "name": "Daniele",
+      "date": "2026-11-12",
+      "photo": "bedroom.webp",
+      "file": "review-2026-11-12-daniele.jpg",
+      "status": "made"
+    }
+  ]
+}
