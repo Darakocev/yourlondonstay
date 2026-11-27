@@ -20,6 +20,8 @@ const json = (body, status = 200) => new Response(JSON.stringify(body), { status
 
 export default async (req) => {
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
+  // Online payment is paused until Stripe setup is finished. Set PAYMENTS_ENABLED=true in Netlify to reopen.
+  if (process.env.PAYMENTS_ENABLED !== "true") return json({ error: "Online payment is not available yet. Please request to book or message us." }, 503);
   const secret = process.env.STRIPE_SECRET_KEY;
   if (!secret) return json({ error: "Online payment is not set up yet. Please message us to book." }, 503);
 
