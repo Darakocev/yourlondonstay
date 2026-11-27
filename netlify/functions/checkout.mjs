@@ -16,16 +16,35 @@ const key = (t) => new Date(t).toISOString().slice(0, 10);
 const blocked = new Set();
 for (const [a, b] of CFG.blocked) for (let t = parse(a); t < parse(b); t += DAY) blocked.add(key(t));
 const extra = (g) => { let e = 0; for (let i = 3; i <= g; i++) e += CFG.guestExtra[i] || 0; return e; };
+// Private test payment: open the site with ?testpay=<TEST_PAY_CODE> to pay a small fixed amount
+// (TEST_PAY_PENCE, default 100 = £1, Stripe minimum is 30p). Works even while PAYMENTS_ENABLED is off,
+// so the owner can test a real card and refund before guests see the button.
+import { timingSafeEqual } from "node:crypto";
+const isTest = (code) => {
+  const want = process.env.TEST_PAY_CODE || "";
+  if (want.length < 8 || typeof code !== "string" || code.length !== want.length) return false;
+  return timingSafeEqual(Buffer.from(code), Buffer.from(want));
+};
+const testPence = () => Math.max(30, Math.floor(Number(process.env.TEST_PAY_PENCE) || 100));
+const keyMode = (k) => (/^(sk|rk)_live_/.test(k || "") ? "live" : /^(sk|rk)_test_/.test(k || "") ? "test" : "none");
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });
 
 export default async (req) => {
-  if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
-  // Online payment is paused until Stripe setup is finished. Set PAYMENTS_ENABLED=true in Netlify to reopen.
-  if (process.env.PAYMENTS_ENABLED !== "true") return json({ error: "Online payment is not available yet. Please request to book or message us." }, 503);
   const secret = process.env.STRIPE_SECRET_KEY;
-  if (!secret) return json({ error: "Online payment is not set up yet. Please message us to book." }, 503);
+  const mode = keyMode(secret);
+  const enabled = process.env.PAYMENTS_ENABLED === "true" && mode !== "none";
+  // GET tells the website whether to show the "Book now & pay" button. No secrets are returned.
+  if (req.method === "GET") {
+    const t = isTest(new URL(req.url).searchParams.get("testpay"));
+    return json({ enabled: enabled || (t && mode !== "none"), test: t, mode: t ? mode : undefined });
+  }
+  if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
   let d; try { d = await req.json(); } catch { return json({ error: "Bad request" }, 400); }
+  const test = isTest(d.testCode);
+  if (mode === "none") return json({ error: "Online payment is not set up yet. Please message us to book." }, 503);
+  // Online payment stays closed to guests until PAYMENTS_ENABLED=true in Netlify.
+  if (!enabled && !test) return json({ error: "Online payment is not available yet. Please request to book or message us." }, 503);
   const cin = parse(d.checkIn), cout = parse(d.checkOut), g = Math.floor(Number(d.guests));
   const now = new Date(), today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
   if (!Number.isFinite(cin) || !Number.isFinite(cout) || cout <= cin) return json({ error: "Please choose valid dates." }, 400);
@@ -38,10 +57,10 @@ export default async (req) => {
     sub += (CFG.weekendNights.includes(new Date(t).getUTCDay()) ? CFG.weekend : CFG.weekday) + extra(g);
   }
   let disc = 0; for (const [min, p] of CFG.discounts) if (n >= min) { disc = Math.round(sub * p * 100) / 100; break; }
-  const pence = Math.round((sub - disc) * 100);
+  const pence = test ? testPence() : Math.round((sub - disc) * 100);
 
   const origin = new URL(req.url).origin;
-  const label = `${key(cin)} to ${key(cout)} · ${n} night${n > 1 ? "s" : ""} · ${g} guest${g > 1 ? "s" : ""}`;
+  const label = `${test ? "TEST PAYMENT · " : ""}${key(cin)} to ${key(cout)} · ${n} night${n > 1 ? "s" : ""} · ${g} guest${g > 1 ? "s" : ""}`;
   const f = new URLSearchParams({
     mode: "payment",
     locale: "en-GB",
@@ -59,6 +78,10 @@ export default async (req) => {
     "metadata[check_in]": key(cin),
     "metadata[check_out]": key(cout),
     "metadata[guests]": String(g),
+    "metadata[test_payment]": test ? "yes" : "no",
+    "payment_intent_data[metadata][test_payment]": test ? "yes" : "no",
+    // Unpaid payment pages close after 35 minutes, so old links cannot be paid for dates taken since.
+    expires_at: String(Math.floor(Date.now() / 1000) + 35 * 60),
     "phone_number_collection[enabled]": "true",
     "billing_address_collection": "required",
     success_url: `${origin}/?booking=success&session={CHECKOUT_SESSION_ID}#book`,

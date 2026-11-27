@@ -983,7 +983,7 @@ html,body{overflow-x:clip}
     if(cE)L.appendChild(li(money(we)+" × "+cE+(cE>1?" weekend nights":" weekend night"),money(cE*we)));
     if(disc)L.appendChild(li(dl,"−"+money(disc),"disc"));
     L.appendChild(li("Total, "+n+(n>1?" nights":" night"),money(tot),"tot"));
-    $("qDirect").setAttribute("aria-disabled","false");/* online payment paused: $("qPay").disabled=false; */
+    $("qDirect").setAttribute("aria-disabled","false");$("qPay").disabled=!window.ylsPayOn;
     $("qAirbnb").href=CFG.airbnb+"?check_in="+key(cin)+"&check_out="+key(cout)+"&adults="+g;
     var txt="Hello Darko, I'd like to book Your London Stay from "+long(cin)+" to "+long(cout)+" ("+n+(n>1?" nights":" night")+", "+g+(g>1?" guests":" guest")+"). Website price: "+money(tot)+".";
     $("qWa").href="https://wa.me/"+CFG.whatsapp+"?text="+encodeURIComponent(txt);
@@ -1105,7 +1105,13 @@ document.querySelectorAll(".has-sub>a").forEach(function(a){a.addEventListener("
 <script>
 {const pay=document.getElementById("qPay"),msg=document.getElementById("qPayMsg");
 function say(t,bad){msg.hidden=false;msg.textContent=t;msg.classList.toggle("pay__msg--err",!!bad);}
-const q=new URLSearchParams(location.search).get("booking");
+const sp=new URLSearchParams(location.search),q=sp.get("booking");
+let tcode=sp.get("testpay");try{if(tcode)sessionStorage.setItem("ylsTestPay",tcode);else tcode=sessionStorage.getItem("ylsTestPay");}catch(e){}
+fetch("/api/checkout"+(tcode?"?testpay="+encodeURIComponent(tcode):""),{cache:"no-store"}).then(function(r){return r.json();}).then(function(c){
+  if(!c||!c.enabled)return;window.ylsPayOn=true;pay.hidden=false;
+  const L=window.ylsQuote&&window.ylsQuote();pay.disabled=!L;
+  if(c.test){pay.textContent="TEST: pay small amount ("+(c.mode||"")+")";say("Test payment mode is on for this browser only. Guests do not see this.",false);}
+}).catch(function(){});
 if(q==="success"){say("Thank you! Your booking request and card hold are confirmed. Check your email; we'll confirm your dates shortly.");if(window.ylsT)ylsT("booked",{});}
 if(q==="cancelled"){say("Payment was cancelled. Your card has not been charged.",true);if(window.ylsT)ylsT("pay_cancel",{});}
 pay.addEventListener("click",async function(){
@@ -1114,7 +1120,7 @@ pay.addEventListener("click",async function(){
   const k=function(t){return new Date(t).toISOString().slice(0,10);};
   if(window.ylsT)ylsT("pay_click",{in:k(L.cin),n:L.n,tot:L.tot});
   pay.disabled=true;const lbl=pay.textContent;pay.textContent="Opening secure payment…";
-  try{const r=await fetch("/api/checkout",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({checkIn:k(L.cin),checkOut:k(L.cout),guests:L.g})});
+  try{const r=await fetch("/api/checkout",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({checkIn:k(L.cin),checkOut:k(L.cout),guests:L.g,testCode:tcode||undefined})});
     const d=await r.json();if(r.ok&&d.url){if(window.ylsT)ylsT("pay_redirect",{tot:L.tot});setTimeout(function(){location.href=d.url;},150);return;}const em=d.error||"Something went wrong. Please message us.";if(window.ylsT)ylsT("pay_err",{msg:em,st:r.status});say(em,true);}
   catch(e){if(window.ylsT)ylsT("pay_err",{msg:"connection"});say("Connection problem. Please try again or message us.",true);}
   pay.disabled=false;pay.textContent=lbl;});}
