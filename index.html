@@ -792,7 +792,7 @@ html,body{overflow-x:clip}
   <div class="wrap" style="display:grid;gap:12px;max-width:52rem;margin-inline:0">
     <details><summary>Privacy notice</summary><div style="display:grid;gap:10px;padding-bottom:20px;color:var(--ink-2)">
       <p><b>Who we are.</b> Your London Stay is run by Darko, a sole trader based at Lampeter Square, London W6. Contact: 4yourlondonstay@gmail.com, +44 7848 108122.</p>
-      <p><b>What we collect.</b> When you use the contact form or message us, we receive your name, email, phone number (if given), dates, number of guests and your message. This website sets no cookies and uses no tracking or analytics.</p>
+      <p><b>What we collect.</b> When you use the contact form or message us, we receive your name, email, phone number (if given), dates, number of guests and your message. This website sets no cookies and stores nothing on your device. To improve the site we count visits anonymously on our own server (country, page sections viewed and buttons used); we never store your IP address and cannot identify you.</p>
       <p><b>Why.</b> To answer your enquiry and, if you book, to arrange your stay (taking steps at your request before a contract). We do not use your details for marketing without your consent.</p>
       <p><b>Who else handles it.</b> Our website host (Netlify), our form service (FormSubmit), which forwards your message to our email (Google Gmail), and WhatsApp if you choose to contact us there. Some of these providers are based outside the UK.</p>
       <p><b>How long.</b> Enquiries that don't lead to a booking are deleted within 12 months. Booking records are kept for 6 years for tax purposes.</p>
@@ -834,6 +834,34 @@ html,body{overflow-x:clip}
   <div class="lb__bar"><button type="button" id="lbPrev" aria-label="Previous photo">&#8249;</button><button type="button" id="lbNext" aria-label="Next photo">&#8250;</button></div>
 </div>
 
+<script>
+/* Visitor analytics: no cookies, nothing stored on your device. Sends anonymous page events to our own server. */
+(function(){
+  var sid=Math.random().toString(36).slice(2,12),q=[],t0=Date.now(),hid=0,hidAt=0,maxS=0,sent={};
+  function flush(beacon){while(q.length){var b=JSON.stringify(q.splice(0,20));try{if(beacon&&navigator.sendBeacon){navigator.sendBeacon("/api/t",new Blob([b],{type:"text/plain"}));}else{fetch("/api/t",{method:"POST",body:b,keepalive:true,headers:{"content-type":"text/plain"}});}}catch(e){}}}
+  var tm=null;
+  window.ylsT=function(e,d,once){if(once){var k=e+JSON.stringify(d||{});if(sent[k])return;sent[k]=1;}q.push({e:e,sid:sid,d:d||{}});clearTimeout(tm);tm=setTimeout(flush,1500);if(q.length>=10)flush();};
+  var u=new URLSearchParams(location.search),ref=document.referrer,rh="";try{rh=ref?new URL(ref).hostname.replace(/^www\./,""):"";}catch(e){}
+  if(rh===location.hostname.replace(/^www\./,""))rh="";
+  var ua=navigator.userAgent,src=(u.get("utm_source")||"").toLowerCase();
+  if(!src){if(/Instagram/i.test(ua)||/instagram\.com$/.test(rh)||rh==="l.instagram.com")src="instagram";else if(/FBAN|FBAV/i.test(ua)||/facebook\.com$/.test(rh))src="facebook";else if(/google\./.test(rh))src="google";else if(/airbnb\./.test(rh))src="airbnb";else if(/bing\.|duckduckgo|yahoo/.test(rh))src="search-other";else if(/whatsapp|wa\.me/.test(rh))src="whatsapp";else src=rh||"(direct)";}
+  ylsT("pv",{src:src,ref:rh,med:u.get("utm_medium"),camp:u.get("utm_campaign"),path:location.pathname+location.hash,lang:(navigator.language||"").slice(0,5),w:innerWidth,bk:u.get("booking")});
+  addEventListener("scroll",function(){var h=document.documentElement,p=Math.round((scrollY+innerHeight)/h.scrollHeight*100);[25,50,75,100].forEach(function(m){if(p>=m-2&&maxS<m){maxS=m;ylsT("scroll",{p:m});}});},{passive:true});
+  addEventListener("DOMContentLoaded",function(){
+    if("IntersectionObserver"in window){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){ylsT("sec",{id:x.target.id},true);io.unobserve(x.target);}});},{rootMargin:"-45% 0px -45% 0px"});document.querySelectorAll("section[id]").forEach(function(s){io.observe(s);});}
+  });
+  document.addEventListener("click",function(e){
+    var a=e.target.closest("a,button");if(!a||a.closest("#calMonths"))return;
+    var h=a.getAttribute("href")||"",l=(a.getAttribute("aria-label")||a.textContent||a.id||"").replace(/\s+/g," ").trim().slice(0,40);
+    ylsT("clk",{l:(a.id?a.id+": ":"")+l,h:h.slice(0,60)});
+    if(/wa\.me|whatsapp/i.test(h))ylsT("wa",{from:a.id||l});
+    if(/airbnb\./i.test(h))ylsT("airbnb",{from:a.id||l});
+  },true);
+  var left=0;function leave(){if(left)return;left=1;ylsT("leave",{s:Math.round((Date.now()-t0-hid)/1000),scroll:maxS});flush(true);}
+  document.addEventListener("visibilitychange",function(){if(document.visibilityState==="hidden"){hidAt=Date.now();leave();}else if(hidAt){hid+=Date.now()-hidAt;hidAt=0;left=0;}});
+  addEventListener("pagehide",leave);
+})();
+</script>
 <script>
 (function(){
   /* ===== Settings (edit here) ===== */
@@ -952,17 +980,20 @@ html,body{overflow-x:clip}
     var txt="Hello Darko, I'd like to book Your London Stay from "+long(cin)+" to "+long(cout)+" ("+n+(n>1?" nights":" night")+", "+g+(g>1?" guests":" guest")+"). Website price: "+money(tot)+".";
     $("qWa").href="https://wa.me/"+CFG.whatsapp+"?text="+encodeURIComponent(txt);
     last={cin:cin,cout:cout,g:g,n:n,tot:tot};
+    if(window.ylsT)ylsT("quote",{in:key(cin),out:key(cout),n:n,g:g,tot:tot},true);
   }
   $("calMonths").addEventListener("click",function(e){
     var b=e.target.closest(".day");if(!b||b.disabled)return;var t=+b.dataset.t,h=$("calHint");
-    if(!cin||cout){if(!free(t))return;cin=t;cout=null;h.textContent="Now select your check-out date.";}
+    if(!cin||cout){if(!free(t))return;cin=t;cout=null;h.textContent="Now select your check-out date.";if(window.ylsT)ylsT("cal_in",{in:key(t)});}
     else if(t>cin&&t<=maxOut(cin)){cout=t;h.textContent="Your dates are set. Book now and pay securely, or message us on WhatsApp.";}
-    else if(free(t)){cin=t;h.textContent="Check-in updated. Now select your check-out date.";}
+    else if(free(t)){cin=t;h.textContent="Check-in updated. Now select your check-out date.";if(window.ylsT)ylsT("cal_in",{in:key(t)});}
     else return;
     render();
   });
-  $("calPrev").addEventListener("click",function(){if(--view.m<0){view.m=11;view.y--;}render();});
-  $("calNext").addEventListener("click",function(){if(++view.m>11){view.m=0;view.y++;}render();});
+  function navT(){if(!window.ylsT)return;var a=Date.UTC(view.y,view.m,1),z=Date.UTC(view.y,view.m+2,1),f=0;for(var t=a;t<z;t+=DAY)if(free(t))f++;var m=view.y+"-"+String(view.m+1).padStart(2,"0");ylsT("cal_nav",{m:m,free:f});if(!f)ylsT("cal_none",{m:m},true);}
+  $("calPrev").addEventListener("click",function(){if(--view.m<0){view.m=11;view.y--;}render();navT();});
+  $("calNext").addEventListener("click",function(){if(++view.m>11){view.m=0;view.y++;}render();navT();});
+  window.ylsQuote=function(){return last;};
   $("qGuests").addEventListener("change",render);
   $("qDirect").addEventListener("click",function(){
     if(!last)return;
@@ -1005,8 +1036,9 @@ html,body{overflow-x:clip}
     var timer=new Promise(function(_,rej){setTimeout(function(){rej(new Error("timeout"));},12000);});
     Promise.race([fetch(CFG.formEndpoint,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams(Object.assign({"form-name":"contact"},data)).toString()}),timer])
     .then(function(r){if(!r.ok)throw new Error("http "+r.status);})
-    .then(function(){var d=document.createElement("div");d.className="status status--ok";d.textContent="Thank you, "+data.name.split(" ")[0]+". Your message is on its way to Darko, who usually replies within the hour.";st.appendChild(d);f.reset();})
+    .then(function(){if(window.ylsT)ylsT("form_ok",{dates:data.check_in?1:0});var d=document.createElement("div");d.className="status status--ok";d.textContent="Thank you, "+data.name.split(" ")[0]+". Your message is on its way to Darko, who usually replies within the hour.";st.appendChild(d);f.reset();})
     .catch(function(){
+      if(window.ylsT)ylsT("form_err",{msg:"contact form failed"});
       var d=document.createElement("div");d.className="status status--warn";
       var p=document.createElement("p");p.textContent="We couldn't send the form from this page right now. Your message is ready below. Send it on WhatsApp in one tap, or copy it into an email to 4yourlondonstay@gmail.com.";d.appendChild(p);
       var pre=document.createElement("pre");pre.textContent=summary;d.appendChild(pre);
@@ -1066,16 +1098,17 @@ document.querySelectorAll(".has-sub>a").forEach(function(a){a.addEventListener("
 {const pay=document.getElementById("qPay"),msg=document.getElementById("qPayMsg");
 function say(t,bad){msg.hidden=false;msg.textContent=t;msg.classList.toggle("pay__msg--err",!!bad);}
 const q=new URLSearchParams(location.search).get("booking");
-if(q==="success")say("Thank you! Your booking request and card hold are confirmed. Check your email; we'll confirm your dates shortly.");
-if(q==="cancelled")say("Payment was cancelled. Your card has not been charged.",true);
+if(q==="success"){say("Thank you! Your booking request and card hold are confirmed. Check your email; we'll confirm your dates shortly.");if(window.ylsT)ylsT("booked",{});}
+if(q==="cancelled"){say("Payment was cancelled. Your card has not been charged.",true);if(window.ylsT)ylsT("pay_cancel",{});}
 pay.addEventListener("click",async function(){
-  const cin=document.getElementById("qIn").textContent,dates=document.querySelectorAll("#calMonths .day--sel");
-  if(dates.length<2)return;
-  const k=function(b){return new Date(+b.dataset.t).toISOString().slice(0,10);};
+  const L=window.ylsQuote&&window.ylsQuote();
+  if(!L)return;
+  const k=function(t){return new Date(t).toISOString().slice(0,10);};
+  if(window.ylsT)ylsT("pay_click",{in:k(L.cin),n:L.n,tot:L.tot});
   pay.disabled=true;const lbl=pay.textContent;pay.textContent="Opening secure payment…";
-  try{const r=await fetch("/api/checkout",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({checkIn:k(dates[0]),checkOut:k(dates[dates.length-1]),guests:+document.getElementById("qGuests").value})});
-    const d=await r.json();if(r.ok&&d.url){location.href=d.url;return;}say(d.error||"Something went wrong. Please message us.",true);}
-  catch(e){say("Connection problem. Please try again or message us.",true);}
+  try{const r=await fetch("/api/checkout",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({checkIn:k(L.cin),checkOut:k(L.cout),guests:L.g})});
+    const d=await r.json();if(r.ok&&d.url){if(window.ylsT)ylsT("pay_redirect",{tot:L.tot});setTimeout(function(){location.href=d.url;},150);return;}const em=d.error||"Something went wrong. Please message us.";if(window.ylsT)ylsT("pay_err",{msg:em,st:r.status});say(em,true);}
+  catch(e){if(window.ylsT)ylsT("pay_err",{msg:"connection"});say("Connection problem. Please try again or message us.",true);}
   pay.disabled=false;pay.textContent=lbl;});}
 </script>
 </body></html>

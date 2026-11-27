@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Website monitoring · YourLondonStay</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--ink:#1d1d1b;--mut:#6b6a66;--line:#e5e1d8;--acc:#1f5f5b;--bad:#b5452f;--ok:#2e7d4f}
+*{box-sizing:border-box}body{margin:0;font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:18px 22px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:var(--card)}
+h1{font-size:18px;margin:0}h2{font-size:15px;margin:0 0 10px}main{padding:18px;max-width:1200px;margin:auto;display:grid;gap:14px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px}
+.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.kpi b{display:block;font-size:26px;font-variant-numeric:tabular-nums}.kpi span{color:var(--mut);font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}td,th{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar{height:8px;background:var(--acc);border-radius:4px;min-width:2px}.bad .bar{background:var(--bad)}
+select,input,button{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff}button{background:var(--acc);color:#fff;border:0;cursor:pointer}
+.muted{color:var(--mut)}.ok{color:var(--ok);font-weight:600}#login{max-width:360px;margin:60px auto}
+.chart{display:flex;align-items:flex-end;gap:3px;height:120px}.chart div{flex:1;background:var(--acc);border-radius:3px 3px 0 0;position:relative}.chart div:hover::after{content:attr(title);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:#000;color:#fff;font-size:11px;padding:2px 5px;border-radius:4px;white-space:nowrap}
+</style></head><body>
+<header><h1>YourLondonStay · Website monitoring</h1><div><select id="days"><option value="1">Today</option><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select> <button id="reload">Refresh</button></div></header>
+<div id="login" class="card"><h2>Password</h2><p class="muted">Enter the STATS_KEY you set in Netlify.</p><form id="lf"><input id="pw" type="password" autocomplete="current-password" style="width:100%"><p><button>Open report</button></p><p id="lerr" class="muted"></p></form></div>
+<main id="app" hidden></main>
+<script>
+(function(){
+  var pw="",app=document.getElementById("app");
+  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function rows(list,total,cls){var m=Math.max.apply(null,list.map(function(x){return x[1];}).concat(1));return "<table>"+list.map(function(x){return "<tr><td>"+esc(x[0])+"</td><td style='width:35%' class='"+(cls||"")+"'><div class='bar' style='width:"+(x[1]/m*100)+"%'></div></td><td class='n'>"+x[1]+(total?" · "+Math.round(x[1]/total*100)+"%":"")+"</td></tr>";}).join("")+"</table>"||"<p class=muted>No data yet</p>";}
+  function card(t,body){return "<div class='card'><h2>"+t+"</h2>"+body+"</div>";}
+  var FUN={visits:"Visits",saw_booking:"Reached booking calendar",picked_checkin:"Picked check-in date",got_price:"Got a full price",took_action:"Clicked Book / WhatsApp / Airbnb / form",opened_payment:"Opened Stripe payment",booked:"Booked & paid"};
+  function draw(r){
+    var T=r.totals,v=T.visits||0;
+    var h="<div class='card kpis'>"+[["Visits",T.visits],["Unique visitors",T.visitors],["From Instagram",T.from_instagram],["Avg. time on site",T.avg_engaged_seconds+" s"],["Direct bookings",T.booked],["Conversion",T.conversion_pct+"%"],["Booked value","£"+T.booked_value_gbp],["Quoted but not booked","£"+T.lost_quoted_value_gbp]].map(function(k){return "<div class='kpi'><b>"+esc(k[1])+"</b><span>"+k[0]+"</span></div>";}).join("")+"</div>";
+    var mx=Math.max.apply(null,r.by_day.map(function(d){return d[1];}).concat(1));
+    h+=card("Visits per day","<div class='chart'>"+r.by_day.map(function(d){return "<div style='height:"+(d[1]/mx*100)+"%' title='"+d[0]+": "+d[1]+"'></div>";}).join("")+"</div>");
+    h+="<div class='grid'>"+card("Booking funnel",rows(Object.keys(FUN).map(function(k){return [FUN[k],r.funnel[k]];}),v))+card("Why visitors did not book",rows(r.reasons.map(function(x){return [x.label,x.count];}),v,"bad"))+"</div>";
+    h+="<div class='grid'>"+card("Countries",rows(r.by_country,v))+card("Cities",rows(r.by_city,v))+card("Where they came from",rows(r.by_source,v))+"</div>";
+    h+="<div class='grid'>"+card("Devices",rows(r.by_device,v))+card("Sections viewed",rows(r.sections_reached,v))+card("Months people want (calendar)",rows(r.demand_months))+"</div>";
+    h+=card("What they clicked",rows(r.top_clicks));
+    h+=card("Errors",r.errors.length?"<table>"+r.errors.map(function(e){return "<tr><td>"+esc(e.t.slice(0,16).replace("T"," "))+"</td><td>"+esc(e.c)+"</td><td>"+esc(e.msg)+"</td></tr>";}).join("")+"</table>":"<p class='ok'>No errors</p>");
+    h+=card("Latest visits","<table><tr><th>Time</th><th>From</th><th>Source</th><th>Device</th><th>Time / scroll</th><th>Dates & price</th><th>Outcome</th></tr>"+r.recent.map(function(s){return "<tr><td>"+esc(s.t.slice(5,16).replace("T"," "))+"</td><td>"+esc((s.city?s.city+", ":"")+s.country)+"</td><td>"+esc(s.src)+"</td><td>"+esc(s.dev)+"</td><td class='n'>"+s.secs+"s · "+s.scroll+"%</td><td>"+(s.quote?esc(s.quote.in+" → "+s.quote.out+" ("+s.quote.n+"n, "+s.quote.g+"g) £"+Math.round(s.quote.tot)):"—")+"</td><td>"+(s.outcome==="BOOKED"?"<span class=ok>BOOKED</span>":esc(s.outcome))+"</td></tr>";}).join("")+"</table>");
+    h+="<p class='muted'>Updated "+esc(r.generated.slice(0,16).replace("T"," "))+" UTC · cookieless, no IP addresses stored · bots excluded</p>";
+    app.innerHTML=h;
+  }
+  function load(){
+    fetch("/api/stats?days="+document.getElementById("days").value,{headers:{"x-stats-key":pw}}).then(function(r){return r.json().then(function(j){return [r.ok,j];});}).then(function(x){
+      if(!x[0]){document.getElementById("lerr").textContent=x[1].error||"Error";document.getElementById("login").hidden=false;app.hidden=true;return;}
+      document.getElementById("login").hidden=true;app.hidden=false;draw(x[1]);
+    }).catch(function(){document.getElementById("lerr").textContent="Connection problem";});
+  }
+  document.getElementById("lf").addEventListener("submit",function(e){e.preventDefault();pw=document.getElementById("pw").value;load();});
+  document.getElementById("reload").addEventListener("click",load);document.getElementById("days").addEventListener("change",load);
+})();
+</script></body></html>
