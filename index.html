@@ -436,7 +436,7 @@ html,body{overflow-x:clip}
     </a>
     <ul class="nav" id="nav">
       <li><a href="#apartment">The apartment</a></li>
-      <li class="has-sub"><a href="#gallery" data-gal="all" aria-haspopup="true">Gallery</a><ul class="sub">
+      <li><a href="#tour">3D tour</a></li><li class="has-sub"><a href="#gallery" data-gal="all" aria-haspopup="true">Gallery</a><ul class="sub">
         <li><a href="#gallery" data-gal="living">Living room</a></li><li><a href="#gallery" data-gal="bedroom">Bedroom</a></li><li><a href="#gallery" data-gal="kitchen">Kitchen</a></li><li><a href="#gallery" data-gal="bath">Bathroom</a></li><li><a href="#gallery" data-gal="home">Entrance &amp; hallway</a></li></ul></li>
       <li><a href="#book">Prices &amp; dates</a></li>
       <li><a href="#location">Location</a></li>
@@ -522,6 +522,14 @@ html,body{overflow-x:clip}
   </div>
 </section>
 
+<section class="section" id="tour">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">3D tour</p><h2>Walk through the apartment</h2><p class="muted">Start at the front door and walk up to your private flat. Drag to look around, tap ➜ to walk, tap + for a closer look.</p></div>
+    <div class="tour-frame"><iframe src="/3d-tour/" title="360° tour of YourLondonStay" loading="lazy" allowfullscreen allow="fullscreen; gyroscope; accelerometer"></iframe></div>
+    <p class="small muted" style="margin-top:10px"><a href="/3d-tour/" target="_blank" rel="noopener">Open the tour full screen ↗</a></p>
+  </div>
+</section>
+<style>.tour-frame{border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.08)}.tour-frame iframe{display:block;width:100%;height:min(80vh,780px);min-height:520px;border:0}</style>
 <section class="section" id="gallery" style="background:var(--surface)">
   <div class="wrap">
     <div class="head"><p class="eyebrow">Gallery</p><h2>Take a closer look</h2></div>

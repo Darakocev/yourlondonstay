@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D Tour – YourLondonStay</title>
+<meta name="description" content="Look around YourLondonStay in Hammersmith in 360°: from the front door, up the stairs, into your private apartment.">
+<link rel="stylesheet" href="lib/pannellum.css">
+<style>
+  :root{--ink:#1d2433;--muted:#667085;--accent:#d9683f;--bg:#f5f2ec;--card:#fff}
+  *{box-sizing:border-box;margin:0;padding:0;min-width:0}
+  body{font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+  .wrap{max-width:1240px;margin:0 auto;padding:16px}
+  h1{font-size:clamp(24px,3vw,34px);line-height:1.1;margin-bottom:4px}
+  .sub{color:var(--muted);margin-bottom:14px}
+  .stage{position:relative;height:min(78vh,720px);min-height:420px;border-radius:14px;overflow:hidden;background:#111}
+  #pano{position:absolute;inset:0}
+  .pnlm-container{background:#111}
+  /* walk + info hotspots */
+  .hs{width:0;height:0}
+  .hs .b{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;color:#fff}
+  .hs .r{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-size:22px;line-height:1;
+    background:rgba(255,255,255,.25);border:2px solid #fff;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);animation:p 2.2s infinite}
+  .hs.info .r{width:40px;height:40px;font-size:24px;font-weight:600;background:rgba(217,104,63,.9)}
+  .hs .l{background:rgba(0,0,0,.66);padding:4px 10px;border-radius:20px;font-size:13px;white-space:nowrap}
+  .hs:hover .r{background:var(--accent);border-color:var(--accent)}
+  @keyframes p{0%{box-shadow:0 0 0 0 rgba(255,255,255,.55)}70%{box-shadow:0 0 0 14px rgba(255,255,255,0)}100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}}
+  .cap{position:absolute;left:12px;bottom:12px;z-index:3;background:rgba(0,0,0,.62);color:#fff;padding:10px 14px;border-radius:10px;max-width:min(70%,480px);pointer-events:none}
+  .cap b{display:block;font-size:17px}.cap span{font-size:14px;opacity:.92}
+  .hint{position:absolute;top:12px;left:12px;z-index:3;background:rgba(0,0,0,.55);color:#fff;font-size:13px;padding:5px 12px;border-radius:20px;transition:opacity 1s;pointer-events:none}
+  .map{position:absolute;top:12px;right:12px;z-index:3;width:178px;background:rgba(255,255,255,.94);border-radius:10px;padding:8px;font-size:11px}
+  .map b{display:flex;justify-content:space-between;margin-bottom:4px}
+  .map svg{width:100%;display:block}
+  .map rect{fill:#ece7df;stroke:#9a9182;stroke-width:1;cursor:pointer}
+  .map rect.on{fill:#f6d3c6;stroke:var(--accent)}.map rect.off{fill:#e2e2e2;cursor:default}
+  .map text{font-size:7px;fill:#555;pointer-events:none}.map circle{fill:var(--accent)}
+  .strip{display:flex;gap:8px;overflow-x:auto;padding:12px 0 4px;scroll-snap-type:x mandatory}
+  .strip button{flex:0 0 auto;scroll-snap-align:start;border:2px solid transparent;border-radius:999px;background:var(--card);padding:10px 16px;font:500 14px system-ui,sans-serif;color:var(--ink);cursor:pointer;min-height:44px}
+  .strip button.on{border-color:var(--accent);color:var(--accent)}
+  .cta{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;background:var(--card);padding:14px 16px;border-radius:12px}
+  .cta a{background:var(--accent);color:#fff;text-decoration:none;padding:11px 20px;border-radius:8px;font-weight:600}
+  .lb{position:fixed;inset:0;background:rgba(10,12,18,.93);z-index:100;display:none;align-items:center;justify-content:center;flex-direction:column;padding:16px}
+  .lb.open{display:flex}
+  .lb img{max-width:min(1100px,94vw);max-height:76vh;border-radius:10px;object-fit:contain}
+  .lb .c{color:#fff;margin-top:12px;text-align:center;max-width:680px}.lb .c b{display:block;font-size:18px}.lb .n{opacity:.7;font-size:13px}
+  .lb button{position:absolute;border:0;background:rgba(255,255,255,.92);width:46px;height:46px;border-radius:50%;font-size:22px;cursor:pointer}
+  .lb .x{top:16px;right:16px}.lb .pv{left:12px;top:50%}.lb .nx{right:12px;top:50%}
+  @media(max-width:600px){.stage{height:72vh}.map{width:120px}.hs .l{font-size:12px}.cap{max-width:calc(100% - 24px)}}
+  @media(prefers-reduced-motion:reduce){.hs .r{animation:none}}
+</style>
+<style>
+  html.embed body{background:transparent}
+  html.embed .wrap{padding:0;max-width:none}
+  html.embed h1,html.embed .sub,html.embed .cta{display:none}
+  html.embed .stage{height:min(72vh,680px)}
+</style>
+<script>if(window.self!==window.top)document.documentElement.classList.add("embed");</script>
+</head>
+<body>
+<main class="wrap">
+  <h1>Take a 360° tour</h1>
+  <p class="sub">Start at the front door and walk up to your private apartment. Drag to look around, tap ➜ to walk, tap + for a closer look.</p>
+  <div class="stage">
+    <div id="pano"></div>
+    <div class="hint" id="hint">Drag to look around · ➜ walk · + photos</div>
+    <div class="map" aria-hidden="true"><b><span id="fl"></span><span id="st"></span></b><svg id="plan" viewBox="0 0 160 110"></svg></div>
+    <div class="cap" aria-live="polite"><b id="ct"></b><span id="cd"></span></div>
+  </div>
+  <nav class="strip" id="strip" aria-label="Rooms"></nav>
+  <div class="cta"><div><b>Like what you see?</b> Book direct for the best price.</div><a href="/#book" target="_top">Check availability</a></div>
+</main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Photos">
+  <button class="x" id="lx" aria-label="Close">✕</button>
+  <button class="pv" id="lp" aria-label="Previous photo">‹</button>
+  <img id="li" alt="">
+  <div class="c"><b id="lt"></b><span id="ld"></span><div class="n" id="ln"></div></div>
+  <button class="nx" id="lnx" aria-label="Next photo">›</button>
+</div>
+
+<script src="lib/pannellum.js"></script>
+<script>
+{
+/* ================= TOUR CONFIG =================
+   x / y = position in the photo as 0..1 (left→right, top→bottom); converted to yaw/pitch.
+   go   = walk to another room;  info = "+" with photos.            */
+const I = "img/";
+const ROOMS = [
+ {id:"door", t:"Front door", d:"Welcome to 43 Lampeter Square. Self check-in with the key box by the door.", img:"p-door.jpg", hfov:58, vfov:77, floor:"ground", room:"entrance", look:.55,
+  go:[{x:.66,y:.42,to:"hall",l:"Go inside",face:.25}],
+  info:[{x:.36,y:.48,l:"Key box",d:"Your code opens the key box beside the door.",p:["door-wide.jpg"]}]},
+ {id:"hall", t:"Entrance hall", d:"Your own entrance – the stairs lead straight up to your floor.", img:"p-hall.jpg", floor:"ground", room:"entrance", look:.25,
+  go:[{x:.235,y:.5,to:"stairs",l:"Up the stairs"},{x:.83,y:.5,to:"door",l:"Front door"}]},
+ {id:"stairs", t:"Stairs", d:"One flight up to your private apartment.", img:"p-stairs.jpg", hfov:58, vfov:77, floor:"ground", room:"stairs", look:.5,
+  go:[{x:.55,y:.22,to:"landing",l:"Climb up",face:.7},{x:.55,y:.92,to:"hall",l:"Back down",face:.83}]},
+ {id:"landing", t:"Upstairs hallway", d:"The whole upper floor is yours.", img:"p-landing.jpg", floor:"first", room:"landing", look:.7,
+  go:[{x:.73,y:.5,to:"living",l:"Living room",face:.2},{x:.93,y:.55,to:"bathroom",l:"Bathroom",face:.8},
+      {x:.11,y:.5,to:"bedroom",l:"Bedroom",face:.45},{x:.18,y:.6,to:"kitchen",l:"Kitchen",face:.3},{x:.4,y:.75,to:"stairs",l:"Stairs down",face:.5}],
+  info:[{x:.55,y:.28,l:"Storage",d:"Built-in cupboards – room for luggage.",p:["storage.jpg","storage-2.jpg"]}]},
+ {id:"living", t:"Living room", d:"Bright lounge with a large smart TV and a double sofa bed.", img:"p-living.jpg", floor:"first", room:"living", look:.4,
+  go:[{x:.61,y:.52,to:"landing",l:"Hallway",face:.6}],
+  info:[{x:.86,y:.38,l:"Smart TV",d:"Large wall-mounted smart TV.",p:["d-living-tv.jpg","d-living.jpg"]},
+        {x:.33,y:.68,l:"Sofa bed",d:"Opens into a comfortable double bed.",p:["d-sofabed.jpg","d-sofabed-2.jpg"]},
+        {x:.14,y:.4,l:"Window",d:"Big windows with sheer and blackout curtains.",p:["living-window.jpg"]}]},
+ {id:"kitchen", t:"Kitchen", d:"Fully equipped: oven, hob, kettle, washing machine.", img:"p-kitchen.jpg", floor:"first", room:"kitchen", look:.38,
+  go:[{x:.88,y:.5,to:"landing",l:"Hallway",face:.3}],
+  info:[{x:.24,y:.32,l:"Oven",d:"Mini oven, pots and pans.",p:["kitchen-oven.jpg","kitchen-cupboard-pans.jpg"]},
+        {x:.37,y:.62,l:"Sink",d:"Corner sink with drying rack.",p:["kitchen-sink.jpg","d-kitchen.jpg"]},
+        {x:.27,y:.7,l:"Tea & coffee",d:"Kettle, toaster, tea and basics.",p:["kitchen-tea.jpg"]},
+        {x:.5,y:.72,l:"Hob & washer",d:"Induction hob and washing machine.",p:["d-kitchen-hob.jpg","d-kitchen.jpg"]},
+        {x:.45,y:.14,l:"Cupboards",d:"Plates, bowls, glasses and mugs.",p:["kitchen-cupboard-plates.jpg","kitchen-cupboard-bowls.jpg","kitchen-cupboard-glasses.jpg"]},
+        {x:.62,y:.8,l:"Fridge",d:"Under-counter fridge with freezer.",p:["kitchen-fridge.jpg"]}]},
+ {id:"bedroom", t:"Bedroom", d:"Double bed, work desk and a large sliding wardrobe.", img:"p-bedroom.jpg", floor:"first", room:"bedroom", look:.5,
+  go:[{x:.27,y:.52,to:"landing",l:"Hallway",face:.1}],
+  info:[{x:.45,y:.68,l:"Double bed",d:"Comfortable double bed by the window.",p:["bedroom-bed.jpg","bedroom-bed-2.jpg","bedroom.jpg"]},
+        {x:.8,y:.66,l:"Desk",d:"Work desk with shelves.",p:["bedroom-desk.jpg"]},
+        {x:.1,y:.45,l:"Wardrobe",d:"Mirrored sliding wardrobe.",p:["bedroom-wardrobe.jpg"]},
+        {x:.62,y:.32,l:"Window",d:"Bright room with blackout curtains.",p:["bedroom-window.jpg"]}]},
+ {id:"bathroom", t:"Bathroom", d:"Marble shower room with rainfall shower. Towels provided.", img:"p-bathroom.jpg", floor:"first", room:"bathroom", look:.8,
+  go:[{x:.22,y:.55,to:"landing",l:"Hallway",face:.9}],
+  info:[{x:.48,y:.45,l:"Towels",d:"Fresh towels, toilet paper and a hairdryer.",p:["bathroom-towels.jpg"]},
+        {x:.86,y:.5,l:"Sink & mirror",d:"Basin, mirror and shelves.",p:["bathroom.jpg","bathroom-2.jpg"]},
+        {x:.05,y:.5,l:"Shower",d:"Rainfall shower with shampoo, conditioner and body wash.",p:["bathroom-shower.jpg"]}]}
+];
+const FLOORS = {
+  ground:{n:"Entrance level", r:[{id:"entrance",x:5,y:58,w:62,h:47,l:"Entrance"},{id:"stairs",x:72,y:20,w:38,h:85,l:"Stairs"},{x:5,y:5,w:62,h:48,l:"Private",off:1},{x:115,y:5,w:40,h:100,l:"Private",off:1}]},
+  first:{n:"Your apartment", r:[{id:"living",x:5,y:5,w:45,h:100,l:"Living room"},{id:"landing",x:52,y:42,w:62,h:26,l:"Hallway"},
+    {id:"kitchen",x:52,y:5,w:30,h:35,l:"Kitchen"},{id:"bathroom",x:84,y:70,w:30,h:35,l:"Bathroom"},{x:52,y:70,w:30,h:35,l:"Stairs",off:1},{id:"bedroom",x:116,y:5,w:39,h:100,l:"Bedroom"}]}
+};
+/* ============================================== */
+const $=id=>document.getElementById(id), byId={};
+ROOMS.forEach(r=>byId[r.id]=r);
+const VFOV=70; // vertical field covered by a phone panorama (approx.)
+const dims={};  // filled from image sizes
+const fov=r=>{const d=dims[r.id]; if(r.hfov) return {h:r.hfov,v:r.vfov}; const v=VFOV; return {h:Math.min(360,v*d.w/d.h),v};};
+const yaw=(r,x)=>(x-.5)*fov(r).h, pitch=(r,y)=>(.5-y)*fov(r).v;
+
+function tip(div,a){ div.classList.add("hs",a.k); div.innerHTML=`<span class="b"><span class="r">${a.k==="info"?"+":"➜"}</span><span class="l"></span></span>`;
+  div.querySelector(".l").textContent=a.l; div.setAttribute("role","button"); div.setAttribute("aria-label",(a.k==="info"?"Photos: ":"Walk to ")+a.l); }
+
+function build(){
+  const scenes={};
+  ROOMS.forEach(r=>{
+    const f=fov(r), full=f.h>=359;
+    scenes[r.id]={type:"equirectangular", panorama:I+r.img, haov:f.h, vaov:f.v, vOffset:0,
+      yaw:yaw(r,r.look??.5), pitch:0, hfov:Math.min(85,f.h), minHfov:35, maxHfov:Math.min(100,f.h), avoidShowingBackground:true,
+      minYaw:full?-180:-f.h/2, maxYaw:full?180:f.h/2, minPitch:-f.v/2, maxPitch:f.v/2, title:"",
+      hotSpots:[
+        ...(r.go||[]).map(g=>({type:"scene",sceneId:g.to,yaw:yaw(r,g.x),pitch:pitch(r,g.y),
+           targetYaw:g.face!=null?yaw(byId[g.to],g.face):"sameAzimuth",targetPitch:0,
+           cssClass:"hs",createTooltipFunc:tip,createTooltipArgs:{k:"go",l:g.l}})),
+        ...(r.info||[]).map(h=>({type:"info",yaw:yaw(r,h.x),pitch:pitch(r,h.y),cssClass:"hs",
+           createTooltipFunc:tip,createTooltipArgs:{k:"info",l:h.l},clickHandlerFunc:()=>openLb(h),clickHandlerArgs:h}))]};
+  });
+  const start=(location.hash.match(/^#([\w-]+)/)||[])[1];
+  const v=pannellum.viewer("pano",{default:{firstScene:byId[start]?start:"door",autoLoad:true,sceneFadeDuration:900,showControls:true,
+    showFullscreenCtrl:true,compass:false,mouseZoom:"fullscreenonly"},scenes});
+  v.on("scenechange",show); show(v.getScene()); window.tour=v;
+  v.on("mousedown",()=>$("hint").style.opacity=0); v.on("touchstart",()=>$("hint").style.opacity=0);
+}
+function show(id){
+  const r=byId[id]; $("ct").textContent=r.t; $("cd").textContent=r.d;
+  $("st").textContent=`${ROOMS.indexOf(r)+1}/${ROOMS.length}`;
+  [...$("strip").children].forEach(b=>{const on=b.dataset.id===id; b.classList.toggle("on",on); b.setAttribute("aria-current",on?"true":"false"); if(on) b.scrollIntoView({block:"nearest",inline:"nearest"});});
+  const f=FLOORS[r.floor], ns="http://www.w3.org/2000/svg"; $("fl").textContent=f.n; $("plan").innerHTML="";
+  f.r.forEach(m=>{const g=document.createElementNS(ns,"rect"); [["x",m.x],["y",m.y],["width",m.w],["height",m.h],["rx",2]].forEach(([k,v])=>g.setAttribute(k,v));
+    g.setAttribute("class",m.off?"off":m.id===r.room?"on":"");
+    const target=!m.off&&ROOMS.find(o=>o.room===m.id); if(target) g.addEventListener("click",()=>window.tour.loadScene(target.id));
+    $("plan").appendChild(g); const t=document.createElementNS(ns,"text"); t.setAttribute("x",m.x+3); t.setAttribute("y",m.y+9); t.textContent=m.l; $("plan").appendChild(t);
+    if(m.id===r.room){const c=document.createElementNS(ns,"circle"); c.setAttribute("cx",m.x+m.w/2); c.setAttribute("cy",m.y+m.h/2+4); c.setAttribute("r",4.5); $("plan").appendChild(c);}});
+  try{history.replaceState(null,"","#"+id);}catch(e){}
+}
+ROOMS.forEach((r,i)=>{const b=document.createElement("button"); b.dataset.id=r.id; b.textContent=`${i+1}. ${r.t}`; b.onclick=()=>window.tour.loadScene(r.id); $("strip").appendChild(b);});
+
+/* lightbox */
+let set=null,ix=0;
+function openLb(h){set=h;ix=0;draw();$("lb").classList.add("open");$("lx").focus();}
+function draw(){const p=set.p; $("li").src=I+p[ix]; $("li").alt=set.l; $("lt").textContent=set.l; $("ld").textContent=set.d||"";
+  $("ln").textContent=p.length>1?`${ix+1} / ${p.length}`:""; $("lp").style.display=$("lnx").style.display=p.length>1?"":"none";}
+const close=()=>$("lb").classList.remove("open");
+$("lx").onclick=close; $("lb").addEventListener("click",e=>{if(e.target.id==="lb")close();});
+$("lp").onclick=()=>{ix=(ix-1+set.p.length)%set.p.length;draw();}; $("lnx").onclick=()=>{ix=(ix+1)%set.p.length;draw();};
+document.addEventListener("keydown",e=>{if(!$("lb").classList.contains("open"))return; if(e.key==="Escape")close(); if(e.key==="ArrowRight")$("lnx").click(); if(e.key==="ArrowLeft")$("lp").click();});
+
+/* read image sizes, then start */
+Promise.all(ROOMS.map(r=>new Promise(ok=>{const im=new Image(); im.onload=()=>{dims[r.id]={w:im.naturalWidth,h:im.naturalHeight};ok();}; im.onerror=()=>{dims[r.id]={w:2,h:1};ok();}; im.src=I+r.img;}))).then(build);
+setTimeout(()=>$("hint").style.opacity=0,7000);
+}
+</script>
+</body>
+</html>
