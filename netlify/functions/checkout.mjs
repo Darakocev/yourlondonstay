@@ -93,7 +93,7 @@ export default async (req) => {
     body: f,
   });
   const s = await r.json().catch(() => ({}));
-  if (!r.ok || !s.url) { console.error("Stripe error", r.status, s && s.error && s.error.message); return json({ error: "Payment page could not be opened. Please try again or message us." }, 502); }
+  if (!r.ok || !s.url) { console.error("Stripe error", r.status, s && s.error && s.error.message); return json({ error: "Payment page could not be opened. Please try again or message us.", ...(test ? { stripe: `${r.status} ${(s && s.error && s.error.message) || ""}` } : {}) }, 502); }
   return json({ url: s.url });
 };
 
