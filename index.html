@@ -426,7 +426,7 @@ h1,h2,h3,.logo b{font-family:var(--display);font-weight:500;letter-spacing:0}
 .cf{position:fixed;inset:0;z-index:100;overflow-y:auto;background:var(--bg);padding:calc(24px + env(safe-area-inset-top,0px)) 20px 48px}
 .cf__in{max-width:640px;margin:0 auto}
 .cf__tick{width:64px;height:64px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;margin:24px 0 20px}
-.cf h1{font-family:var(--display);font-weight:500;font-size:clamp(1.8rem,1.3rem + 2vw,2.6rem);line-height:1.15;margin:0 0 12px}
+.cf h1:focus{outline:none}.cf h1{font-family:var(--display);font-weight:500;font-size:clamp(1.8rem,1.3rem + 2vw,2.6rem);line-height:1.15;margin:0 0 12px}
 .cf__lead{font-size:1.05rem;color:var(--ink-2);margin:0 0 24px}
 .cf__card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:0 0 20px}
 .cf__ref{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
@@ -1166,13 +1166,15 @@ if(q==="success"){
   const h=document.getElementById("cfH");if(h)h.focus();
   if(window.ylsT)ylsT("booked",{});
   document.getElementById("cfClose").addEventListener("click",function(e){e.preventDefault();cf.hidden=true;document.documentElement.style.overflow="";history.replaceState(null,"","/");window.scrollTo(0,0);});
+  const fail=function(){set("cfRef","Received");const d=document.querySelector("#cf dl");if(d)d.hidden=true;};
+  if(!sid)fail();
   if(sid)fetch("/api/booking?session_id="+encodeURIComponent(sid),{cache:"no-store"}).then(function(r){return r.json();}).then(function(b){
-    if(!b||!b.ok){set("cfRef","Sent");return;}
+    if(!b||!b.ok){fail();return;}
     set("cfRef",b.ref);set("cfIn",fd(b.check_in)+" · from 12:00");set("cfOut",fd(b.check_out)+" · by 11:00");set("cfN",b.nights);set("cfG",b.guests);set("cfAmt",b.amount);
     if(b.first_name)set("cfName",", "+b.first_name);
     if(b.code){document.getElementById("cfCodeT").hidden=false;const c=document.getElementById("cfCode");c.hidden=false;c.textContent=b.code;}
     if(b.email)set("cfMail","A confirmation has been sent to "+b.email+". If you can't see it, check your spam folder.");
-  }).catch(function(){set("cfRef","Sent");});
+  }).catch(fail);
 }
 if(q==="cancelled"){say("Payment was cancelled. Your card has not been charged.",true);if(window.ylsT)ylsT("pay_cancel",{});
   window.addEventListener("load",function(){const b=document.getElementById("book");if(b)b.scrollIntoView();});}
