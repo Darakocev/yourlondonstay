@@ -427,6 +427,36 @@ h1,h2,h3,.logo b{font-family:var(--display);font-weight:500;letter-spacing:0}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}.promo{display:flex;gap:8px;margin:14px 0 4px}.promo input{flex:1;min-width:0;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:var(--bg);font:inherit;text-transform:uppercase}.promo button{padding:10px 16px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font:inherit;cursor:pointer}.promo__msg{font-size:.85rem;margin:0 0 8px;color:var(--muted)}.promo__msg--ok{color:var(--ok)}.promo__msg--err{color:#8a2e24}
 .pay__msg--err{background:#fbecea;color:#8a2e24}
 html,body{overflow-x:clip}
+.pay__hint{margin:8px 0 0;font-size:.85rem;color:var(--ok);text-align:center}
+.cx{position:fixed;inset:0;z-index:90;background:rgba(8,11,18,.72);overflow-y:auto;padding:max(16px,env(safe-area-inset-top,0px)) 14px 24px;display:flex;justify-content:center;align-items:flex-start}
+.cx__box{position:relative;width:min(980px,100%);margin:auto 0;background:var(--bg);color:var(--ink);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:clamp(18px,2.4vw,34px)}
+.cx__x{position:absolute;top:10px;right:10px;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:1.4rem;line-height:1;cursor:pointer}
+.cx h2{margin:0 44px 4px 0;font-family:var(--display);font-weight:500;font-size:clamp(1.5rem,2.4vw,2rem)}
+.cx__sum{margin:0 0 18px;color:var(--muted);font-size:.95rem}
+.cx__grid{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;align-items:start}
+.cx__col{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(16px,2vw,26px)}
+.cx__col--c{border-color:var(--brass);box-shadow:0 0 0 1px var(--brass) inset}
+.cx__col h3{margin:0 0 6px;font-size:1.15rem;font-weight:600}
+.cx__tag{display:inline-block;margin:0 0 8px;padding:4px 10px;border-radius:999px;background:var(--brass);color:#fff;font-size:.75rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.cx__price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:4px 0}.cx__price b{font-size:1.7rem;font-weight:600}.cx__price s{color:var(--muted)}
+.cx__amt{margin:0 0 12px;font-size:.92rem;color:var(--ink-2)}
+.cx__pay{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;margin:10px 0 14px}
+.cx__qr{width:168px;height:168px;padding:8px;background:#fff;border-radius:10px;border:1px solid var(--line)}.cx__qr svg,.cx__qr img{display:block;width:100%;height:100%}
+.cx__net{margin:0 0 8px;font-size:.9rem}.cx__warn{margin:0;font-size:.82rem;color:var(--err)}
+.cx__addr{display:flex;gap:8px;align-items:center;margin:0 0 8px}.cx__addr code{flex:1;min-width:0;overflow-wrap:anywhere;font-size:.85rem;padding:8px 10px;border-radius:8px;background:var(--bg);border:1px solid var(--line)}
+.cx__btn2{padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font:inherit;font-size:.85rem;cursor:pointer;white-space:nowrap}
+.cx ol{margin:0 0 14px;padding-left:20px;font-size:.9rem;color:var(--ink-2)}.cx ol li{margin:2px 0}
+.cx form{display:grid;gap:10px}.cx form .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cx label{display:grid;gap:4px;font-size:.82rem;color:var(--muted)}
+.cx input[type=text],.cx input[type=email],.cx input[type=tel]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;font-size:.95rem}
+.cx input[type=file]{font:inherit;font-size:.9rem;color:var(--ink)}
+.cx__file{padding:12px;border:1px dashed var(--brass);border-radius:10px;background:var(--bg)}
+.cx .btn{width:100%}
+.cx__note{margin:10px 0 0;font-size:.82rem;color:var(--muted)}
+.cx__msg{margin:6px 0 0;font-size:.9rem;color:var(--err)}
+.cx__done{display:grid;gap:10px}.cx__done dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0;font-size:.95rem}.cx__done dt{color:var(--muted)}.cx__done dd{margin:0;font-weight:500}
+@media (max-width:820px){.cx__grid{grid-template-columns:1fr}.cx form .two{grid-template-columns:1fr}}
+@media (max-width:460px){.cx__pay{grid-template-columns:1fr;justify-items:center}.cx__qr{width:190px;height:190px}}
 </style>
 
 
@@ -582,7 +612,7 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
         </div>
         <ul class="lines" id="qLines"><li><span>Weeknights (Sun–Thu)</span><span>from £125</span></li><li><span>Fri &amp; Sat nights</span><span>from £152</span></li></ul>
         <div class="promo" id="qPromoBox" hidden><label class="sr-only" for="qPromo">Discount code</label><input id="qPromo" type="text" placeholder="Discount code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40"><button type="button" id="qPromoBtn">Apply</button></div><p class="promo__msg" id="qPromoMsg" role="status" hidden></p>
-        <button class="btn btn--primary" id="qPay" type="button" disabled hidden>Book now &amp; pay securely</button>
+        <button class="btn btn--primary" id="qPay" type="button" disabled hidden>Book now &amp; pay securely</button><p class="pay__hint" id="qCxHint" hidden>Pay with crypto and save 10%</p>
         <a class="btn btn--primary" id="qDirect" href="#contact" aria-disabled="true">Request to book</a>
         <p class="pay__msg" id="qPayMsg" role="status" hidden></p>
         <div class="btn-row" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
@@ -808,7 +838,7 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
       <p><b>Who we are.</b> Your London Stay is run by Darko, a sole trader based at Lampeter Square, London W6. Contact: 4yourlondonstay@gmail.com, +44 7848 108122.</p>
       <p><b>What we collect.</b> When you use the contact form or message us, we receive your name, email, phone number (if given), dates, number of guests and your message. This website sets no cookies and stores nothing on your device. To improve the site we count visits anonymously on our own server (country, page sections viewed and buttons used); we never store your IP address and cannot identify you.</p>
       <p><b>Why.</b> To answer your enquiry and, if you book, to arrange your stay (taking steps at your request before a contract). We do not use your details for marketing without your consent.</p>
-      <p><b>Who else handles it.</b> Our website host (Netlify); our payment provider (Stripe), which processes your card payment and booking details when you book online; our form service (FormSubmit), which forwards your messages and booking details to our email (Google Gmail); and WhatsApp if you choose to contact us there. Some of these providers are based outside the UK.</p>
+      <p><b>Who else handles it.</b> Our website host (Netlify); our payment provider (Stripe), which processes your card payment and booking details when you book online; our website host's storage (Netlify Blobs), which keeps the transaction screenshot you upload if you pay with crypto; our form service (FormSubmit), which forwards your messages and booking details to our email (Google Gmail); and WhatsApp if you choose to contact us there. Some of these providers are based outside the UK.</p>
       <p><b>How long.</b> Enquiries that don't lead to a booking are deleted within 12 months. Booking records are kept for 6 years for tax purposes.</p>
       <p><b>Your rights.</b> You can ask to see, correct or delete your data, or object to its use, by emailing us. You can also complain to the Information Commissioner's Office (ico.org.uk).</p>
     </div></details>
@@ -842,6 +872,48 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
 <a class="wa-float" id="waFloat" href="https://wa.me/447848108122?text=Hello%20Darko%2C%20I%27m%20interested%20in%20staying%20at%20Your%20London%20Stay." target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.2Z"/></svg></a>
 <div class="mbar"><div><b>£125</b> <span>/ night, from</span></div><a class="btn btn--primary" href="#book">Check dates</a></div>
 
+<div class="cx" id="cx" hidden role="dialog" aria-modal="true" aria-labelledby="cxH">
+  <div class="cx__box">
+    <button type="button" class="cx__x" id="cxClose" aria-label="Close">&times;</button>
+    <h2 id="cxH" tabindex="-1">How would you like to pay?</h2>
+    <p class="cx__sum" id="cxSum"></p>
+    <div class="cx__grid">
+      <section class="cx__col cx__col--c" id="cxCrypto" aria-labelledby="cxCH">
+        <div id="cxStep">
+          <p class="cx__tag" id="cxTag">Save 10%</p>
+          <h3 id="cxCH">Pay with crypto</h3>
+          <div class="cx__price"><b id="cxGbp">…</b><s id="cxFull"></s></div>
+          <p class="cx__amt" id="cxAmt"></p>
+          <div class="cx__pay">
+            <div class="cx__qr" id="cxQr" role="img" aria-label="QR code of our wallet address"></div>
+            <div>
+              <p class="cx__net">Send only <b id="cxCoin">USDT</b> on the <b id="cxNet">TRC20</b> network to:</p>
+              <div class="cx__addr"><code id="cxAddr"></code><button type="button" class="cx__btn2" id="cxCopy">Copy</button></div>
+              <p class="cx__warn">Other coins or networks can't be recovered.</p>
+            </div>
+          </div>
+          <ol><li>Scan the QR code or copy the address in your wallet app.</li><li>Send the amount shown above.</li><li>Take a screenshot of the completed transaction and upload it below.</li></ol>
+          <form id="cxForm" novalidate>
+            <div class="two"><label>Full name<input type="text" name="name" autocomplete="name" required maxlength="80"></label><label>Email<input type="email" name="email" autocomplete="email" required maxlength="120"></label></div>
+            <div class="two"><label>WhatsApp / phone (optional)<input type="tel" name="phone" autocomplete="tel" maxlength="40"></label><label>Transaction ID / hash (optional)<input type="text" name="txid" maxlength="160" autocomplete="off" spellcheck="false"></label></div>
+            <label class="cx__file">Screenshot of your transaction<input type="file" name="screenshot" id="cxFile" accept="image/*" required></label>
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+            <button class="btn btn--primary" type="submit" id="cxSend">Confirm my payment</button>
+            <p class="cx__msg" id="cxMsg" role="alert" hidden></p>
+          </form>
+          <p class="cx__note">We check every payment on the blockchain and confirm your dates by email or WhatsApp, usually within a few hours. If we can't confirm the dates, we refund the full amount to the wallet it came from.</p>
+        </div>
+      </section>
+      <section class="cx__col" id="cxCard" aria-labelledby="cxKH">
+        <h3 id="cxKH">Pay by card</h3>
+        <div class="cx__price"><b id="cxCardGbp"></b></div>
+        <p class="cx__amt">Visa, Mastercard, Amex, Apple Pay and Google Pay, through Stripe's secure payment page.</p>
+        <button class="btn btn--line" type="button" id="cxStripe">Continue to card payment</button>
+        <p class="cx__note">Your card is only held. We take the payment once we confirm your dates.</p>
+      </section>
+    </div>
+  </div>
+</div>
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
   <div class="lb__top"><span id="lbCap"></span><button type="button" id="lbClose" aria-label="Close">&times;</button></div>
   <div class="lb__stage"><img id="lbImg" alt=""></div>
@@ -1115,9 +1187,10 @@ function say(t,bad){msg.hidden=false;msg.textContent=t;msg.classList.toggle("pay
 function psay(t,cls){pMsg.hidden=!t;pMsg.textContent=t||"";pMsg.className="promo__msg"+(cls?" promo__msg--"+cls:"");}
 const sp=new URLSearchParams(location.search),q=sp.get("booking"),sid=sp.get("session");
 const tcode=null;try{sessionStorage.removeItem("ylsTestPay");}catch(e){}
+let stripeOn=false;
 function rerender(){const g=document.getElementById("qGuests");if(g)g.dispatchEvent(new Event("change"));}
 fetch("/api/checkout"+(tcode?"?testpay="+encodeURIComponent(tcode):""),{cache:"no-store"}).then(function(r){return r.json();}).then(function(c){
-  if(!c||!c.enabled)return;window.ylsPayOn=true;pay.hidden=false;pBox.hidden=false;
+  if(!c||!c.enabled)return;stripeOn=true;window.ylsPayOn=true;pay.hidden=false;pBox.hidden=false;
   const L=window.ylsQuote&&window.ylsQuote();pay.disabled=!L;
   const qd=document.getElementById("qDirect");qd.textContent="Ask a question first";qd.classList.remove("btn--primary");qd.classList.add("btn--line");
 }).catch(function(){});
@@ -1156,15 +1229,71 @@ if(q==="success"){
 }
 if(q==="cancelled"){say("Payment was cancelled. Your card has not been charged.",true);if(window.ylsT)ylsT("pay_cancel",{});
   window.addEventListener("load",function(){const b=document.getElementById("book");if(b)b.scrollIntoView();});}
-pay.addEventListener("click",async function(){
+const kd=function(t){return new Date(t).toISOString().slice(0,10);};
+async function goStripe(btn){
   const L=window.ylsQuote&&window.ylsQuote();
   if(!L)return;
-  const k=function(t){return new Date(t).toISOString().slice(0,10);};
-  if(window.ylsT)ylsT("pay_click",{in:k(L.cin),n:L.n,tot:L.tot});
-  pay.disabled=true;const lbl=pay.textContent;pay.textContent="Opening secure payment…";
-  try{const r=await fetch("/api/checkout",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({checkIn:k(L.cin),checkOut:k(L.cout),guests:L.g,promo:window.ylsPromoInfo?window.ylsPromoInfo.code:undefined,testCode:tcode||undefined})});
-    const d=await r.json();if(r.ok&&d.url){if(window.ylsT)ylsT("pay_redirect",{tot:L.tot});setTimeout(function(){location.href=d.url;},150);return;}const em=d.error||"Something went wrong. Please message us.";if(window.ylsT)ylsT("pay_err",{msg:em,st:r.status});say(em,true);}
-  catch(e){if(window.ylsT)ylsT("pay_err",{msg:"connection"});say("Connection problem. Please try again or message us.",true);}
-  pay.disabled=false;pay.textContent=lbl;});}
+  if(window.ylsT)ylsT("pay_click",{in:kd(L.cin),n:L.n,tot:L.tot});
+  btn.disabled=true;const lbl=btn.textContent;btn.textContent="Opening secure payment…";
+  try{const r=await fetch("/api/checkout",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({checkIn:kd(L.cin),checkOut:kd(L.cout),guests:L.g,promo:window.ylsPromoInfo?window.ylsPromoInfo.code:undefined,testCode:tcode||undefined})});
+    const d=await r.json();if(r.ok&&d.url){if(window.ylsT)ylsT("pay_redirect",{tot:L.tot});setTimeout(function(){location.href=d.url;},150);return;}const em=d.error||"Something went wrong. Please message us.";if(window.ylsT)ylsT("pay_err",{msg:em,st:r.status});closeCx();say(em,true);}
+  catch(e){if(window.ylsT)ylsT("pay_err",{msg:"connection"});closeCx();say("Connection problem. Please try again or message us.",true);}
+  btn.disabled=false;btn.textContent=lbl;}
+/* Crypto payment (10% off): QR + address, guest uploads a screenshot of the transaction. Settings live in Netlify env (see netlify/functions/crypto.mjs). */
+const cx=document.getElementById("cx"),cxE=function(i){return document.getElementById(i);};let cxCfg=null,cxLast=null,cxQ=null;
+fetch("/api/crypto",{cache:"no-store"}).then(function(r){return r.json();}).then(function(c){
+  if(!c||!c.enabled)return;cxCfg=c;pay.hidden=false;cxE("qCxHint").hidden=false;cxE("qCxHint").textContent="Pay with crypto and save "+c.discount+"%";
+  const L=window.ylsQuote&&window.ylsQuote();pay.disabled=!L;window.ylsPayOn=true;
+  const qd=document.getElementById("qDirect");qd.textContent="Ask a question first";qd.classList.remove("btn--primary");qd.classList.add("btn--line");
+}).catch(function(){});
+function loadQr(cb){if(window.qrcode)return cb();const sc=document.createElement("script");sc.src="/js/qrcode.js";sc.onload=cb;sc.onerror=function(){cxE("cxQr").hidden=true;};document.head.appendChild(sc);}
+function closeCx(){if(cx.hidden)return;cx.hidden=true;document.body.style.overflow="";if(cxLast)cxLast.focus();}
+function cxErr(t){const m=cxE("cxMsg");m.hidden=!t;m.textContent=t||"";}
+async function openCx(){
+  const L=window.ylsQuote&&window.ylsQuote();if(!L)return;
+  cxLast=document.activeElement;cxQ=L;cx.hidden=false;document.body.style.overflow="hidden";cxE("cxH").focus();
+  cxE("cxSum").textContent=new Date(L.cin).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"})+" to "+new Date(L.cout).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric",timeZone:"UTC"})+" · "+L.n+(L.n>1?" nights":" night")+" · "+L.g+(L.g>1?" guests":" guest");
+  cxE("cxCard").hidden=!stripeOn;cxE("cxCardGbp").textContent="£"+(Math.round(L.tot*100)/100).toFixed(2);
+  cxE("cxTag").textContent="Save "+cxCfg.discount+"%";cxE("cxCoin").textContent=cxCfg.coin;cxE("cxNet").textContent=cxCfg.network;cxE("cxAddr").textContent=cxCfg.address;
+  cxE("cxGbp").textContent="…";cxE("cxFull").textContent="";cxE("cxAmt").textContent="Calculating your crypto price…";cxErr("");
+  loadQr(function(){try{const qr=qrcode(0,"M");qr.addData(cxCfg.address);qr.make();cxE("cxQr").innerHTML=qr.createSvgTag({cellSize:4,margin:0,scalable:true});}catch(e){cxE("cxQr").hidden=true;}});
+  if(window.ylsT)ylsT("cx_open",{in:kd(L.cin),n:L.n});
+  try{const r=await fetch("/api/crypto?checkIn="+kd(L.cin)+"&checkOut="+kd(L.cout)+"&guests="+L.g,{cache:"no-store"});const d=await r.json();
+    if(!r.ok||d.error){cxE("cxGbp").textContent="";cxE("cxAmt").textContent=d.error||"Crypto price not available. Please pay by card or message us.";return;}
+    cxE("cxGbp").textContent="£"+d.gbp;cxE("cxFull").textContent="£"+d.full;
+    cxE("cxAmt").textContent=(d.amount?"Send about "+d.amount+" "+cxCfg.coin+" (today's rate), ":"Send the equivalent of £"+d.gbp+" in "+cxCfg.coin+", ")+cxCfg.discount+"% off the regular price. Discount codes don't apply to crypto payments.";}
+  catch(e){cxE("cxAmt").textContent="Connection problem. Please try again.";}
+}
+cxE("cxClose").addEventListener("click",closeCx);
+cx.addEventListener("click",function(e){if(e.target===cx)closeCx();});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeCx();});
+cxE("cxStripe").addEventListener("click",function(){goStripe(cxE("cxStripe"));});
+cxE("cxCopy").addEventListener("click",function(){const b=cxE("cxCopy"),a=cxCfg.address;function sel(){const r=document.createRange();r.selectNodeContents(cxE("cxAddr"));const x=getSelection();x.removeAllRanges();x.addRange(r);b.textContent="Selected";}try{navigator.clipboard.writeText(a).then(function(){b.textContent="Copied";if(window.ylsT)ylsT("clk",{t:"cx_copy"});},sel);}catch(e){sel();}});
+function shrink(file){return new Promise(function(res){
+  if(!/^image\/(jpeg|png|webp)$/.test(file.type)||file.size<1.2e6)return res(file);
+  const img=new Image(),u=URL.createObjectURL(file);
+  img.onload=function(){try{const m=1800,sc=Math.min(1,m/Math.max(img.width,img.height)),c=document.createElement("canvas");c.width=Math.round(img.width*sc);c.height=Math.round(img.height*sc);c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);c.toBlob(function(b){res(b&&b.size<file.size?new File([b],"screenshot.jpg",{type:"image/jpeg"}):file);},"image/jpeg",.85);}catch(e){res(file);}};
+  img.onerror=function(){URL.revokeObjectURL(u);res(file);};img.src=u;});}
+cxE("cxForm").addEventListener("submit",async function(e){
+  e.preventDefault();const f=e.target,L=cxQ;if(!L)return;cxErr("");
+  if(f.name.value.trim().length<2)return cxErr("Please enter your full name.");
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.value.trim()))return cxErr("Please enter a valid email address.");
+  const file=cxE("cxFile").files[0];if(!file)return cxErr("Please attach a screenshot of your transaction.");
+  const btn=cxE("cxSend");btn.disabled=true;btn.textContent="Sending…";
+  try{const fd=new FormData(f);fd.set("screenshot",await shrink(file));fd.set("checkIn",kd(L.cin));fd.set("checkOut",kd(L.cout));fd.set("guests",String(L.g));
+    if(fd.get("screenshot").size>5e6){cxErr("The screenshot is too large. Please use a smaller image (under 5 MB).");throw 0;}
+    const r=await fetch("/api/crypto",{method:"POST",body:fd});const d=await r.json();
+    if(!r.ok||!d.ok){cxErr(d.error||"Something went wrong. Please try again or message us.");throw 0;}
+    if(d.notify&&d.notify.to)fetch("https://formsubmit.co/ajax/"+encodeURIComponent(d.notify.to),{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(d.notify.data)}).catch(function(){});
+    if(window.ylsT)ylsT("cx_sent",{tot:+d.gbp});
+    const st=cxE("cxStep");st.innerHTML="";const box=document.createElement("div");box.className="cx__done";
+    const h=document.createElement("h3");h.textContent="Thank you! Payment confirmation received";box.appendChild(h);
+    const dl=document.createElement("dl");[["Reference",d.ref],["Dates",d.check_in+" to "+d.check_out],["Guests",d.guests+" · "+d.nights+(d.nights=="1"?" night":" nights")],["Amount","£"+d.gbp+" in "+cxCfg.coin]].forEach(function(x){const t=document.createElement("dt");t.textContent=x[0];const v=document.createElement("dd");v.textContent=x[1];dl.appendChild(t);dl.appendChild(v);});box.appendChild(dl);
+    const p=document.createElement("p");p.className="cx__note";p.textContent="We're checking your payment now and will confirm your dates by email or WhatsApp, usually within a few hours. A copy has been sent to "+d.email+" (check spam).";box.appendChild(p);
+    const w=document.createElement("a");w.className="btn btn--wa";w.href="https://wa.me/447848108122?text="+encodeURIComponent("Hello Darko, I've paid for my booking "+d.ref+" with crypto.");w.target="_blank";w.rel="noopener";w.textContent="WhatsApp Darko";box.appendChild(w);
+    st.appendChild(box);cxE("cxCard").hidden=true;return;
+  }catch(x){if(x!==0){if(window.ylsT)ylsT("cx_err",{});cxErr("Connection problem. Please try again or message us.");}}
+  btn.disabled=false;btn.textContent="Confirm my payment";});
+pay.addEventListener("click",function(){if(cxCfg)openCx();else goStripe(pay);});}
 </script>
 </body></html>
