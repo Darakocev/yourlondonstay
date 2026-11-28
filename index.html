@@ -427,7 +427,6 @@ h1,h2,h3,.logo b{font-family:var(--display);font-weight:500;letter-spacing:0}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}.promo{display:flex;gap:8px;margin:14px 0 4px}.promo input{flex:1;min-width:0;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:var(--bg);font:inherit;text-transform:uppercase}.promo button{padding:10px 16px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font:inherit;cursor:pointer}.promo__msg{font-size:.85rem;margin:0 0 8px;color:var(--muted)}.promo__msg--ok{color:var(--ok)}.promo__msg--err{color:#8a2e24}
 .pay__msg--err{background:#fbecea;color:#8a2e24}
 html,body{overflow-x:clip}
-.pay__hint{margin:8px 0 0;font-size:.85rem;color:var(--ok);text-align:center}
 .cx{position:fixed;inset:0;z-index:90;background:rgba(8,11,18,.72);overflow-y:auto;padding:max(16px,env(safe-area-inset-top,0px)) 14px 24px;display:flex;justify-content:center;align-items:flex-start}
 .cx__box{position:relative;width:min(980px,100%);margin:auto 0;background:var(--bg);color:var(--ink);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:clamp(18px,2.4vw,34px)}
 .cx__x{position:absolute;top:10px;right:10px;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink);font-size:1.4rem;line-height:1;cursor:pointer}
@@ -437,7 +436,7 @@ html,body{overflow-x:clip}
 .cx__col{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(16px,2vw,26px)}
 .cx__col--c{border-color:var(--brass);box-shadow:0 0 0 1px var(--brass) inset}
 .cx__col h3{margin:0 0 6px;font-size:1.15rem;font-weight:600}
-.cx__tag{display:inline-block;margin:0 0 8px;padding:4px 10px;border-radius:999px;background:var(--brass);color:#fff;font-size:.75rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.cx__col--c h3{color:var(--brass)}
 .cx__price{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:4px 0}.cx__price b{font-size:1.7rem;font-weight:600}.cx__price s{color:var(--muted)}
 .cx__amt{margin:0 0 12px;font-size:.92rem;color:var(--ink-2)}
 .cx__pay{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;margin:10px 0 14px}
@@ -612,7 +611,7 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
         </div>
         <ul class="lines" id="qLines"><li><span>Weeknights (Sun–Thu)</span><span>from £125</span></li><li><span>Fri &amp; Sat nights</span><span>from £152</span></li></ul>
         <div class="promo" id="qPromoBox" hidden><label class="sr-only" for="qPromo">Discount code</label><input id="qPromo" type="text" placeholder="Discount code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40"><button type="button" id="qPromoBtn">Apply</button></div><p class="promo__msg" id="qPromoMsg" role="status" hidden></p>
-        <button class="btn btn--primary" id="qPay" type="button" disabled hidden>Book now &amp; pay securely</button><p class="pay__hint" id="qCxHint" hidden>Pay with crypto and save 10%</p>
+        <button class="btn btn--primary" id="qPay" type="button" disabled hidden>Book now</button>
         <a class="btn btn--primary" id="qDirect" href="#contact" aria-disabled="true">Request to book</a>
         <p class="pay__msg" id="qPayMsg" role="status" hidden></p>
         <div class="btn-row" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
@@ -880,8 +879,7 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
     <div class="cx__grid">
       <section class="cx__col cx__col--c" id="cxCrypto" aria-labelledby="cxCH">
         <div id="cxStep">
-          <p class="cx__tag" id="cxTag">Save 10%</p>
-          <h3 id="cxCH">Pay with crypto</h3>
+          <h3 id="cxCH">Pay with crypto and save 10%</h3>
           <div class="cx__price"><b id="cxGbp">…</b><s id="cxFull"></s></div>
           <p class="cx__amt" id="cxAmt"></p>
           <div class="cx__pay">
@@ -1192,7 +1190,7 @@ function rerender(){const g=document.getElementById("qGuests");if(g)g.dispatchEv
 fetch("/api/checkout"+(tcode?"?testpay="+encodeURIComponent(tcode):""),{cache:"no-store"}).then(function(r){return r.json();}).then(function(c){
   if(!c||!c.enabled)return;stripeOn=true;window.ylsPayOn=true;pay.hidden=false;pBox.hidden=false;
   const L=window.ylsQuote&&window.ylsQuote();pay.disabled=!L;
-  const qd=document.getElementById("qDirect");qd.textContent="Ask a question first";qd.classList.remove("btn--primary");qd.classList.add("btn--line");
+  document.getElementById("qDirect").hidden=true;
 }).catch(function(){});
 async function applyPromo(){
   const code=pIn.value.trim().toUpperCase();
@@ -1242,9 +1240,9 @@ async function goStripe(btn){
 /* Crypto payment (10% off): QR + address, guest uploads a screenshot of the transaction. Settings live in Netlify env (see netlify/functions/crypto.mjs). */
 const cx=document.getElementById("cx"),cxE=function(i){return document.getElementById(i);};let cxCfg=null,cxLast=null,cxQ=null;
 fetch("/api/crypto",{cache:"no-store"}).then(function(r){return r.json();}).then(function(c){
-  if(!c||!c.enabled)return;cxCfg=c;pay.hidden=false;cxE("qCxHint").hidden=false;cxE("qCxHint").textContent="Pay with crypto and save "+c.discount+"%";
+  if(!c||!c.enabled)return;cxCfg=c;pay.hidden=false;pBox.hidden=false;
   const L=window.ylsQuote&&window.ylsQuote();pay.disabled=!L;window.ylsPayOn=true;
-  const qd=document.getElementById("qDirect");qd.textContent="Ask a question first";qd.classList.remove("btn--primary");qd.classList.add("btn--line");
+  document.getElementById("qDirect").hidden=true;
 }).catch(function(){});
 function loadQr(cb){if(window.qrcode)return cb();const sc=document.createElement("script");sc.src="/js/qrcode.js";sc.onload=cb;sc.onerror=function(){cxE("cxQr").hidden=true;};document.head.appendChild(sc);}
 function closeCx(){if(cx.hidden)return;cx.hidden=true;document.body.style.overflow="";if(cxLast)cxLast.focus();}
@@ -1254,14 +1252,14 @@ async function openCx(){
   cxLast=document.activeElement;cxQ=L;cx.hidden=false;document.body.style.overflow="hidden";cxE("cxH").focus();
   cxE("cxSum").textContent=new Date(L.cin).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",timeZone:"UTC"})+" to "+new Date(L.cout).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric",timeZone:"UTC"})+" · "+L.n+(L.n>1?" nights":" night")+" · "+L.g+(L.g>1?" guests":" guest");
   cxE("cxCard").hidden=!stripeOn;cxE("cxCardGbp").textContent="£"+(Math.round(L.tot*100)/100).toFixed(2);
-  cxE("cxTag").textContent="Save "+cxCfg.discount+"%";cxE("cxCoin").textContent=cxCfg.coin;cxE("cxNet").textContent=cxCfg.network;cxE("cxAddr").textContent=cxCfg.address;
+  cxE("cxCH").textContent="Pay with crypto and save "+cxCfg.discount+"%";cxE("cxCoin").textContent=cxCfg.coin;cxE("cxNet").textContent=cxCfg.network;cxE("cxAddr").textContent=cxCfg.address;
   cxE("cxGbp").textContent="…";cxE("cxFull").textContent="";cxE("cxAmt").textContent="Calculating your crypto price…";cxErr("");
   loadQr(function(){try{const qr=qrcode(0,"M");qr.addData(cxCfg.address);qr.make();cxE("cxQr").innerHTML=qr.createSvgTag({cellSize:4,margin:0,scalable:true});}catch(e){cxE("cxQr").hidden=true;}});
   if(window.ylsT)ylsT("cx_open",{in:kd(L.cin),n:L.n});
-  try{const r=await fetch("/api/crypto?checkIn="+kd(L.cin)+"&checkOut="+kd(L.cout)+"&guests="+L.g,{cache:"no-store"});const d=await r.json();
+  try{const pc=window.ylsPromoInfo?window.ylsPromoInfo.code:"";const r=await fetch("/api/crypto?checkIn="+kd(L.cin)+"&checkOut="+kd(L.cout)+"&guests="+L.g+(pc?"&promo="+encodeURIComponent(pc):""),{cache:"no-store"});const d=await r.json();
     if(!r.ok||d.error){cxE("cxGbp").textContent="";cxE("cxAmt").textContent=d.error||"Crypto price not available. Please pay by card or message us.";return;}
     cxE("cxGbp").textContent="£"+d.gbp;cxE("cxFull").textContent="£"+d.full;
-    cxE("cxAmt").textContent=(d.amount?"Send about "+d.amount+" "+cxCfg.coin+" (today's rate), ":"Send the equivalent of £"+d.gbp+" in "+cxCfg.coin+", ")+cxCfg.discount+"% off the regular price. Discount codes don't apply to crypto payments.";}
+    cxE("cxAmt").textContent=(d.amount?"Send about "+d.amount+" "+cxCfg.coin+" (today's rate), ":"Send the equivalent of £"+d.gbp+" in "+cxCfg.coin+", ")+cxCfg.discount+"% off the card price"+(pc?" (code "+pc+" included)":"")+".";}
   catch(e){cxE("cxAmt").textContent="Connection problem. Please try again.";}
 }
 cxE("cxClose").addEventListener("click",closeCx);
@@ -1280,7 +1278,7 @@ cxE("cxForm").addEventListener("submit",async function(e){
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.email.value.trim()))return cxErr("Please enter a valid email address.");
   const file=cxE("cxFile").files[0];if(!file)return cxErr("Please attach a screenshot of your transaction.");
   const btn=cxE("cxSend");btn.disabled=true;btn.textContent="Sending…";
-  try{const fd=new FormData(f);fd.set("screenshot",await shrink(file));fd.set("checkIn",kd(L.cin));fd.set("checkOut",kd(L.cout));fd.set("guests",String(L.g));
+  try{const fd=new FormData(f);fd.set("screenshot",await shrink(file));fd.set("checkIn",kd(L.cin));fd.set("checkOut",kd(L.cout));fd.set("guests",String(L.g));if(window.ylsPromoInfo)fd.set("promo",window.ylsPromoInfo.code);
     if(fd.get("screenshot").size>5e6){cxErr("The screenshot is too large. Please use a smaller image (under 5 MB).");throw 0;}
     const r=await fetch("/api/crypto",{method:"POST",body:fd});const d=await r.json();
     if(!r.ok||!d.ok){cxErr(d.error||"Something went wrong. Please try again or message us.");throw 0;}

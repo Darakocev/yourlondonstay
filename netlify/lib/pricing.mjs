@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 // Shared price rules for card (checkout.mjs) and crypto (crypto.mjs) bookings.
 // Keep these numbers in sync with CFG in index.html.
 export const CFG = {
@@ -31,3 +32,15 @@ export function priceStay(checkIn, checkOut, guests) {
   let disc = 0; for (const [min, p] of CFG.discounts) if (n >= min) { disc = Math.round(sub * p * 100) / 100; break; }
   return { cin, cout, g, n, sub, disc };
 }
+
+// Discount codes. Only SHA-256 hashes are stored, so the public code does not reveal them.
+// To add a code: run  printf %s "CODE" | sha256sum  and add a line here.
+const PROMOS = {
+  "43f870f625677a868d0ac7a341780e027b590e88ae3952d4911808d0fbd65c9c": { type: "fixed", pence: 100, label: "Special price" }, // owner test code
+  "1b32369945793aa89de9acc14a70fd7bd6d0bc61dab2d2251e186b6960e40a0d": { type: "percent", value: 10, label: "10% off" },
+};
+export const normCode = (c) => String(c || "").trim().toUpperCase().replace(/\s+/g, "").slice(0, 40);
+export const promoFor = (c) => { const n = normCode(c); return n ? PROMOS[createHash("sha256").update(n).digest("hex")] || null : null; };
+
+// Applies a discount code to a price in pence (same rules for card and crypto).
+export const applyPromo = (pence, promo) => promo ? Math.max(0, promo.type === "percent" ? Math.round(pence * (100 - promo.value) / 100) : promo.pence) : pence;

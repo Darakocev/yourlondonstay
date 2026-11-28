@@ -10,7 +10,7 @@
 //   CRYPTO_ENABLED   set to "false" to hide crypto without removing the address
 import { getStore } from "@netlify/blobs";
 import { randomBytes, timingSafeEqual } from "node:crypto";
-import { key, priceStay } from "../lib/pricing.mjs";
+import { key, priceStay, promoFor, normCode, applyPromo } from "../lib/pricing.mjs";
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });
 // Owner's BNB Chain wallet (checked: QR code and EIP-55 checksum). Netlify env CRYPTO_ADDRESS overrides it.
@@ -47,9 +47,11 @@ const coinAmount = (gbp, rate, coin) => {
 const quote = (c, d) => {
   const P = priceStay(d.checkIn, d.checkOut, d.guests);
   if (P.error) return P;
-  const full = Math.round((P.sub - P.disc) * 100) / 100;
+  // Discount code first (same as card), then the crypto discount on top.
+  const promo = promoFor(d.promo);
+  const full = applyPromo(Math.round((P.sub - P.disc) * 100), promo) / 100;
   const gbp = Math.round(full * (100 - c.discount)) / 100;
-  return { ...P, full, gbp };
+  return { ...P, full, gbp, code: promo ? normCode(d.promo) : "" };
 };
 const clean = (v, max = 200) => String(v == null ? "" : v).replace(/[\u0000-\u001f\u007f]/g, " ").trim().slice(0, max);
 const IMG = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/heic": "heic", "image/heif": "heif" };
@@ -72,7 +74,7 @@ export default async (req) => {
     if (!c.enabled) return json({ enabled: false });
     const base = { enabled: true, address: c.address, coin: c.coin, network: c.network, discount: c.discount };
     if (!u.searchParams.has("checkIn")) return json(base);
-    const q = quote(c, { checkIn: u.searchParams.get("checkIn"), checkOut: u.searchParams.get("checkOut"), guests: u.searchParams.get("guests") });
+    const q = quote(c, { checkIn: u.searchParams.get("checkIn"), checkOut: u.searchParams.get("checkOut"), guests: u.searchParams.get("guests"), promo: u.searchParams.get("promo") });
     if (q.error) return json({ ...base, error: q.error }, q.status);
     const rate = await gbpRate(c.coin);
     return json({ ...base, full: q.full.toFixed(2), gbp: q.gbp.toFixed(2), amount: coinAmount(q.gbp, rate, c.coin), nights: q.n });
@@ -93,7 +95,7 @@ export default async (req) => {
   if (!type) return json({ error: "The screenshot must be a JPG, PNG, WEBP or HEIC image." }, 400);
   if (file.size > 5e6) return json({ error: "The screenshot is too large. Please use a smaller image (under 5 MB)." }, 413);
 
-  const q = quote(c, { checkIn: f.get("checkIn"), checkOut: f.get("checkOut"), guests: f.get("guests") });
+  const q = quote(c, { checkIn: f.get("checkIn"), checkOut: f.get("checkOut"), guests: f.get("guests"), promo: f.get("promo") });
   if (q.error) return json({ error: q.error }, q.status);
   const rate = await gbpRate(c.coin);
 
@@ -102,7 +104,7 @@ export default async (req) => {
   const rec = {
     reference: ref, payment_method: `Crypto ${c.coin} (${c.network})`, payment_status: "UNVERIFIED: check the wallet before confirming",
     check_in: key(q.cin), check_out: key(q.cout), nights: String(q.n), guests: String(q.g),
-    amount_due: `£${q.gbp.toFixed(2)} (${c.discount}% crypto discount on £${q.full.toFixed(2)})`,
+    amount_due: `£${q.gbp.toFixed(2)} (${c.discount}% crypto discount on £${q.full.toFixed(2)})`, discount_code: q.code || "none",
     approx_coin_amount: rate ? `${coinAmount(q.gbp, rate, c.coin)} ${c.coin} at £${rate} per ${c.coin}` : "rate not available",
     wallet: c.address, transaction_id: txid || "not given",
     guest_name: name, guest_email: email, guest_phone: phone || "not given",
@@ -119,7 +121,7 @@ export default async (req) => {
   const notify = {
     to: process.env.BOOKING_EMAIL || "4yourlondonstay@gmail.com",
     data: {
-      _subject: `CRYPTO booking ${ref} · ${rec.check_in} to ${rec.check_out} · £${q.gbp.toFixed(2)} · VERIFY PAYMENT`,
+      _subject: `CRYPTO booking ${ref} · ${rec.check_in} to ${rec.check_out} · £${q.gbp.toFixed(2)}${q.code ? " · code " + q.code : ""} · VERIFY PAYMENT`,
       _template: "table", _captcha: "false", email, _replyto: email, _autoresponse: guestText,
       ...rec,
     },

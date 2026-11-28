@@ -1,7 +1,7 @@
 // Creates a Stripe Checkout session for a direct booking.
 // The price is recalculated here from the same rules as the website calendar,
 // so a visitor cannot change the amount they pay.
-import { key, priceStay } from "../lib/pricing.mjs";
+import { key, priceStay, promoFor, normCode } from "../lib/pricing.mjs";
 // Private test payment: open the site with ?testpay=<TEST_PAY_CODE> to pay a small fixed amount
 // (TEST_PAY_PENCE, default 100 = £1, Stripe minimum is 30p). Works even while PAYMENTS_ENABLED is off,
 // so the owner can test a real card and refund before guests see the button.
@@ -13,15 +13,6 @@ const isTest = (code) => {
 };
 const testPence = () => Math.max(30, Math.floor(Number(process.env.TEST_PAY_PENCE) || 100));
 const keyMode = (k) => (/^(sk|rk)_live_/.test(k || "") ? "live" : /^(sk|rk)_test_/.test(k || "") ? "test" : "none");
-// Discount codes. Only SHA-256 hashes are stored, so the public code does not reveal them.
-// To add a code: run  printf %s "CODE" | sha256sum  and add a line here.
-import { createHash } from "node:crypto";
-const PROMOS = {
-  "43f870f625677a868d0ac7a341780e027b590e88ae3952d4911808d0fbd65c9c": { type: "fixed", pence: 100, label: "Special price" }, // owner test code
-  "1b32369945793aa89de9acc14a70fd7bd6d0bc61dab2d2251e186b6960e40a0d": { type: "percent", value: 10, label: "10% off" },
-};
-const normCode = (c) => String(c || "").trim().toUpperCase().replace(/\s+/g, "").slice(0, 40);
-const promoFor = (c) => { const n = normCode(c); return n ? PROMOS[createHash("sha256").update(n).digest("hex")] || null : null; };
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });
 
 export default async (req) => {
