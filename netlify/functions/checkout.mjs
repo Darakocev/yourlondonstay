@@ -107,8 +107,8 @@ export default async (req) => {
     expires_at: String(Math.floor(Date.now() / 1000) + 35 * 60),
     "phone_number_collection[enabled]": "true",
     "billing_address_collection": "required",
-    success_url: `${origin}/?booking=success&session={CHECKOUT_SESSION_ID}#book`,
-    cancel_url: `${origin}/?booking=cancelled#book`,
+    success_url: `${origin}/?booking=success&session={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origin}/?booking=cancelled`,
   });
   const r = await fetch("https://api.stripe.com/v1/checkout/sessions", {
     method: "POST",
