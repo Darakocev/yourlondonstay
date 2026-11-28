@@ -1111,13 +1111,12 @@ document.querySelectorAll(".has-sub>a").forEach(function(a){a.addEventListener("
 function say(t,bad){msg.hidden=false;msg.textContent=t;msg.classList.toggle("pay__msg--err",!!bad);}
 function psay(t,cls){pMsg.hidden=!t;pMsg.textContent=t||"";pMsg.className="promo__msg"+(cls?" promo__msg--"+cls:"");}
 const sp=new URLSearchParams(location.search),q=sp.get("booking"),sid=sp.get("session");
-let tcode=sp.get("testpay");try{if(tcode)sessionStorage.setItem("ylsTestPay",tcode);else tcode=sessionStorage.getItem("ylsTestPay");}catch(e){}
+const tcode=null;try{sessionStorage.removeItem("ylsTestPay");}catch(e){}
 function rerender(){const g=document.getElementById("qGuests");if(g)g.dispatchEvent(new Event("change"));}
 fetch("/api/checkout"+(tcode?"?testpay="+encodeURIComponent(tcode):""),{cache:"no-store"}).then(function(r){return r.json();}).then(function(c){
   if(!c||!c.enabled)return;window.ylsPayOn=true;pay.hidden=false;pBox.hidden=false;
   const L=window.ylsQuote&&window.ylsQuote();pay.disabled=!L;
-  document.getElementById("qDirect").textContent="Ask a question first";
-  if(c.test)pay.textContent="TEST: pay small amount ("+(c.mode||"")+")";
+  const qd=document.getElementById("qDirect");qd.textContent="Ask a question first";qd.classList.remove("btn--primary");qd.classList.add("btn--line");
 }).catch(function(){});
 async function applyPromo(){
   const code=pIn.value.trim().toUpperCase();
