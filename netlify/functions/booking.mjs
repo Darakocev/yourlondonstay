@@ -62,10 +62,9 @@ export default async (req) => {
   const f = await fetch(`${origin}/`, { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded" }, body: new URLSearchParams({ "form-name": "booking", ...rec }).toString() }).catch((e) => ({ ok: false, status: String(e) }));
   if (!f.ok) console.error("Booking form submission failed", f.status);
 
-  // Owner email with all details (approved by the owner) + guest confirmation:
-  // FormSubmit sends _autoresponse to the address in the "email" field. Free, no account;
-  // the very first email asks the owner to activate once.
-  const to = process.env.BOOKING_EMAIL || "4yourlondonstay@gmail.com";
+  // Emails are sent by the guest's browser to FormSubmit (the way FormSubmit is designed to be used;
+  // server-to-server posts are not delivered). Owner gets all booking details (approved by the owner),
+  // the guest gets a confirmation via _autoresponse. Returned only once per booking, so reloads do not resend.
   const first = (rec.guest_name || "").split(" ")[0] || "there";
   const guestText =
     `Hello ${first},\n\nThank you for booking Your London Stay, Hammersmith W6.\n\n` +
@@ -75,20 +74,18 @@ export default async (req) => {
     `The payment is only taken once we confirm. If we cannot confirm your dates, the hold is released and you are not charged.\n\n` +
     `Cancellation: full refund if you cancel at least 45 days before check-in; no refund for later cancellations.\n\n` +
     `Questions? Reply to this email, or WhatsApp +44 7848 108122.\n\nDarko\nYour London Stay · yourlondonstay.com`;
-  const e = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
-    method: "POST",
-    headers: { "content-type": "application/json", accept: "application/json", origin, referer: `${origin}/` },
-    body: JSON.stringify({
+  const notify = {
+    to: process.env.BOOKING_EMAIL || "4yourlondonstay@gmail.com",
+    data: {
       _subject: `New booking ${rec.reference} · ${rec.check_in} to ${rec.check_out} · ${rec.amount_paid}${rec.discount_code ? " · code " + rec.discount_code : ""}`,
       _template: "table",
       _captcha: "false",
       ...(rec.guest_email ? { email: rec.guest_email, _replyto: rec.guest_email, _autoresponse: guestText } : {}),
       ...rec,
-    }),
-  }).catch((err) => ({ ok: false, status: String(err) }));
-  if (!e.ok) console.error("Booking email failed", e.status);
+    },
+  };
 
-  return json(summary(rec));
+  return json({ ...summary(rec), notify });
 };
 
 export const config = { path: "/api/booking" };

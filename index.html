@@ -423,40 +423,13 @@ h1,h2,h3,.logo b{font-family:var(--display);font-weight:500;letter-spacing:0}
 .quote .btn{width:100%}#qDirect{margin-top:10px}
 #qPay[hidden]{display:none!important}#qPay:disabled{opacity:.45;cursor:not-allowed}
 .pay__msg{margin:12px 0 0;padding:12px 14px;border-radius:14px;background:#e8f3ec;color:#1f5a3f;font-size:.92rem}
-.cf{position:fixed;inset:0;z-index:100;overflow-y:auto;background:var(--bg);padding:calc(24px + env(safe-area-inset-top,0px)) 20px 48px}
-.cf__in{max-width:640px;margin:0 auto}
-.cf__tick{width:64px;height:64px;border-radius:50%;background:var(--ok);color:#fff;display:flex;align-items:center;justify-content:center;margin:24px 0 20px}
-.cf h1:focus{outline:none}.cf h1{font-family:var(--display);font-weight:500;font-size:clamp(1.8rem,1.3rem + 2vw,2.6rem);line-height:1.15;margin:0 0 12px}
-.cf__lead{font-size:1.05rem;color:var(--ink-2);margin:0 0 24px}
-.cf__card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:22px 24px;margin:0 0 20px}
-.cf__ref{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.cf__ref b{display:block;font-size:1.4rem;letter-spacing:.06em;color:var(--ink);margin-top:4px}
-.cf dl{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;margin:18px 0 0}
-.cf dt{color:var(--muted)}.cf dd{margin:0;text-align:right;font-weight:500}
-.cf ol{margin:0;padding-left:20px;display:grid;gap:10px;color:var(--ink-2)}
-.cf h2{font-size:1rem;margin:0 0 12px;font-weight:600}
-.cf__btns{display:grid;gap:10px;margin-top:8px}
-@media(min-width:600px){.cf__btns{grid-template-columns:1fr 1fr}}
+.hero h1:focus{outline:none}.cf-dl dd{font-variant-numeric:tabular-nums}.cf-next{margin:14px 0 0;font-size:.88rem;line-height:1.5;color:var(--muted)}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}.promo{display:flex;gap:8px;margin:14px 0 4px}.promo input{flex:1;min-width:0;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:var(--bg);font:inherit;text-transform:uppercase}.promo button{padding:10px 16px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font:inherit;cursor:pointer}.promo__msg{font-size:.85rem;margin:0 0 8px;color:var(--muted)}.promo__msg--ok{color:var(--ok)}.promo__msg--err{color:#8a2e24}
 .pay__msg--err{background:#fbecea;color:#8a2e24}
 html,body{overflow-x:clip}
 </style>
 
 
-<div class="cf" id="cf" role="dialog" aria-modal="true" aria-labelledby="cfH" hidden><div class="cf__in">
-  <div class="cf__tick" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
-  <h1 id="cfH" tabindex="-1">Thank you<span id="cfName"></span>!</h1>
-  <p class="cf__lead">Your booking request and card hold are confirmed. Check your email; we'll confirm your dates shortly.</p>
-  <div class="cf__card"><div class="cf__ref">Booking reference<b id="cfRef">…</b></div>
-    <dl><dt>Check-in</dt><dd id="cfIn">…</dd><dt>Check-out</dt><dd id="cfOut">…</dd><dt>Nights</dt><dd id="cfN">…</dd><dt>Guests</dt><dd id="cfG">…</dd><dt id="cfCodeT" hidden>Discount code</dt><dd id="cfCode" hidden></dd><dt>Held on your card</dt><dd id="cfAmt">…</dd></dl></div>
-  <div class="cf__card"><h2>What happens next</h2><ol>
-    <li>We check your dates and confirm by email or WhatsApp, usually within the hour.</li>
-    <li>Your card is only held now. The payment is taken once we confirm. If we can't confirm your dates, the hold is released and you are not charged.</li>
-    <li>Before you travel, we send your self check-in instructions. Check-in from 12:00, check-out by 11:00.</li></ol>
-    <p id="cfMail" style="margin:14px 0 0;color:var(--muted);font-size:.92rem"></p></div>
-  <div class="cf__btns"><a class="btn btn--wa" href="https://wa.me/447848108122" target="_blank" rel="noopener">WhatsApp Darko</a><a class="btn btn--line" href="/" id="cfClose">Back to the website</a></div>
-  <p style="margin:18px 0 0;color:var(--muted);font-size:.88rem">Cancellation: full refund if you cancel at least 45 days before check-in; no refund for later cancellations. Questions: 4yourlondonstay@gmail.com · +44 7848 108122</p>
-</div></div>
 <script>try{if("scrollRestoration" in history)history.scrollRestoration="manual";}catch(e){}
 window.addEventListener("load",function(){if(new URLSearchParams(location.search).get("booking"))return;var h=location.hash&&location.hash.length>1?document.getElementById(location.hash.slice(1)):null;if(h)h.scrollIntoView();else window.scrollTo(0,0);});</script>
 <header class="hdr" id="top">
@@ -489,7 +462,7 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
     <img src="img/hero.webp" alt="Living room with a corner sofa, full-length curtains and a gold pendant light" fetchpriority="high">
   </picture>
   <div class="wrap hero__in">
-    <div>
+    <div id="heroCopy">
       <p class="eyebrow">Hammersmith · West London</p>
       <h1>Your home <em>in</em> West London</h1>
       <p>A bright, beautifully kept one-bedroom apartment for up to four guests. Ten minutes from the Tube, one direct line from Heathrow and the West End.</p>
@@ -498,7 +471,7 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
         <a class="btn btn--ghost" href="#gallery">See the apartment</a>
       </div>
     </div>
-    <aside class="card-q" aria-label="At a glance">
+    <aside class="card-q" aria-label="At a glance" id="heroCard">
       <div class="card-q__price"><b>£125</b><span>per night, from</span></div>
       <dl>
         <dt>Guests</dt><dd>Up to 4</dd>
@@ -1160,21 +1133,24 @@ async function applyPromo(){
 pBtn.addEventListener("click",applyPromo);
 pIn.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();applyPromo();}});
 if(q==="success"){
-  const cf=document.getElementById("cf"),set=function(i,v){const e=document.getElementById(i);if(e)e.textContent=v;};
+  const esc=function(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});};
   const fd=function(k){const t=Date.parse(k+"T00:00:00Z");return isNaN(t)?k:new Date(t).toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});};
-  cf.hidden=false;document.documentElement.style.overflow="hidden";window.scrollTo(0,0);
-  const h=document.getElementById("cfH");if(h)h.focus();
+  const copy=document.getElementById("heroCopy"),card=document.getElementById("heroCard");
+  const lead="Your booking request and card hold are confirmed. Check your email; we'll confirm your dates shortly.";
+  const paint=function(b){
+    const name=b&&b.first_name?", "+esc(b.first_name):"";
+    copy.innerHTML='<p class="eyebrow">Booking received'+(b&&b.ref?" · "+esc(b.ref):"")+'</p><h1 id="cfH" tabindex="-1">Thank you'+name+'<em>!</em></h1><p>'+lead+'</p><div class="btn-row"><a class="btn btn--light" href="https://wa.me/447848108122" target="_blank" rel="noopener">WhatsApp Darko</a><a class="btn btn--ghost" href="/">Back to the website</a></div>';
+    if(b&&b.ok){card.setAttribute("aria-label","Your booking");
+      card.innerHTML='<div class="card-q__price"><b>'+esc(b.amount)+'</b><span>held on your card</span></div><dl class="cf-dl"><dt>Reference</dt><dd>'+esc(b.ref)+'</dd><dt>Check-in</dt><dd>'+esc(fd(b.check_in))+'</dd><dt>Check-out</dt><dd>'+esc(fd(b.check_out))+'</dd><dt>Guests</dt><dd>'+esc(b.guests)+' · '+esc(b.nights)+(b.nights=="1"?" night":" nights")+'</dd>'+(b.code?'<dt>Code</dt><dd>'+esc(b.code)+'</dd>':'')+'</dl><p class="cf-next">Your card is only held. We confirm your dates by email or WhatsApp, usually within the hour, and only then take the payment. If we can\'t confirm, the hold is released.'+(b.email?' Confirmation sent to '+esc(b.email)+' (check spam).':'')+'</p>';}
+  };
+  paint(null);window.scrollTo(0,0);const h0=document.getElementById("cfH");if(h0)h0.focus({preventScroll:true});
   if(window.ylsT)ylsT("booked",{});
-  document.getElementById("cfClose").addEventListener("click",function(e){e.preventDefault();cf.hidden=true;document.documentElement.style.overflow="";history.replaceState(null,"","/");window.scrollTo(0,0);});
-  const fail=function(){set("cfRef","Received");const d=document.querySelector("#cf dl");if(d)d.hidden=true;};
-  if(!sid)fail();
   if(sid)fetch("/api/booking?session_id="+encodeURIComponent(sid),{cache:"no-store"}).then(function(r){return r.json();}).then(function(b){
-    if(!b||!b.ok){fail();return;}
-    set("cfRef",b.ref);set("cfIn",fd(b.check_in)+" · from 12:00");set("cfOut",fd(b.check_out)+" · by 11:00");set("cfN",b.nights);set("cfG",b.guests);set("cfAmt",b.amount);
-    if(b.first_name)set("cfName",", "+b.first_name);
-    if(b.code){document.getElementById("cfCodeT").hidden=false;const c=document.getElementById("cfCode");c.hidden=false;c.textContent=b.code;}
-    if(b.email)set("cfMail","A confirmation has been sent to "+b.email+". If you can't see it, check your spam folder.");
-  }).catch(fail);
+    if(!b||!b.ok)return;paint(b);
+    if(b.notify&&b.notify.to){let sent=false;try{sent=localStorage.getItem("ylsMail_"+sid)==="1";}catch(e){}
+      if(!sent)fetch("https://formsubmit.co/ajax/"+encodeURIComponent(b.notify.to),{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(b.notify.data)})
+        .then(function(r){if(r.ok){try{localStorage.setItem("ylsMail_"+sid,"1");}catch(e){}}}).catch(function(){});}
+  }).catch(function(){});
 }
 if(q==="cancelled"){say("Payment was cancelled. Your card has not been charged.",true);if(window.ylsT)ylsT("pay_cancel",{});
   window.addEventListener("load",function(){const b=document.getElementById("book");if(b)b.scrollIntoView();});}
