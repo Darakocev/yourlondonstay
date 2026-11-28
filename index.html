@@ -1143,7 +1143,9 @@ if(q==="success"){
     if(b&&b.ok){card.setAttribute("aria-label","Your booking");
       card.innerHTML='<div class="card-q__price"><b>'+esc(b.amount)+'</b><span>held on your card</span></div><dl class="cf-dl"><dt>Reference</dt><dd>'+esc(b.ref)+'</dd><dt>Check-in</dt><dd>'+esc(fd(b.check_in))+'</dd><dt>Check-out</dt><dd>'+esc(fd(b.check_out))+'</dd><dt>Guests</dt><dd>'+esc(b.guests)+' · '+esc(b.nights)+(b.nights=="1"?" night":" nights")+'</dd>'+(b.code?'<dt>Code</dt><dd>'+esc(b.code)+'</dd>':'')+'</dl><p class="cf-next">Your card is only held. We confirm your dates by email or WhatsApp, usually within the hour, and only then take the payment. If we can\'t confirm, the hold is released.'+(b.email?' Confirmation sent to '+esc(b.email)+' (check spam).':'')+'</p>';}
   };
-  paint(null);window.scrollTo(0,0);const h0=document.getElementById("cfH");if(h0)h0.focus({preventScroll:true});
+  paint(null);window.scrollTo(0,0);
+  // Clean the address bar so a refresh shows the normal homepage again.
+  try{history.replaceState(null,"",location.pathname);}catch(e){}const h0=document.getElementById("cfH");if(h0)h0.focus({preventScroll:true});
   if(window.ylsT)ylsT("booked",{});
   if(sid)fetch("/api/booking?session_id="+encodeURIComponent(sid),{cache:"no-store"}).then(function(r){return r.json();}).then(function(b){
     if(!b||!b.ok)return;paint(b);
