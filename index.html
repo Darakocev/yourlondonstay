@@ -77,7 +77,8 @@ h2{font-size:clamp(2.2rem,1.5rem + 2.6vw,3.6rem)}
 h3{font-size:clamp(1.35rem,1.2rem + .6vw,1.7rem)}
 p{margin:0;text-wrap:pretty}
 .wrap{max-width:var(--max);margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
-.section{padding-block:clamp(72px,6vw + 40px,136px)}
+.section{--pad:clamp(64px,4vw + 36px,112px);padding-block:var(--pad)}
+.section[id]{scroll-margin-top:calc(28px - var(--pad))}
 .eyebrow{font-size:.74rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:var(--brass);display:flex;align-items:center;gap:14px}
 .eyebrow::before{content:"";width:28px;height:1px;background:currentColor}
 .lead{font-size:clamp(1.08rem,1rem + .35vw,1.28rem);color:var(--ink-2);font-weight:300;line-height:1.6}
@@ -468,12 +469,13 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
       <span><b>Your London Stay</b><i>Hammersmith · W6</i></span>
     </a>
     <ul class="nav" id="nav">
-      <li><a href="#apartment">The apartment</a></li>
-      <li><a href="#tour">3D tour</a></li><li class="has-sub"><a href="#gallery" data-gal="all" aria-haspopup="true">Gallery</a><ul class="sub">
+      <li class="has-sub"><a href="#gallery" data-gal="all" aria-haspopup="true">Gallery</a><ul class="sub">
         <li><a href="#gallery" data-gal="living">Living room</a></li><li><a href="#gallery" data-gal="bedroom">Bedroom</a></li><li><a href="#gallery" data-gal="kitchen">Kitchen</a></li><li><a href="#gallery" data-gal="bath">Bathroom</a></li><li><a href="#gallery" data-gal="home">Entrance &amp; hallway</a></li></ul></li>
+      <li><a href="#apartment">The apartment</a></li>
+      <li><a href="#tour">3D tour</a></li>
+      <li><a href="#reviews">Reviews</a></li>
       <li><a href="#book">Prices &amp; dates</a></li>
       <li><a href="#location">Location</a></li>
-      <li><a href="#reviews">Reviews</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -522,6 +524,21 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
   </ul></div>
 </section>
 
+<section class="section" id="gallery" style="background:var(--surface)">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">Gallery</p><h2>Take a closer look</h2></div>
+    <div class="gal-tabs" id="galTabs" role="group" aria-label="Filter photos">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="living" aria-pressed="false">Living room</button>
+      <button type="button" data-f="bedroom" aria-pressed="false">Bedroom</button>
+      <button type="button" data-f="kitchen" aria-pressed="false">Kitchen</button>
+      <button type="button" data-f="bath" aria-pressed="false">Bathroom</button>
+      <button type="button" data-f="home" aria-pressed="false">Entrance &amp; hallway</button>
+    </div>
+    <div class="gal" id="gal"></div>
+  </div>
+</section>
+
 <section class="section" id="apartment">
   <div class="wrap intro">
     <div class="intro__text">
@@ -555,7 +572,7 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
   </div>
 </section>
 
-<section class="section" id="tour">
+<section class="section" id="tour" style="background:var(--linen)">
   <div class="wrap">
     <div class="head"><p class="eyebrow">3D tour</p><h2>Walk through the apartment</h2><p class="muted">Start at the front door and walk up to your private flat. Drag to look around, tap ➜ to walk, tap + for a closer look.</p></div>
     <div class="tour-frame"><iframe src="/3d-tour/" title="360° tour of YourLondonStay" loading="lazy" allowfullscreen allow="fullscreen; gyroscope; accelerometer"></iframe></div>
@@ -563,22 +580,8 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
   </div>
 </section>
 <style>.tour-frame{border-radius:18px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.08)}.tour-frame iframe{display:block;width:100%;height:min(80vh,780px);min-height:520px;border:0}</style>
-<section class="section" id="gallery" style="background:var(--surface)">
-  <div class="wrap">
-    <div class="head"><p class="eyebrow">Gallery</p><h2>Take a closer look</h2></div>
-    <div class="gal-tabs" id="galTabs" role="group" aria-label="Filter photos">
-      <button type="button" data-f="all" aria-pressed="true">All</button>
-      <button type="button" data-f="living" aria-pressed="false">Living room</button>
-      <button type="button" data-f="bedroom" aria-pressed="false">Bedroom</button>
-      <button type="button" data-f="kitchen" aria-pressed="false">Kitchen</button>
-      <button type="button" data-f="bath" aria-pressed="false">Bathroom</button>
-      <button type="button" data-f="home" aria-pressed="false">Entrance &amp; hallway</button>
-    </div>
-    <div class="gal" id="gal"></div>
-  </div>
-</section>
 
-<section class="section" aria-labelledby="amenH">
+<section class="section" id="amenities" aria-labelledby="amenH">
   <div class="wrap">
     <div class="head"><p class="eyebrow">Amenities</p><h2 id="amenH">Everything in its place</h2></div>
     <div class="amen">
@@ -592,74 +595,7 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
   </div>
 </section>
 
-<section class="section book" id="book">
-  <div class="wrap">
-    <div class="head"><p class="eyebrow">Prices &amp; availability</p><h2>Choose your dates</h2><p class="lead">Live availability and clear prices. No booking-platform fees when you book direct.</p></div>
-    <div class="book__grid">
-      <div class="panel">
-        <div class="cal__head"><p class="nextfree" id="nextFree"></p><div class="cal__nav"><button type="button" id="calPrev" aria-label="Previous months">&#8249;</button><button type="button" id="calNext" aria-label="Next months">&#8250;</button></div></div>
-        <div class="cal__months" id="calMonths"></div>
-        <div class="cal__legend"><span><i style="background:var(--free)"></i>Available</span><span><i style="background:var(--taken);border:1px solid var(--line)"></i>Booked</span><span><i style="background:var(--sel)"></i>Your stay</span></div>
-        <p class="cal__hint" id="calHint" role="status">Select your check-in date.</p>
-      </div>
-      <aside class="panel quote" aria-label="Your stay" aria-live="polite">
-        <div class="quote__price"><b id="qRate">£125</b><span class="muted" id="qRateLbl">per night, from</span></div>
-        <div class="qrow">
-          <div><span class="l">Check-in</span><strong id="qIn">Add date</strong></div>
-          <div><span class="l">Check-out</span><strong id="qOut">Add date</strong></div>
-          <div class="full"><label for="qGuests">Guests</label><select id="qGuests"><option value="1">1 guest</option><option value="2" selected>2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option></select></div>
-        </div>
-        <ul class="lines" id="qLines"><li><span>Weeknights (Sun–Thu)</span><span>from £125</span></li><li><span>Fri &amp; Sat nights</span><span>from £152</span></li></ul>
-        <div class="promo" id="qPromoBox" hidden><label class="sr-only" for="qPromo">Discount code</label><input id="qPromo" type="text" placeholder="Discount code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40"><button type="button" id="qPromoBtn">Apply</button></div><p class="promo__msg" id="qPromoMsg" role="status" hidden></p>
-        <button class="btn btn--primary" id="qPay" type="button" disabled hidden>Book now</button>
-        <a class="btn btn--primary" id="qDirect" href="#contact" aria-disabled="true">Request to book</a>
-        <p class="pay__msg" id="qPayMsg" role="status" hidden></p>
-        <div class="btn-row" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-          <a class="btn btn--wa" id="qWa" href="https://wa.me/447848108122" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.2Z"/></svg>WhatsApp</a>
-          <a class="btn btn--line" id="qAirbnb" href="https://www.airbnb.co.uk/rooms/1245107111113572905" target="_blank" rel="noopener">Airbnb</a>
-        </div>
-        <p class="quote__note">Send us your dates and we confirm personally, usually within the hour. You won't be charged yet. We never ask for payment by bank transfer or through a link sent on WhatsApp.</p>
-      </aside>
-    </div>
-    <div class="why">
-      <div><h3>No platform fees</h3><p>Book with us directly and skip the booking-site service charge.</p></div>
-      <div><h3>Talk to your host</h3><p>One person from first question to check-out, on WhatsApp or email.</p></div>
-      <div><h3>Longer-stay savings</h3><p>7% off stays of a week or more, 28% off stays of 28 nights or more.</p></div>
-      <div><h3>Flexible arrivals</h3><p>Self check-in from 12:00, with step-by-step instructions before you travel.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="section dark" id="location">
-  <div class="wrap">
-    <div class="loc">
-      <div>
-        <div class="head" style="margin-bottom:28px"><p class="eyebrow">Location</p><h2>The calm side of central London</h2><p class="lead">Barons Court station is about ten minutes' walk, Hammersmith about fifteen. From there, the West End is one train away.</p></div>
-        <ul class="journeys">
-          <li><b>Heathrow Airport</b><span>Direct</span><em>Piccadilly line from Barons Court, no changes</em></li>
-          <li><b>South Kensington museums</b><span>~15 min</span><em>Piccadilly line</em></li>
-          <li><b>Hyde Park &amp; Knightsbridge</b><span>~15 min</span><em>Piccadilly line</em></li>
-          <li><b>Covent Garden &amp; Leicester Square</b><span>20–25 min</span><em>Piccadilly line, direct</em></li>
-          <li><b>King's Cross St Pancras (Eurostar)</b><span>Direct</span><em>Piccadilly line, no changes</em></li>
-          <li><b>Tower of London</b><span>~30 min</span><em>District line to Tower Hill</em></li>
-        </ul>
-        <p class="small muted" style="margin-top:14px">Approximate Tube times from Barons Court or Hammersmith. <a href="https://www.google.com/maps/search/?api=1&amp;query=Lampeter+Square+London+W6" target="_blank" rel="noopener" style="color:#ead6ad">Open the area in Google Maps</a></p>
-      </div>
-      <figure class="loc__img"><img src="img/entrance-wide.webp" alt="Private front door on the fourth floor with keypad lockbox and open views over West London" loading="lazy"><figcaption>Your private front door on the 4th floor, with self check-in and open views over West London.</figcaption></figure>
-    </div>
-    <div class="map"><iframe title="Map: Lampeter Square, Hammersmith, London W6 8PS" src="https://www.google.com/maps?q=Lampeter+Square,+London+W6+8PS&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe><a class="btn btn--primary map__btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=Lampeter+Square,+London+W6+8PS" target="_blank" rel="noopener">Get directions</a></div>
-    <div class="near">
-      <div><b>Thames riverside</b><p>The Thames Path and historic pubs along Lower and Upper Mall.</p></div>
-      <div><b>Eventim Apollo &amp; Lyric</b><p>Concerts, comedy and theatre around Hammersmith Broadway.</p></div>
-      <div><b>Olympia London</b><p>Exhibitions and trade shows a short ride away.</p></div>
-      <div><b>Bishop's Park</b><p>Fulham Palace, walled garden and a riverside park.</p></div>
-      <div><b>Queen's Club &amp; Fulham FC</b><p>Tennis and Premier League football nearby.</p></div>
-      <div><b>Everyday essentials</b><p>Supermarkets and cafés on King Street and North End Road.</p></div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="reviews">
+<section class="section" id="reviews" style="background:var(--surface)">
   <div class="wrap">
     <div class="rv__top">
       <div class="head" style="margin:0"><p class="eyebrow">Guest reviews</p><h2>In our guests' words</h2></div>
@@ -743,6 +679,73 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
   </div>
 </section>
 
+<section class="section book" id="book">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">Prices &amp; availability</p><h2>Choose your dates</h2><p class="lead">Live availability and clear prices. No booking-platform fees when you book direct.</p></div>
+    <div class="book__grid">
+      <div class="panel">
+        <div class="cal__head"><p class="nextfree" id="nextFree"></p><div class="cal__nav"><button type="button" id="calPrev" aria-label="Previous months">&#8249;</button><button type="button" id="calNext" aria-label="Next months">&#8250;</button></div></div>
+        <div class="cal__months" id="calMonths"></div>
+        <div class="cal__legend"><span><i style="background:var(--free)"></i>Available</span><span><i style="background:var(--taken);border:1px solid var(--line)"></i>Booked</span><span><i style="background:var(--sel)"></i>Your stay</span></div>
+        <p class="cal__hint" id="calHint" role="status">Select your check-in date.</p>
+      </div>
+      <aside class="panel quote" aria-label="Your stay" aria-live="polite">
+        <div class="quote__price"><b id="qRate">£125</b><span class="muted" id="qRateLbl">per night, from</span></div>
+        <div class="qrow">
+          <div><span class="l">Check-in</span><strong id="qIn">Add date</strong></div>
+          <div><span class="l">Check-out</span><strong id="qOut">Add date</strong></div>
+          <div class="full"><label for="qGuests">Guests</label><select id="qGuests"><option value="1">1 guest</option><option value="2" selected>2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option></select></div>
+        </div>
+        <ul class="lines" id="qLines"><li><span>Weeknights (Sun–Thu)</span><span>from £125</span></li><li><span>Fri &amp; Sat nights</span><span>from £152</span></li></ul>
+        <div class="promo" id="qPromoBox" hidden><label class="sr-only" for="qPromo">Discount code</label><input id="qPromo" type="text" placeholder="Discount code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40"><button type="button" id="qPromoBtn">Apply</button></div><p class="promo__msg" id="qPromoMsg" role="status" hidden></p>
+        <button class="btn btn--primary" id="qPay" type="button" disabled hidden>Book now</button>
+        <a class="btn btn--primary" id="qDirect" href="#contact" aria-disabled="true">Request to book</a>
+        <p class="pay__msg" id="qPayMsg" role="status" hidden></p>
+        <div class="btn-row" style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <a class="btn btn--wa" id="qWa" href="https://wa.me/447848108122" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.5-.2Z"/></svg>WhatsApp</a>
+          <a class="btn btn--line" id="qAirbnb" href="https://www.airbnb.co.uk/rooms/1245107111113572905" target="_blank" rel="noopener">Airbnb</a>
+        </div>
+        <p class="quote__note">Send us your dates and we confirm personally, usually within the hour. You won't be charged yet. We never ask for payment by bank transfer or through a link sent on WhatsApp.</p>
+      </aside>
+    </div>
+    <div class="why">
+      <div><h3>No platform fees</h3><p>Book with us directly and skip the booking-site service charge.</p></div>
+      <div><h3>Talk to your host</h3><p>One person from first question to check-out, on WhatsApp or email.</p></div>
+      <div><h3>Longer-stay savings</h3><p>7% off stays of a week or more, 28% off stays of 28 nights or more.</p></div>
+      <div><h3>Flexible arrivals</h3><p>Self check-in from 12:00, with step-by-step instructions before you travel.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="location" style="background:var(--bg)">
+  <div class="wrap">
+    <div class="loc">
+      <div>
+        <div class="head" style="margin-bottom:28px"><p class="eyebrow">Location</p><h2>The calm side of central London</h2><p class="lead">Barons Court station is about ten minutes' walk, Hammersmith about fifteen. From there, the West End is one train away.</p></div>
+        <ul class="journeys">
+          <li><b>Heathrow Airport</b><span>Direct</span><em>Piccadilly line from Barons Court, no changes</em></li>
+          <li><b>South Kensington museums</b><span>~15 min</span><em>Piccadilly line</em></li>
+          <li><b>Hyde Park &amp; Knightsbridge</b><span>~15 min</span><em>Piccadilly line</em></li>
+          <li><b>Covent Garden &amp; Leicester Square</b><span>20–25 min</span><em>Piccadilly line, direct</em></li>
+          <li><b>King's Cross St Pancras (Eurostar)</b><span>Direct</span><em>Piccadilly line, no changes</em></li>
+          <li><b>Tower of London</b><span>~30 min</span><em>District line to Tower Hill</em></li>
+        </ul>
+        <p class="small muted" style="margin-top:14px">Approximate Tube times from Barons Court or Hammersmith. <a href="https://www.google.com/maps/search/?api=1&amp;query=Lampeter+Square+London+W6" target="_blank" rel="noopener" style="color:#ead6ad">Open the area in Google Maps</a></p>
+      </div>
+      <figure class="loc__img"><img src="img/entrance-wide.webp" alt="Private front door on the fourth floor with keypad lockbox and open views over West London" loading="lazy"><figcaption>Your private front door on the 4th floor, with self check-in and open views over West London.</figcaption></figure>
+    </div>
+    <div class="map"><iframe title="Map: Lampeter Square, Hammersmith, London W6 8PS" src="https://www.google.com/maps?q=Lampeter+Square,+London+W6+8PS&amp;z=16&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe><a class="btn btn--primary map__btn" href="https://www.google.com/maps/dir/?api=1&amp;destination=Lampeter+Square,+London+W6+8PS" target="_blank" rel="noopener">Get directions</a></div>
+    <div class="near">
+      <div><b>Thames riverside</b><p>The Thames Path and historic pubs along Lower and Upper Mall.</p></div>
+      <div><b>Eventim Apollo &amp; Lyric</b><p>Concerts, comedy and theatre around Hammersmith Broadway.</p></div>
+      <div><b>Olympia London</b><p>Exhibitions and trade shows a short ride away.</p></div>
+      <div><b>Bishop's Park</b><p>Fulham Palace, walled garden and a riverside park.</p></div>
+      <div><b>Queen's Club &amp; Fulham FC</b><p>Tennis and Premier League football nearby.</p></div>
+      <div><b>Everyday essentials</b><p>Supermarkets and cafés on King Street and North End Road.</p></div>
+    </div>
+  </div>
+</section>
+
 <section class="section" style="background:var(--surface)" aria-labelledby="hostH">
   <div class="wrap host">
     <figure><img src="img/host.webp" alt="The living room, prepared for guests" loading="lazy"></figure>
@@ -752,20 +755,6 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
       <p class="lead">I work in hospitality and look after every stay personally, from your first question to the moment you lock up and head home.</p>
       <p class="muted">Ask me for restaurant tips, the best way in from the airport, or a quiet corner of the river. Or just enjoy your space; it's your stay.</p>
       <div class="hfacts"><div><b>2024</b><span>Hosting since</span></div><div><b>100%</b><span>Response rate</span></div><div><b>&lt; 1 hr</b><span>Typical reply</span></div></div>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="guide" style="background:var(--linen)">
-  <div class="wrap">
-    <div class="head"><p class="eyebrow">London guide</p><h2>London from your doorstep</h2><p class="lead">Our favourite places, with the route from the apartment.</p></div>
-    <div class="guide">
-      <article class="g"><span class="tag">Museums · Free</span><h3>Natural History, V&amp;A, Science Museum</h3><p>Three world-class museums side by side, all free.</p><p class="route">Piccadilly line to South Kensington, ~15 min</p></article>
-      <article class="g"><span class="tag">Landmark</span><h3>The London Eye &amp; South Bank</h3><p>The wheel you see from the balcony at night, then a riverside walk to Tate Modern.</p><p class="route">Piccadilly to Leicester Square, Northern line to Waterloo</p></article>
-      <article class="g"><span class="tag">Royal London</span><h3>Buckingham Palace</h3><p>Watch the Changing of the Guard for free. Check the schedule first.</p><p class="route">District line to Victoria or St James's Park</p></article>
-      <article class="g"><span class="tag">History</span><h3>Tower of London &amp; Tower Bridge</h3><p>The Crown Jewels and London's most famous bridge.</p><p class="route">District line direct to Tower Hill</p></article>
-      <article class="g"><span class="tag">On foot</span><h3>Hammersmith riverside</h3><p>Georgian houses, rowing clubs and riverside pubs. Lovely at sunset.</p><p class="route">About 15–20 min walk</p></article>
-      <article class="g"><span class="tag">Gardens</span><h3>Holland Park &amp; Kyoto Garden</h3><p>A Japanese garden with a waterfall, koi and peacocks.</p><p class="route">Short Tube or bus ride to Holland Park</p></article>
     </div>
   </div>
 </section>
@@ -793,6 +782,20 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
       <details><summary>Is there parking?</summary><p>Free street parking is available in the evenings and at weekends. Check the local signs for weekday hours, and ask us before you travel.</p></details>
       <details><summary>How do I know this website is genuine?</summary><p>This is the only official website for Your London Stay, and our only WhatsApp number is +44 7848 108122. We never ask you to pay by bank transfer, and we never send payment links on WhatsApp. If anything feels wrong, contact us before paying.</p></details>
       <details><summary>Can I arrive early or leave late?</summary><p>Often, depending on the bookings either side of yours. Send us a message and we'll do our best.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="guide" style="background:var(--linen)">
+  <div class="wrap">
+    <div class="head"><p class="eyebrow">London guide</p><h2>London from your doorstep</h2><p class="lead">Our favourite places, with the route from the apartment.</p></div>
+    <div class="guide">
+      <article class="g"><span class="tag">Museums · Free</span><h3>Natural History, V&amp;A, Science Museum</h3><p>Three world-class museums side by side, all free.</p><p class="route">Piccadilly line to South Kensington, ~15 min</p></article>
+      <article class="g"><span class="tag">Landmark</span><h3>The London Eye &amp; South Bank</h3><p>The wheel you see from the balcony at night, then a riverside walk to Tate Modern.</p><p class="route">Piccadilly to Leicester Square, Northern line to Waterloo</p></article>
+      <article class="g"><span class="tag">Royal London</span><h3>Buckingham Palace</h3><p>Watch the Changing of the Guard for free. Check the schedule first.</p><p class="route">District line to Victoria or St James's Park</p></article>
+      <article class="g"><span class="tag">History</span><h3>Tower of London &amp; Tower Bridge</h3><p>The Crown Jewels and London's most famous bridge.</p><p class="route">District line direct to Tower Hill</p></article>
+      <article class="g"><span class="tag">On foot</span><h3>Hammersmith riverside</h3><p>Georgian houses, rowing clubs and riverside pubs. Lovely at sunset.</p><p class="route">About 15–20 min walk</p></article>
+      <article class="g"><span class="tag">Gardens</span><h3>Holland Park &amp; Kyoto Garden</h3><p>A Japanese garden with a waterfall, koi and peacocks.</p><p class="route">Short Tube or bus ride to Holland Park</p></article>
     </div>
   </div>
 </section>
@@ -831,6 +834,7 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
     </div>
   </div>
 </section>
+
 <section class="section" id="privacy" style="padding-block:56px;border-top:1px solid var(--line)">
   <div class="wrap" style="display:grid;gap:12px;max-width:52rem;margin-inline:0">
     <details><summary>Privacy notice</summary><div style="display:grid;gap:10px;padding-bottom:20px;color:var(--ink-2)">
@@ -849,6 +853,7 @@ window.addEventListener("load",function(){if(new URLSearchParams(location.search
     </div></details>
   </div>
 </section>
+
 </main>
 
 <footer class="foot">
