@@ -161,7 +161,7 @@ function build(){
 function show(id){
   const r=byId[id]; $("ct").textContent=r.t; $("cd").textContent=r.d;
   $("st").textContent=`${ROOMS.indexOf(r)+1}/${ROOMS.length}`;
-  [...$("strip").children].forEach(b=>{const on=b.dataset.id===id; b.classList.toggle("on",on); b.setAttribute("aria-current",on?"true":"false"); if(on) b.scrollIntoView({block:"nearest",inline:"nearest"});});
+  [...$("strip").children].forEach(b=>{const on=b.dataset.id===id; b.classList.toggle("on",on); b.setAttribute("aria-current",on?"true":"false"); if(on){const st=b.parentElement;if(st){const l=b.offsetLeft-st.offsetLeft,r=l+b.offsetWidth;if(l<st.scrollLeft)st.scrollLeft=l;else if(r>st.scrollLeft+st.clientWidth)st.scrollLeft=r-st.clientWidth;}}});
   const f=FLOORS[r.floor], ns="http://www.w3.org/2000/svg"; $("fl").textContent=f.n; $("plan").innerHTML="";
   f.r.forEach(m=>{const g=document.createElementNS(ns,"rect"); [["x",m.x],["y",m.y],["width",m.w],["height",m.h],["rx",2]].forEach(([k,v])=>g.setAttribute(k,v));
     g.setAttribute("class",m.off?"off":m.id===r.room?"on":"");
