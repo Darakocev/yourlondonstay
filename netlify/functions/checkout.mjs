@@ -30,7 +30,7 @@ const keyMode = (k) => (/^(sk|rk)_live_/.test(k || "") ? "live" : /^(sk|rk)_test
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });
 
 export default async (req) => {
-  const secret = process.env.STRIPE_SECRET_KEY;
+  const secret = (process.env.STRIPE_SECRET_KEY || "").replace(/\s+/g, "");
   const mode = keyMode(secret);
   const enabled = process.env.PAYMENTS_ENABLED === "true" && mode !== "none";
   // GET tells the website whether to show the "Book now & pay" button. No secrets are returned.
@@ -42,7 +42,7 @@ export default async (req) => {
 
   let d; try { d = await req.json(); } catch { return json({ error: "Bad request" }, 400); }
   const test = isTest(d.testCode);
-  if (mode === "none") return json({ error: "Online payment is not set up yet. Please message us to book." }, 503);
+  if (mode === "none") return json({ error: "Online payment is not set up yet. Please message us to book.", ...(test ? { key: secret ? `starts with "${secret.slice(0, 8)}", ${secret.length} characters` : "empty" } : {}) }, 503);
   // Online payment stays closed to guests until PAYMENTS_ENABLED=true in Netlify.
   if (!enabled && !test) return json({ error: "Online payment is not available yet. Please request to book or message us." }, 503);
   const cin = parse(d.checkIn), cout = parse(d.checkOut), g = Math.floor(Number(d.guests));
