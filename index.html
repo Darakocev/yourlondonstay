@@ -423,6 +423,7 @@ h1,h2,h3,.logo b{font-family:var(--display);font-weight:500;letter-spacing:0}
 .quote .btn{width:100%}#qDirect{margin-top:10px}
 #qPay[hidden]{display:none!important}#qPay:disabled{opacity:.45;cursor:not-allowed}
 .pay__msg{margin:12px 0 0;padding:12px 14px;border-radius:14px;background:#e8f3ec;color:#1f5a3f;font-size:.92rem}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}.promo{display:flex;gap:8px;margin:14px 0 4px}.promo input{flex:1;min-width:0;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:var(--bg);font:inherit;text-transform:uppercase}.promo button{padding:10px 16px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font:inherit;cursor:pointer}.promo__msg{font-size:.85rem;margin:0 0 8px;color:var(--muted)}.promo__msg--ok{color:var(--ok)}.promo__msg--err{color:#8a2e24}
 .pay__msg--err{background:#fbecea;color:#8a2e24}
 html,body{overflow-x:clip}
 </style>
@@ -577,6 +578,7 @@ html,body{overflow-x:clip}
           <div class="full"><label for="qGuests">Guests</label><select id="qGuests"><option value="1">1 guest</option><option value="2" selected>2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option></select></div>
         </div>
         <ul class="lines" id="qLines"><li><span>Weeknights (Sun–Thu)</span><span>from £125</span></li><li><span>Fri &amp; Sat nights</span><span>from £152</span></li></ul>
+        <div class="promo" id="qPromoBox" hidden><label class="sr-only" for="qPromo">Discount code</label><input id="qPromo" type="text" placeholder="Discount code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="40"><button type="button" id="qPromoBtn">Apply</button></div><p class="promo__msg" id="qPromoMsg" role="status" hidden></p>
         <button class="btn btn--primary" id="qPay" type="button" disabled hidden>Book now &amp; pay securely</button>
         <a class="btn btn--primary" id="qDirect" href="#contact" aria-disabled="true">Request to book</a>
         <p class="pay__msg" id="qPayMsg" role="status" hidden></p>
@@ -775,6 +777,7 @@ html,body{overflow-x:clip}
       </div>
     </div>
     <div class="panel">
+      <form name="booking" data-netlify="true" netlify-honeypot="_honey" hidden aria-hidden="true"><input type="hidden" name="form-name" value="booking"><input name="check_in"><input name="check_out"><input name="guests"><input name="amount_paid"><input name="full_price"><input name="discount_code"><input name="payment_status"><input name="guest_name"><input name="guest_email"><input name="guest_phone"><input name="stripe_link"><input name="session"><input name="_honey"></form>
       <form id="cForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="_honey" novalidate><input type="hidden" name="form-name" value="contact">
         <div class="frow">
           <div class="field"><label for="fName">Your name</label><input id="fName" name="name" autocomplete="name" required></div>
@@ -982,6 +985,7 @@ html,body{overflow-x:clip}
     if(cW)L.appendChild(li(money(wd)+" × "+cW+(cW>1?" weeknights":" weeknight"),money(cW*wd)));
     if(cE)L.appendChild(li(money(we)+" × "+cE+(cE>1?" weekend nights":" weekend night"),money(cE*we)));
     if(disc)L.appendChild(li(dl,"−"+money(disc),"disc"));
+    var pr=window.ylsPromoInfo;if(pr){var pt=pr.type==="percent"?Math.round(tot*(100-pr.value))/100:Math.min(pr.value,tot);L.appendChild(li("Code "+pr.code+" ("+pr.label+")","−"+money(tot-pt),"disc"));tot=pt;}
     L.appendChild(li("Total, "+n+(n>1?" nights":" night"),money(tot),"tot"));
     $("qDirect").setAttribute("aria-disabled","false");$("qPay").disabled=!window.ylsPayOn;
     $("qAirbnb").href=CFG.airbnb+"?check_in="+key(cin)+"&check_out="+key(cout)+"&adults="+g;
@@ -993,7 +997,7 @@ html,body{overflow-x:clip}
   $("calMonths").addEventListener("click",function(e){
     var b=e.target.closest(".day");if(!b||b.disabled)return;var t=+b.dataset.t,h=$("calHint");
     if(!cin||cout){if(!free(t))return;cin=t;cout=null;h.textContent="Now select your check-out date.";if(window.ylsT)ylsT("cal_in",{in:key(t)});}
-    else if(t>cin&&t<=maxOut(cin)){cout=t;h.textContent="Your dates are set. Request to book, or message us on WhatsApp.";}
+    else if(t>cin&&t<=maxOut(cin)){cout=t;h.textContent="Your dates are set. Book now and pay securely, or message us on WhatsApp.";}
     else if(free(t)){cin=t;h.textContent="Check-in updated. Now select your check-out date.";if(window.ylsT)ylsT("cal_in",{in:key(t)});}
     else return;
     render();
@@ -1103,16 +1107,31 @@ document.querySelectorAll("[data-gal]").forEach(function(a){a.addEventListener("
 document.querySelectorAll(".has-sub>a").forEach(function(a){a.addEventListener("touchstart",function(e){var li=a.parentElement;if(!li.classList.contains("open")&&!document.getElementById("nav").classList.contains("open")){e.preventDefault();li.classList.add("open");}},{passive:false});});}
 </script>
 <script>
-{const pay=document.getElementById("qPay"),msg=document.getElementById("qPayMsg");
+{const pay=document.getElementById("qPay"),msg=document.getElementById("qPayMsg"),pBox=document.getElementById("qPromoBox"),pIn=document.getElementById("qPromo"),pBtn=document.getElementById("qPromoBtn"),pMsg=document.getElementById("qPromoMsg");
 function say(t,bad){msg.hidden=false;msg.textContent=t;msg.classList.toggle("pay__msg--err",!!bad);}
-const sp=new URLSearchParams(location.search),q=sp.get("booking");
+function psay(t,cls){pMsg.hidden=!t;pMsg.textContent=t||"";pMsg.className="promo__msg"+(cls?" promo__msg--"+cls:"");}
+const sp=new URLSearchParams(location.search),q=sp.get("booking"),sid=sp.get("session");
 let tcode=sp.get("testpay");try{if(tcode)sessionStorage.setItem("ylsTestPay",tcode);else tcode=sessionStorage.getItem("ylsTestPay");}catch(e){}
+function rerender(){const g=document.getElementById("qGuests");if(g)g.dispatchEvent(new Event("change"));}
 fetch("/api/checkout"+(tcode?"?testpay="+encodeURIComponent(tcode):""),{cache:"no-store"}).then(function(r){return r.json();}).then(function(c){
-  if(!c||!c.enabled)return;window.ylsPayOn=true;pay.hidden=false;
+  if(!c||!c.enabled)return;window.ylsPayOn=true;pay.hidden=false;pBox.hidden=false;
   const L=window.ylsQuote&&window.ylsQuote();pay.disabled=!L;
-  if(c.test){pay.textContent="TEST: pay small amount ("+(c.mode||"")+")";say("Test payment mode is on for this browser only. Guests do not see this.",false);}
+  document.getElementById("qDirect").textContent="Ask a question first";
+  if(c.test)pay.textContent="TEST: pay small amount ("+(c.mode||"")+")";
 }).catch(function(){});
-if(q==="success"){say("Thank you! Your booking request and card hold are confirmed. Check your email; we'll confirm your dates shortly.");if(window.ylsT)ylsT("booked",{});}
+async function applyPromo(){
+  const code=pIn.value.trim().toUpperCase();
+  if(!code){window.ylsPromoInfo=null;psay("");rerender();return;}
+  pBtn.disabled=true;
+  try{const r=await fetch("/api/checkout?promo="+encodeURIComponent(code),{cache:"no-store"});const d=await r.json();
+    if(d.valid){window.ylsPromoInfo={code:code,type:d.type,value:d.value,label:d.label};psay("Code "+code+" applied: "+d.label+".","ok");if(window.ylsT)ylsT("clk",{t:"promo_ok"});}
+    else{window.ylsPromoInfo=null;psay("This code is not valid.","err");}}
+  catch(e){psay("Could not check the code. Please try again.","err");}
+  pBtn.disabled=false;rerender();}
+pBtn.addEventListener("click",applyPromo);
+pIn.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();applyPromo();}});
+if(q==="success"){say("Thank you! Your booking request and card hold are confirmed. Check your email; we'll confirm your dates shortly.");if(window.ylsT)ylsT("booked",{});
+  if(sid)fetch("/api/booking?session_id="+encodeURIComponent(sid),{cache:"no-store"}).catch(function(){});}
 if(q==="cancelled"){say("Payment was cancelled. Your card has not been charged.",true);if(window.ylsT)ylsT("pay_cancel",{});}
 pay.addEventListener("click",async function(){
   const L=window.ylsQuote&&window.ylsQuote();
@@ -1120,7 +1139,7 @@ pay.addEventListener("click",async function(){
   const k=function(t){return new Date(t).toISOString().slice(0,10);};
   if(window.ylsT)ylsT("pay_click",{in:k(L.cin),n:L.n,tot:L.tot});
   pay.disabled=true;const lbl=pay.textContent;pay.textContent="Opening secure payment…";
-  try{const r=await fetch("/api/checkout",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({checkIn:k(L.cin),checkOut:k(L.cout),guests:L.g,testCode:tcode||undefined})});
+  try{const r=await fetch("/api/checkout",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({checkIn:k(L.cin),checkOut:k(L.cout),guests:L.g,promo:window.ylsPromoInfo?window.ylsPromoInfo.code:undefined,testCode:tcode||undefined})});
     const d=await r.json();if(r.ok&&d.url){if(window.ylsT)ylsT("pay_redirect",{tot:L.tot});setTimeout(function(){location.href=d.url;},150);return;}const em=d.error||"Something went wrong. Please message us.";if(window.ylsT)ylsT("pay_err",{msg:em,st:r.status});say(em,true);}
   catch(e){if(window.ylsT)ylsT("pay_err",{msg:"connection"});say("Connection problem. Please try again or message us.",true);}
   pay.disabled=false;pay.textContent=lbl;});}
