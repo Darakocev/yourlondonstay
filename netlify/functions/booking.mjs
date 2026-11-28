@@ -43,6 +43,21 @@ export default async (req) => {
   const origin = new URL(req.url).origin;
   const f = await fetch(`${origin}/`, { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(rec).toString() });
   if (!f.ok) console.error("Booking form submission failed", f.status);
+
+  // Email to the owner through FormSubmit (free, no account). The very first email asks to activate once.
+  const to = process.env.BOOKING_EMAIL || "4yourlondonstay@gmail.com";
+  const { "form-name": _f, ...fields } = rec;
+  const e = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(to)}`, {
+    method: "POST",
+    headers: { "content-type": "application/json", accept: "application/json", origin, referer: `${origin}/` },
+    body: JSON.stringify({
+      _subject: `New booking ${rec.check_in} to ${rec.check_out} · ${rec.amount_paid}${rec.discount_code ? " · code " + rec.discount_code : ""}`,
+      _template: "table",
+      _captcha: "false",
+      ...fields,
+    }),
+  }).catch((err) => ({ ok: false, status: String(err) }));
+  if (!e.ok) console.error("Booking email failed", e.status);
   return json({ ok: true });
 };
 
