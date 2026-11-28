@@ -3,9 +3,9 @@
 // The screenshot is kept in Netlify Blobs; the owner gets an email (via FormSubmit) with a private link to it.
 //
 // Netlify environment variables:
-//   CRYPTO_ADDRESS   wallet address guests pay to (crypto option is hidden while this is empty)
+//   CRYPTO_ADDRESS   wallet address guests pay to (defaults to DEFAULT_ADDRESS below)
 //   CRYPTO_COIN      e.g. USDT, USDC, BTC, ETH   (default USDT)
-//   CRYPTO_NETWORK   e.g. TRC20 (Tron), ERC20 (Ethereum), BEP20, Bitcoin   (default TRC20)
+//   CRYPTO_NETWORK   e.g. TRC20 (Tron), ERC20 (Ethereum), BEP20, Bitcoin   (default BNB Smart Chain (BEP20))
 //   CRYPTO_DISCOUNT  percent off for crypto (default 10)
 //   CRYPTO_ENABLED   set to "false" to hide crypto without removing the address
 import { getStore } from "@netlify/blobs";
@@ -13,13 +13,15 @@ import { randomBytes, timingSafeEqual } from "node:crypto";
 import { key, priceStay } from "../lib/pricing.mjs";
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json", "cache-control": "no-store" } });
+// Owner's BNB Chain wallet (checked: QR code and EIP-55 checksum). Netlify env CRYPTO_ADDRESS overrides it.
+const DEFAULT_ADDRESS = "0x359B8Ef705f59ccdf84906Bb685FE130489f32C1";
 const conf = () => {
-  const address = String(process.env.CRYPTO_ADDRESS || "").trim();
+  const address = String(process.env.CRYPTO_ADDRESS || DEFAULT_ADDRESS).trim();
   return {
     enabled: process.env.CRYPTO_ENABLED !== "false" && /^[A-Za-z0-9:._-]{20,120}$/.test(address),
     address,
     coin: String(process.env.CRYPTO_COIN || "USDT").trim().toUpperCase().slice(0, 10),
-    network: String(process.env.CRYPTO_NETWORK || "TRC20").trim().slice(0, 30),
+    network: String(process.env.CRYPTO_NETWORK || "BNB Smart Chain (BEP20)").trim().slice(0, 30),
     discount: Math.min(50, Math.max(0, Number(process.env.CRYPTO_DISCOUNT) || 10)),
   };
 };
